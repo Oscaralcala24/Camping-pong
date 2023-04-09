@@ -1,0 +1,119 @@
+@use '@angular/material' as mat;
+
+$md-primary: (
+    50 : #fff0e7,
+    100 : #ffdac3,
+    200 : #ffc19c,
+    300 : #ffa874,
+    400 : #ff9656,
+    500 : #ff8338,
+    600 : #ff7b32,
+    700 : #ff702b,
+    800 : #ff6624,
+    900 : #ff5317,
+    A100 : #ffffff,
+    A200 : #fffdfc,
+    A400 : #ffd6c9,
+    A700 : #ffc2b0,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-warn: (
+    50 : #fbe7e7,
+    100 : #f6c4c4,
+    200 : #f09d9d,
+    300 : #ea7676,
+    400 : #e65858,
+    500 : #e13b3b,
+    600 : #dd3535,
+    700 : #d92d2d,
+    800 : #d52626,
+    900 : #cd1919,
+    A100 : #ffffff,
+    A200 : #ffcdcd,
+    A400 : #ff9a9a,
+    A700 : #ff8080,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-secondary: (
+    50 : #e2eaf0,
+    100 : #b7c9da,
+    200 : #87a6c1,
+    300 : #5782a8,
+    400 : #336795,
+    500 : #0f4c82,
+    600 : #0d457a,
+    700 : #0b3c6f,
+    800 : #083365,
+    900 : #042452,
+    A100 : #85adff,
+    A200 : #528bff,
+    A400 : #1f69ff,
+    A700 : #0558ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+$my-typography: mat.define-typography-config(
+    $font-family: "Raleway",
+);
+
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: mat.define-palette($md-primary, 500, 200),
+      accent: mat.define-palette($md-secondary, 500),
+      warn: mat.define-palette($md-warn, 500),
+
+      // warn:
+    ),
+    typography: $my-typography,
+    density: 0,
+  )
+);
+
+@include mat.all-component-themes($light-theme);

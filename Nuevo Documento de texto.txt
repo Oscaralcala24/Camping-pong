@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  angular:
+    hostname: localhost
+    #container_name: angular-app
+    build: angular-app
+    ports:
+      - 8181:80
+  express: #name of the second service
+    build: express-server # specify the directory of the Dockerfile
+    ports:
+      - "3000:3000" #specify ports forewarding

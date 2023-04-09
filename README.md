@@ -14,9 +14,9 @@ El desarrollo de toda Aplicación Web requiere seguir un [proceso estructurado](
 
 # Título del Proyecto
 
-#### Curso Escolar 20XX-20XX
-#### Autor: [Nombre del alumno autor](Enlace a su cuenta de gitHub)
-#### Tutor: [Nombre del profesor tutor](Enlace a su cuenta de gitHub)
+#### Curso Escolar 2022-2023
+#### Autor: Óscar Alcalá Espigares - https://github.com/Oscaralcala24
+#### Tutor: Antonio Gabriel González Casado - https://github.com/antonio-gabriel-gonzalez-casado
 #### Fecha de Inicio: DD-MM-YYYY
 #### Fecha de Finalización: DD-MM-YYYY
 
@@ -27,7 +27,7 @@ Si ya tienes una idea para tu aplicación, explícala brevemente. Si no es así,
 En este apartado el alumno debe hacer una breve descripción del proyecto que vaya a realizar. Esta descripción no será ua descripción detallada, será una presentación general con no más de 10 líneas.
 
 ## Definir el objetivo de la aplicación
-**Tener una gran idea** o encontrar un punto del mercado al que no se esté dando un producto o servicio es el punto de partida en cada nuevo proyecto. Antes de comenzar debes **definir claramente el propósito y la misión de la aplicación web**:
+Nuestra aplicación llega para resolver el problema que existe con las reservas de los camping, ya que no existe ninguna aplicación que los unifique a todos, permita reservar parcelas y cancelarlas cuando sea necesario. Nuestra empresa más allá de facilitar a nuestro clientes la reserva de camping, tiene como objetivo fomentar el uso de estos tanto como fomentar el uso responsable del medio ambiente.
 
 - **¿Qué va a hacer la aplicación?**
 - **¿Cuál es su atractivo principal?** 
@@ -45,10 +45,3 @@ Por lo anterior, un proyecto que contenga un Frontend en una tecnología o frame
 - docs
 - README.md
 
-En el caso anterior, si se quiere desplegar de forma automatizada a partir del control de versiones, lo habitual es que estén los dos proyectos en repositorios separados. Por lo que se deberá configurar el despliegue automático para indicarle la raíz del código fuente de cada proyecto (si es posible) o hacer dos folks del repositorio principal uno para la API y otro para el frontend y adaptar los directorios para poder realizar el despliegue automático.
-
-En un proyecto monolítico (tecnología servidor: Springboot, Django, Express, PHP,... con un sistema de templates propio para el frontend: Thymeleaf, jinja, ejs,...) deberá tener la siguiente estructura en el repositorio de entrega:
-
-- src
-- docs
-- README.md
