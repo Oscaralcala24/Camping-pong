@@ -3,15 +3,15 @@ import { CommonModule } from '@angular/common';
 import {MaterialModule} from './material/material.module';
 
 
-
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
   ],
   exports: [
     MaterialModule,
+    
   ]
 })
 export class CoreModule { }

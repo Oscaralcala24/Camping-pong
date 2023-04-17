@@ -1,1 +1,67 @@
-<p>registro works!</p>
+
+<div class="row my-auto py-5">
+        <div class="col-sm-8 col-lg-6 mx-auto">
+            <h4 class="fw-bold text-center">Iniciar sesión</h4>
+            <mat-divider></mat-divider>
+            
+                <form [formGroup]="registerForm" class="mx-auto my-4 row" (ngSubmit)="signUp()" novalidate>
+                    <mat-form-field appearance="fill" class="col-md-4 me-auto">
+                        <mat-label>Introduzca su nombre</mat-label>
+                        <input matInput placeholder="Antonio" formControlName="nombre" required name="nombre"> 
+                        <mat-error *ngIf="registerForm.get('nombre').hasError('required') ">El campo nombre es obligatorio</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-8 ms-auto">
+                        <mat-label>Introduzca sus apellidos</mat-label>
+                        <input matInput placeholder="Pérez Rodríguez" formControlName="apellidos" required name="apellidos"> 
+                        <mat-error *ngIf="registerForm.get('apellidos').hasError('required') ">El campo apellidos es obligatorio</mat-error>
+                    </mat-form-field> 
+                    <mat-form-field appearance="fill">
+                        <mat-label>Introduzca su dni</mat-label>
+                        <input matInput placeholder="12345678X" formControlName="dni" required name="dni">
+                        <mat-error *ngIf="registerForm.get('dni').hasError('required')">El DNI es requerido</mat-error> 
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Introduzca su nombre de usuario</mat-label>
+                        <input matInput placeholder="antoniopr3" formControlName="nickname" required name="nickname">
+                        <mat-error *ngIf="registerForm.get('nickname').hasError('required')">El nickname es requerido</mat-error> 
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Introduzca su email</mat-label>
+                        <input matInput placeholder="pat@example.com" formControlName="email" required name="email">
+                        <mat-error *ngIf="registerForm.get('email').hasError('required')">El correo electrónico es requerido</mat-error>
+                        <mat-error *ngIf="registerForm.get('email').hasError('email')">El correo electrónico no es válido</mat-error> 
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Introduzca su telefono</mat-label>
+                        <span matPrefix>+34 &nbsp;</span>
+                        <input type="tel" matInput placeholder="658736465" formControlName="telefono" name="telefono" pattern="^[0-9]{9}$">
+                        
+                        <mat-error *ngIf="registerForm.get('telefono').hasError('required')">El teléfono es requerido</mat-error>
+                        <mat-error *ngIf="registerForm.get('telefono').hasError('pattern')">El teléfono debe tener 9 dígitos</mat-error>
+                      </mat-form-field> 
+                    <mat-form-field appearance="fill">
+                        <mat-label>Introduzca su contraseña</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="contrasena" required name="contrasena">
+                        <button mat-icon-button  matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="registerForm.value.contrasena">Password must be a combination of lower-case, upper-case, numbers and at least 9 characters long</mat-error>
+                    </mat-form-field>     
+                    <mat-form-field appearance="fill">
+                        <mat-label>Confirma su contraseña</mat-label>
+                        <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="contrasena2" required name="contrasena2">
+                        <mat-error *ngIf="registerForm.get('contrasena2').hasError('required')">La confirmación de contraseña es requerida</mat-error>
+                        
+                        <button mat-icon-button  matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2" type="button">
+                        <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>     
+                       
+                    <button class="col-sm-4 col-md-2 mx-auto" [disabled]="!registerForm.valid" mat-raised-button color="accent" type="submit">
+                        Registrarse
+                    </button>
+                </form>
+        
+        </div>
+
+</div>

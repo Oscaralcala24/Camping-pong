@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 const validationToken = require('./../middleware/ValidacionToken')
-const { registrarUsuario, mostrarUsuarios, loginUsuario } = require('../controllers/UsersController');
+const { registrarUsuario, mostrarUsuarios, loginUsuario, mostrarDatosUsuario } = require('../controllers/UsersController');
 var db = mongoose.connection;
 
 
@@ -15,5 +15,6 @@ var db = mongoose.connection;
 router.post('/registro', registrarUsuario);
 router.post('/login', loginUsuario);
 router.get('/listaUsuarios',validationToken , mostrarUsuarios);
+router.get('/:id',validationToken , mostrarDatosUsuario);
 
 module.exports = router;

@@ -7,6 +7,8 @@ const registrarUsuario = async function (req, res) {
   try {
     const data = req.body
     const consultaAux = await Usuario.find({"dni": data.dni}).exec();
+    console.log(consultaAux)
+    console.log(consultaAux.length)
     if(consultaAux.length ===  0){
       await Usuario.create(data)
       const token = jwt.sign({ id: consultaAux[0]._id }, process.env.JWT_SECRET,{
@@ -39,7 +41,6 @@ const loginUsuario = async function (req, res) {
       res.send({error: "No se ha encontrado ningun usuario"})
       return
     }
-
     const checkContrasena = await bcrypt.compare(contrasena, user.contrasena)
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET,{
       expiresIn: '1d'});
@@ -61,6 +62,24 @@ const loginUsuario = async function (req, res) {
   }
 };
 
+const mostrarDatosUsuario = async function (req, res) {
+  var id = req.params.id;;
+  try{
+    consulta = await Usuario.find({_id:id}).exec()
+  }catch(err){
+    console.log(err)
+    res.json({status:"error",error:"Error"})
+  }
+  jwt.verify(req.token, process.env.JWT_SECRET , function(error, authData) {
+    if (error) {
+      res.sendStatus(403);
+    } else {
+      res.json({
+      consulta
+    });
+  }
+});
+}
 
 const mostrarUsuarios = async function (req, res) {
   let stringQuery = req.query;
@@ -86,5 +105,6 @@ const mostrarUsuarios = async function (req, res) {
 module.exports = {
     registrarUsuario,
     mostrarUsuarios,
-    loginUsuario
+    loginUsuario,
+    mostrarDatosUsuario
 };

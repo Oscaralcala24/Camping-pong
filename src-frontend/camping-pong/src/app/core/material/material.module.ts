@@ -13,8 +13,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from "@angular/material/card";
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDividerModule} from '@angular/material/divider';
-
-
+import { FormsModule } from '@angular/forms';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [],
   imports: [
@@ -30,7 +31,10 @@ import {MatDividerModule} from '@angular/material/divider';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    FormsModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule
   ],
   exports: [
     MatSlideToggleModule,
@@ -44,7 +48,10 @@ import {MatDividerModule} from '@angular/material/divider';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    FormsModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule
   ]
 })
 

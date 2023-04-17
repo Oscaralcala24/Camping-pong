@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
-
+   ciudades = ["Camping Huelva", "Camping Valencia", "Camping Barcelona", "Camping Cadiz", "Camping Sevilla"]
 }
