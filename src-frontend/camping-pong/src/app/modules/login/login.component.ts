@@ -25,9 +25,15 @@ export class LoginComponent implements OnInit {
       res => {
         console.log(res.token)
         localStorage.setItem('token', res.token)
+        
         this.router.navigate(['/'])
+        .then(() => {
+          window.location.reload();
+        });
+      
       },
       err => console.log(err),
     )
   }
+
 }

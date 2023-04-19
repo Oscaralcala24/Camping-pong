@@ -9,14 +9,20 @@ import { TaskService } from '../../service/task.service';
 export class HeaderComponent implements OnInit{
 
 constructor(public authService: AuthService,private taskService:TaskService){}
-  ngOnInit(): void {
-    const token = this.authService.getToken();
-    if(token){
-      const tokenInfo = JSON.stringify(this.taskService.DecodeToken(token));
-      console.log(tokenInfo);
-    }
-    
+  user = {
     
   }
-
+  ngOnInit(): any {
+      // const getID = this.authService.getInfoToken(this.authService.getToken());
+      // console.log(getID);
+      
+      // if(getID){
+      //     const id = getID.id;
+      //     var nombreUsuario
+      //     const user = this.authService.getUsuario(id).subscribe(async data=> console.log(data))
+          
+      //   this.authService.getUsuario(id).subscribe((data: {}) => {
+      //     this.user = data;
+      //   });
+      } 
 }

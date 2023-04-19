@@ -5,16 +5,16 @@
     </div>
     <div class="col-6  d-flex justify-content-end" >
         <nav class="navbar navbar-expand-lg" >
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-lg-0">
+                <ul class="navbar-nav me-auto mb-lg-0 ">
                   <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
-                    <li class="nav-item">
+                    <li class="nav-item ms-auto">
                       <a class="nav-link link-dark" aria-current="page" href="/login">Iniciar sesión</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item ms-auto">
                       <a class="nav-link link-dark" href="/registro">Registrarse</a>
                     </li>
                   </ng-container>
@@ -23,7 +23,7 @@
                       <a class="nav-link link-dark" aria-current="page" href="/perfil"></a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link link-dark" aria-current="page" (click)="authService.logout()">
+                      <a class="nav-link link-dark" role="button" aria-current="page" (click)="authService.logout()">
                         Cerrar sesión
                       </a>
                     </li>

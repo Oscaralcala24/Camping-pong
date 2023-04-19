@@ -7,11 +7,14 @@ const registrarUsuario = async function (req, res) {
   try {
     const data = req.body
     const consultaAux = await Usuario.find({"dni": data.dni}).exec();
-    console.log(consultaAux)
-    console.log(consultaAux.length)
+    console.log(data.nombre.trim())
+    console.log(data.apellidos.trim())
+    console.log(data.dni.trim())
+    console.log(data.nickname.trim())
+    console.log(data.email.trim())
     if(consultaAux.length ===  0){
       await Usuario.create(data)
-      const token = jwt.sign({ id: consultaAux[0]._id }, process.env.JWT_SECRET,{
+      const token = jwt.sign({ id: data._id, role: data.role }, process.env.JWT_SECRET,{
       expiresIn: '1d'});
       res.status(201).json({
         status: 'success',
@@ -42,7 +45,7 @@ const loginUsuario = async function (req, res) {
       return
     }
     const checkContrasena = await bcrypt.compare(contrasena, user.contrasena)
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET,{
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET,{
       expiresIn: '1d'});
     if(checkContrasena){
       res.send({
@@ -63,7 +66,7 @@ const loginUsuario = async function (req, res) {
 };
 
 const mostrarDatosUsuario = async function (req, res) {
-  var id = req.params.id;;
+  var id = req.params.id;
   try{
     consulta = await Usuario.find({_id:id}).exec()
   }catch(err){
