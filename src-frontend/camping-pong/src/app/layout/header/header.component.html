@@ -20,7 +20,7 @@
                   </ng-container>
                   <ng-template #loggedIn>
                     <li class="nav-item">
-                      <a class="nav-link link-dark" aria-current="page" href="/perfil"></a>
+                      <a class="nav-link link-dark" aria-current="page" href="/perfil">{{user.nickname}}</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link link-dark" role="button" aria-current="page" (click)="authService.logout()">

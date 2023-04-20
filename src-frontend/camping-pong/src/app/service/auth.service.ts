@@ -2,21 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user';
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-private URL = "http://localhost:3000"
-
+private URL = "http://localhost:3000";
+private userobj = new BehaviorSubject<any>({});
+user = this.userobj.asObservable();
   constructor(private http:HttpClient , private router : Router) { }
   signIn(user:any){
-    return this.http.post<any>(this.URL + '/usuarios/login', JSON.stringify(user),{
+    const data = this.http.post<any>(this.URL + '/usuarios/login', JSON.stringify(user),{
       headers: new HttpHeaders().set('Content-Type', 'application/json')
                                 .set('Accept', 'application/json')
                                 .set('Access-Control-Allow-Headers', 'Content-Type')
     });
+    return data;
   }
   signUp(user:any){
     user = {
@@ -65,9 +68,10 @@ private URL = "http://localhost:3000"
 
   getUsuario(id: any):Observable<User[]>{
     
-    return this.http.get<User[]>(this.URL + '/usuarios/' + id)
+    this.user = this.http.get<User[]>(this.URL + '/usuarios/' + id);
+    return this.user;
     
-
+    
   }
 
 

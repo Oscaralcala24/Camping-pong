@@ -27,10 +27,13 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', res.token)
         
         this.router.navigate(['/'])
-        .then(() => {
-          window.location.reload();
-        });
-      
+        // .then(() => {
+        //   window.location.reload();
+        // });
+        console.log("prueba2")
+        console.log(res)
+        console.log(res.data._id)
+        this.authService.getUsuario(res.data._id);
       },
       err => console.log(err),
     )

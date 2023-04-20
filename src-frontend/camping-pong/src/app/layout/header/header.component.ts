@@ -13,16 +13,24 @@ constructor(public authService: AuthService,private taskService:TaskService){}
     
   }
   ngOnInit(): any {
-      // const getID = this.authService.getInfoToken(this.authService.getToken());
-      // console.log(getID);
-      
-      // if(getID){
-      //     const id = getID.id;
-      //     var nombreUsuario
-      //     const user = this.authService.getUsuario(id).subscribe(async data=> console.log(data))
-          
-      //   this.authService.getUsuario(id).subscribe((data: {}) => {
-      //     this.user = data;
-      //   });
+      const getID = this.authService.getInfoToken(this.authService.getToken());
+      console.log(getID);
+    
+      if(getID){
+          const id = getID.id;
+          var nombreUsuario
+          const user = this.authService.getUsuario(id).subscribe(async data=> console.log(data))
+       
+        this.authService.getUsuario(id).subscribe((data: {}) => {
+          this.user = data;
+        });
       } 
+      this.authService.user.subscribe(resAux => {
+        console.log("prueba observable");
+        console.log(resAux.consulta);
+        this.user = resAux.consulta;
+        
+      }
+    );
+}
 }

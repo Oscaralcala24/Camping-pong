@@ -6,13 +6,13 @@ var bcrypt = require('bcryptjs');
 const registrarUsuario = async function (req, res) {
   try {
     const data = req.body
-    const consultaAux = await Usuario.find({"dni": data.dni}).exec();
+    const consultaAux = await Usuario.findOne({"dni": data.dni},{contrasena:0}).exec();
     console.log(data.nombre.trim())
     console.log(data.apellidos.trim())
     console.log(data.dni.trim())
     console.log(data.nickname.trim())
     console.log(data.email.trim())
-    if(consultaAux.length ===  0){
+    if(consultaAux){
       await Usuario.create(data)
       const token = jwt.sign({ id: data._id, role: data.role }, process.env.JWT_SECRET,{
       expiresIn: '1d'});
@@ -48,6 +48,7 @@ const loginUsuario = async function (req, res) {
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET,{
       expiresIn: '1d'});
     if(checkContrasena){
+      user.contrasena = null;
       res.send({
         data: user,
         token: token,
@@ -68,7 +69,7 @@ const loginUsuario = async function (req, res) {
 const mostrarDatosUsuario = async function (req, res) {
   var id = req.params.id;
   try{
-    consulta = await Usuario.find({_id:id}).exec()
+    consulta = await Usuario.findOne({_id:id},{contrasena:0}).exec()
   }catch(err){
     console.log(err)
     res.json({status:"error",error:"Error"})
@@ -77,6 +78,7 @@ const mostrarDatosUsuario = async function (req, res) {
     if (error) {
       res.sendStatus(403);
     } else {
+
       res.json({
       consulta
     });
@@ -87,7 +89,7 @@ const mostrarDatosUsuario = async function (req, res) {
 const mostrarUsuarios = async function (req, res) {
   let stringQuery = req.query;
   try{
-    consulta = await Usuario.find().exec()
+    consulta = await Usuario.findOne().exec()
   }catch(err){
     console.log(err)
     res.json({status:"error",error:"Error"})
