@@ -10,8 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
 private URL = "http://localhost:3000";
-private userobj = new BehaviorSubject<any>({});
-user = this.userobj.asObservable();
+
   constructor(private http:HttpClient , private router : Router) { }
   signIn(user:any){
     const data = this.http.post<any>(this.URL + '/usuarios/login', JSON.stringify(user),{
@@ -66,13 +65,6 @@ user = this.userobj.asObservable();
     }
   }
 
-  getUsuario(id: any):Observable<User[]>{
-    
-    this.user = this.http.get<User[]>(this.URL + '/usuarios/' + id);
-    return this.user;
-    
-    
-  }
-
+  
 
 }

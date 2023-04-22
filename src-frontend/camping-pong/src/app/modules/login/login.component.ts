@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/service/userService/user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
       email:"",
       contrasena: ""
   }
-    constructor( private authService: AuthService, private router : Router){}
+    constructor( private authService: AuthService, private router : Router ,private userService: UserService){}
   ngOnInit() {
     
   }
@@ -27,13 +28,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', res.token)
         
         this.router.navigate(['/'])
-        // .then(() => {
-        //   window.location.reload();
-        // });
-        console.log("prueba2")
-        console.log(res)
-        console.log(res.data._id)
-        this.authService.getUsuario(res.data._id);
+        .then(() => {
+          window.location.reload();
+        });
       },
       err => console.log(err),
     )
