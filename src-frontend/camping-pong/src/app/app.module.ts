@@ -10,16 +10,24 @@ import { CoreModule } from './core/core.module';
 import { ModulesModule } from './modules/modules.module';
 import { HeaderComponent } from './layout/header/header.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { TokenInterceptorService } from './service/token-interceptor.service';
-import { TaskService } from './service/task.service';
+
+import { UserService } from './service/userService/user.service';
+import { AdminSkeletonComponent } from './layout/admin-skeleton/admin-skeleton.component';
+import { HeaderAdminComponent } from './layout/header-admin/header-admin.component';
+import { FooterAdminComponent } from './layout/footer-admin/footer-admin.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     SkeletonComponent,
     FooterComponent,
     NavigationComponent,
-    HeaderComponent
+    HeaderComponent,
+    AdminSkeletonComponent,
+    HeaderAdminComponent,
+    FooterAdminComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +37,7 @@ import { TaskService } from './service/task.service';
     ModulesModule,
     HttpClientModule
   ],
-  providers: [TaskService,AuthGuard,{
+  providers: [UserService,AuthGuard,{
       provide : HTTP_INTERCEPTORS,
       useClass : TokenInterceptorService,
       multi : true

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/service/auth.service';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { Router } from '@angular/router';
 import { FormControl,FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Validate } from './validation';
@@ -58,14 +58,14 @@ export class RegistroComponent implements OnInit{
         if (res.status === 'success'){
           localStorage.setItem('token', res.token)
           this.router.navigate(['/'])
-          .then(() => {
-            window.location.reload();
-          });
+          // .then(() => {
+          //   window.location.reload();
+          // });
         }else{
           this.router.navigate(['/registro'])
-          .then(() => {
-            window.location.reload();
-          });
+          // .then(() => {
+          //   window.location.reload();
+          // });
         
           alert("error")
         }

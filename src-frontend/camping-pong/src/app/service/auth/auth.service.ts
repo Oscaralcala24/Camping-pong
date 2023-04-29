@@ -3,7 +3,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../models/user';
+import { User } from '../../models/user';
 import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,18 @@ private URL = "http://localhost:3000";
 
   constructor(private http:HttpClient , private router : Router) { }
   signIn(user:any){
+    
+    let headers = new HttpHeaders({ 'Access-Control-Allow-Origin': '*','content-type': 'application/json'}  )
     const data = this.http.post<any>(this.URL + '/usuarios/login', JSON.stringify(user),{
-      headers: new HttpHeaders().set('Content-Type', 'application/json')
-                                .set('Accept', 'application/json')
-                                .set('Access-Control-Allow-Headers', 'Content-Type')
+      "headers": headers
+    });
+    return data;
+  }
+  signInAdmin(user:any){
+    
+    let headers = new HttpHeaders({ 'Access-Control-Allow-Origin': '*','content-type': 'application/json'}  )
+    const data = this.http.post<any>(this.URL + '/usuarios/loginAdmin', JSON.stringify(user),{
+      "headers": headers
     });
     return data;
   }
@@ -52,6 +60,13 @@ private URL = "http://localhost:3000";
   logout(){
     localStorage.removeItem('token');
     this.router.navigate(['/'])
+          .then(() => {
+            window.location.reload();
+          });
+  }
+  logoutAdmin(){
+    localStorage.removeItem('token');
+    this.router.navigate(['/admin/login'])
           .then(() => {
             window.location.reload();
           });

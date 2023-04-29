@@ -41,6 +41,36 @@ const registrarCamping = async function (req, res) {
 };
 
 
+const mostrarDatosCamping = async function (req, res) {
+    let id = req.params.id;
+    try{
+      consulta = await Camping.findOne({_id:id}).exec()
+        res.status(200).json({
+                consulta
+            });
+    }catch(err){   
+        res.status(404).json({status:"error",error:"Error"})
+    }
+    
+  };
+
+
+const mostrarCampings = async function (req, res) {
+    try{
+      consulta = await Camping.find().sort({valoracion: -1}).exec()
+        res.status(200).json({
+                consulta
+            });
+    }catch(err){   
+        res.status(404).json({status:"error",error:"Error"})
+    }
+  };
+
+  
+
+
 module.exports = {
-    registrarCamping
+    registrarCamping,
+    mostrarDatosCamping,
+    mostrarCampings,
 };

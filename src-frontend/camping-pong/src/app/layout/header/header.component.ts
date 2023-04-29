@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/service/auth.service';
-import { TaskService } from '../../service/task.service';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { UserService } from 'src/app/service/userService/user.service';
+import { User } from 'src/app/models/user';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -9,31 +10,16 @@ import { UserService } from 'src/app/service/userService/user.service';
 })
 export class HeaderComponent implements OnInit{
 
-constructor(public authService: AuthService,private taskService:TaskService, private userService: UserService){
+constructor(public authService: AuthService, private userService: UserService , private router:Router){
   
 }
 
-user:any;
+user!:User
   ngOnInit(): any {
-    const getID = this.authService.getInfoToken(this.authService.getToken());
-    console.log(getID);
-  
-    if(getID){
-        const id = getID.id;
-        var nombreUsuario
-        const user = this.userService.getUsuario(id).subscribe(async data=> console.log(data))
-     
-      this.userService.getUsuario(id).subscribe((data: {}) => {
-        this.user = data;
-      });
-    } 
-    this.userService.user.subscribe(resAux => {
-      console.log("prueba observable");
-      console.log(resAux.consulta);
-      this.user = resAux.consulta;
-      
-    }
-  );
+    this.userService.dataUser.subscribe((data) =>{
+      this.user = data;
+      console.log(this.user);
+    })
 
 }
 }

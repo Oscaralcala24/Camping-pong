@@ -29,6 +29,7 @@ const registrarUsuario = async function (req, res) {
       
   }catch(err) {
     console.log(err)
+    console.log()
     res.json({status: "No se ha ingresado correctamente"})
   }
 };
@@ -39,13 +40,14 @@ const loginUsuario = async function (req, res) {
   try {
     const {email , contrasena} = req.body;
     const user = await Usuario.findOne({email: email});
-    if(!user){
+    
+    if(!user || user.role == "administrador"){
       res.status(404)
       res.send({error: "No se ha encontrado ningun usuario"})
       return
     }
     const checkContrasena = await bcrypt.compare(contrasena, user.contrasena)
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET,{
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET,{
       expiresIn: '1d'});
     if(checkContrasena){
       user.contrasena = null;
@@ -61,7 +63,38 @@ const loginUsuario = async function (req, res) {
       return
     }
   }catch(err) {
-    console.log(err)
+    
+    res.json({status: "Error en el login"})
+  }
+};
+const loginUsuarioAdministrador = async function (req, res) {
+  try {
+    const {email , contrasena} = req.body;
+    const user = await Usuario.findOne({email: email});
+    
+    if(!user || user.role == "usuario_registrado"){
+      res.status(404)
+      res.send({error: "No se ha encontrado ningun usuario"})
+      return
+    }
+    const checkContrasena = await bcrypt.compare(contrasena, user.contrasena)
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET,{
+      expiresIn: '1d'});
+    if(checkContrasena){
+      user.contrasena = null;
+      res.send({
+        data: user,
+        token: token,
+      })
+      return
+    }
+    if(!checkContrasena){
+      res.status(409);
+      res.send({error: "Contraseña invalida"});
+      return
+    }
+  }catch(err) {
+    
     res.json({status: "Error en el login"})
   }
 };
@@ -70,8 +103,9 @@ const mostrarDatosUsuario = async function (req, res) {
   var id = req.params.id;
   try{
     consulta = await Usuario.findOne({_id:id},{contrasena:0}).exec()
+    console.log(consulta)
   }catch(err){
-    console.log(err)
+    
     res.json({status:"error",error:"Error"})
   }
   jwt.verify(req.token, process.env.JWT_SECRET , function(error, authData) {
@@ -111,5 +145,6 @@ module.exports = {
     registrarUsuario,
     mostrarUsuarios,
     loginUsuario,
+    loginUsuarioAdministrador,
     mostrarDatosUsuario
 };
