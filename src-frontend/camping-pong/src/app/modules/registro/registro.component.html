@@ -1,6 +1,7 @@
+<div class="container">
 <div class="row my-auto py-5">
-    <div class="col-sm-8 col-lg-6 mx-auto">
-        <h4 class="fw-bold text-center">Iniciar sesión</h4>
+    <div class="col-sm-10 col-lg-8 mx-auto">
+        <h4 class="fw-bold text-center">Registro</h4>
         <mat-divider></mat-divider>
         
             <form [formGroup]="registerForm" class="mx-auto my-4 row" (ngSubmit)="signUp()" novalidate>
@@ -88,12 +89,17 @@
                         Las contraseñas no coinciden
                     </mat-error>
                 </mat-form-field>     
-                   
-                <button class="col-4 col-md-2 mx-auto" [disabled]="!registerForm.valid" mat-raised-button color="accent" type="submit">
+                <div class="col-md-8 row text-center mx-auto">
+        
+                <button class="col-md-8 mx-auto" [disabled]="!registerForm.valid" mat-raised-button color="accent" type="submit">
                     Registrarse
                 </button>
+                
+                </div>     
+
             </form>
     
     </div>
 
+</div>
 </div>

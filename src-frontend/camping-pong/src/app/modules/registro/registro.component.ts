@@ -57,16 +57,10 @@ export class RegistroComponent implements OnInit{
       res => {
         if (res.status === 'success'){
           localStorage.setItem('token', res.token)
+          localStorage.setItem('role', res.data.role)
           this.router.navigate(['/'])
-          // .then(() => {
-          //   window.location.reload();
-          // });
         }else{
-          this.router.navigate(['/registro'])
-          // .then(() => {
-          //   window.location.reload();
-          // });
-        
+          this.router.navigate(['/registro']) 
           alert("error")
         }
         return;

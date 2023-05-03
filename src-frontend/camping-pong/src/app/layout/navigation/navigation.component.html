@@ -1,40 +1,65 @@
-<nav class="row container mx-auto">
-  <div class="col-md-4  mx-auto">
-      <img id="imgLogo" src="../../../assets/img/Logo.png" alt="logo_grande">
-  </div>
-  <div class="col-md-6 mx-auto row d-flex align-self-center">
-    <div class="col-12">
-      <nav class="navbar navbar-expand-sm" >
-            <ul class="navbar-nav me-auto mb-lg-0 d-flex justify-content-between text-center w-100">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" routerLink="/">Camping Huelva</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" routerLink="/">Camping Valencia</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" routerLink="/">Camping Almeria</a>
-              </li>
-            </ul>
-      </nav>
+<div class="container">
 
+
+  <nav class="row ">
+    <div class="col-md-4  mx-auto">
+      <a href="/"><img id="imgLogo" src="../../../assets/images/Logo.png" alt="logo_grande"></a>
     </div>
-    <form [formGroup]="stateForm" class="w-100 col-12">
-      <mat-form-field class="w-100 " appearance="fill">
-        <mat-label>Introduce una ciudad</mat-label>
-        <input type="text"
-               matInput
-               formControlName="stateGroup"
-               [matAutocomplete]="autoGroup">
-          <mat-autocomplete #autoGroup="matAutocomplete">
-            <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter">
-              <mat-option *ngFor="let name of group.names" [value]="name">
-                {{name}}
-              </mat-option>
-          </mat-optgroup>
-        </mat-autocomplete>
-      </mat-form-field>
-    </form>
-  </div>
-  <hr>
-</nav>
+    <div class="col-md-6 mx-auto row d-flex align-self-center">
+      <div class="col-12">
+        <nav class="navbar navbar-expand-sm">
+          <ul class="navbar-nav me-auto mb-lg-0 d-flex justify-content-evenly text-center w-100">
+            <ng-container *ngIf="!authService.loggedIn(); else loggedInNav">
+              <li class="nav-item">
+                <a class="nav-link"  aria-current="page" [routerLink]="['/listado-camping']" [queryParams]="{ciudad: 'Huelva'}">Camping Huelva</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" [routerLink]="['/listado-camping']" [queryParams]="{ciudad: 'Valencia'}">Camping Valencia</a>
+              </li>
+              <li class="nav-item">
+                
+                <a class="nav-link" aria-current="page" [routerLink]="['/listado-camping']" [queryParams]="{ciudad: 'Almeria'}">Camping Almeria</a>
+              </li>
+            </ng-container>
+            <ng-template #loggedInNav>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" routerLink="/">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" routerLink="/perfil">Mi perfil</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" routerLink="/perfil/reservas/pendientes">Mis reservas</a>
+              </li>
+              
+            </ng-template>
+
+          </ul>
+        </nav>
+
+      </div>
+      <form class="d-flex m-auto mb-4 col-12 justify-content-center align-items-start">
+        <mat-form-field class="w-100">
+          <input  
+                type="search"
+                #ciudadInput
+                 placeholder="Pick one"
+                 matInput
+                 [formControl]="myControl"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <button class="mt-2" mat-button type="button" (click)="goCampingFilter(ciudadInput.value)">
+          <mat-icon>search</mat-icon>
+        </button>
+       
+        
+      </form>
+    </div>
+    <hr>
+  </nav>
+</div>

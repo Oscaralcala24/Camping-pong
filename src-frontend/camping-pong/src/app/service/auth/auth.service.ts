@@ -59,6 +59,7 @@ private URL = "http://localhost:3000";
 
   logout(){
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
     this.router.navigate(['/'])
           .then(() => {
             window.location.reload();
@@ -66,6 +67,7 @@ private URL = "http://localhost:3000";
   }
   logoutAdmin(){
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
     this.router.navigate(['/admin/login'])
           .then(() => {
             window.location.reload();

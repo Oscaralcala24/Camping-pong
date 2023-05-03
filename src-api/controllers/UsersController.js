@@ -2,16 +2,11 @@ const { compare } = require('bcryptjs');
 const Usuario = require('./../models/Usuario');
 const jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
-
+const SALT_WORK_FACTOR = 10;
 const registrarUsuario = async function (req, res) {
   try {
     const data = req.body
     const consultaAux = await Usuario.findOne({"dni": data.dni},{contrasena:0}).exec();
-    console.log(data.nombre.trim())
-    console.log(data.apellidos.trim())
-    console.log(data.dni.trim())
-    console.log(data.nickname.trim())
-    console.log(data.email.trim())
     if(consultaAux){
       await Usuario.create(data)
       const token = jwt.sign({ id: data._id, role: data.role }, process.env.JWT_SECRET,{
@@ -141,10 +136,57 @@ const mostrarUsuarios = async function (req, res) {
 }
 
 
+const updateUser = async function (req, res) {
+  try{
+    consulta = await Usuario.findByIdAndUpdate(req.params.id, req.body).exec()
+    console.log("prueba consulta")
+    console.log(consulta)
+    res.status(200);
+    res.json(
+      'Cambios confirmados'
+    );
+  }catch(err){
+    console.log(err)
+    res.json({status:"error",error:"Error"})
+  }
+  
+}
+const updatePassword = async function (req, res) {
+  try{
+    const {contrasenaActual , contrasenaNueva} = req.body;
+    console.log(contrasenaActual)
+    const user = await Usuario.findOne({_id: req.params.id});
+    const checkContrasena = await bcrypt.compare(contrasenaActual, user.contrasena)
+    if (checkContrasena){
+      // aplica una función hash al password usando la nueva salt
+      bcrypt.hash(contrasenaNueva,SALT_WORK_FACTOR, async function (err, hash) {    
+        console.log(err)  
+        console.log("Este es el hash "+hash)  
+      consulta = await Usuario.findByIdAndUpdate(req.params.id, {contrasena : hash}).exec()
+      res.status(200);
+      res.json(
+        'Cambios confirmados'
+      );
+    });
+    
+    }else{
+      res.json(
+        ' Las contraseñas no coinciden'
+      );
+    }
+  }catch(err){
+    console.log(err)
+    res.json({status:"error",error:"Error"})
+  }
+  
+}
+
 module.exports = {
     registrarUsuario,
     mostrarUsuarios,
     loginUsuario,
     loginUsuarioAdministrador,
-    mostrarDatosUsuario
-};
+    mostrarDatosUsuario,
+    updateUser,
+    updatePassword
+}

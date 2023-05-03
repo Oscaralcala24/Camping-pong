@@ -18,7 +18,6 @@ export class HeaderAdminComponent implements OnInit {
     ngOnInit(): any {
       this.userService.dataUser.subscribe((data) =>{
         this.user = data;
-        console.log(this.user);
       })
   
   }

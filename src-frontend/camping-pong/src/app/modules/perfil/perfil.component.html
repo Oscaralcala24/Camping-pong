@@ -1,0 +1,110 @@
+<div class="container">
+    <div class="row my-auto py-5">
+        <div class="col-sm-10 col-lg-8 mx-auto">
+        <h4 class="fw-bold text-center">Datos de mi cuenta</h4>
+        <mat-divider></mat-divider>
+
+        <form [formGroup]="updateDataForm" class="mx-auto my-4 row"  (ngSubmit)="actualizardatos()" novalidate>
+            <mat-form-field appearance="fill" class="col-md-4 me-auto">
+                <mat-label>Introduzca su nombre</mat-label>
+                <input matInput placeholder="Antonio" formControlName="nombre" required name="nombre" [ngModel]="this.user.nombre">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="errorHandling('nombre', 'required')">
+                    El campo nombre es requerido
+                </mat-error>
+                <mat-error *ngIf="errorHandling('nombre', 'pattern')">
+                    El campo nombre solo puede incluir letras
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="col-md-8 ms-auto">
+                <mat-label>Introduzca sus apellidos</mat-label>
+                <input matInput placeholder="Pérez Rodríguez" formControlName="apellidos" required name="apellidos" [ngModel]="this.user.apellidos"> 
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="errorHandling('apellidos', 'required')">
+                    El campo apellido es requerido
+                </mat-error> 
+                <mat-error *ngIf="errorHandling('apellidos', 'pattern')">
+                    El campo apellidos solo puede incluir letras
+                </mat-error>               
+            </mat-form-field> 
+            <mat-form-field appearance="fill">
+                <mat-label>Introduzca su dni</mat-label>
+                <input matInput placeholder="12345678X" formControlName="dni" required name="dni" [ngModel]="this.user.dni">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="errorHandling('dni', 'required')">
+                    El campo dni es requerido
+                </mat-error>
+                <mat-error *ngIf="errorHandling('dni', 'pattern')">
+                    El formato del dni no es correcto
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Introduzca su email</mat-label>
+                <input matInput placeholder="pat@example.com" formControlName="email" required name="email" [ngModel]="this.user.email">
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="errorHandling('email', 'required')">
+                    El campo email es requerido
+                </mat-error>
+                <mat-error *ngIf="errorHandling('email', 'email')">
+                    EL formato del email no es correcto
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Introduzca su telefono</mat-label>
+                <span matPrefix>+34 &nbsp;</span>
+                <input type="number" matInput placeholder="658736465" formControlName="telefono" name="telefono" pattern="^[0-9]{9}$" [ngModel]="this.user.telefono" >
+                <mat-icon matSuffix>mode_edit</mat-icon>
+                <mat-error *ngIf="errorHandling('telefono', 'pattern')">
+                    El teléfono debe ser 9 carácteres numéricos
+                </mat-error>
+                <mat-error *ngIf="errorHandling('telefono', 'required')">
+                    El teléfono es requerido
+                </mat-error>
+            </mat-form-field> 
+            <div class="col-md-8 row text-center mx-auto">
+            <button class="col-md-8 mx-auto"  mat-raised-button color="accent" type="submit">
+                Guardar cambios
+            </button>
+            
+            </div>     
+
+        </form>
+
+        <hr>
+
+        <h4 class="mt-5 fw-bold text-center">Modificar contraseña</h4>
+
+        <form [formGroup]="updatePasswordForm" class="mx-auto my-4 row" (ngSubmit)="updatePassword()" novalidate>
+            <mat-form-field appearance="fill" class="col-md-8 mx-auto">
+                <mat-label>Introduzca su contraseña actual</mat-label>
+                <input formControlName="contrasenaActual" matInput type="password" required name="contrasenaActual">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="col-md-8 mx-auto">
+                <mat-label>Introduzca su contraseña nueva</mat-label>
+                <input matInput formControlName="password"  type="password" required name="password">
+                <mat-error *ngIf="errorHandlingPassword('password', 'pattern')">
+                    La contraseña debe ser una combinacion de minúsculas, mayusculas, numeros y al menos 8 caracteres
+                </mat-error>
+                <mat-error *ngIf="errorHandlingPassword('password', 'required')">
+                    El campo contraseña es requerido
+                </mat-error>  
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="col-md-8 mx-auto">
+                <mat-label>Confirme su contraseña nueva</mat-label>
+                <input formControlName="passwordConfirm"  matInput type="password" required name="passwordConfirm">
+                <mat-error *ngIf="errorHandlingPassword('passwordConfirm', 'required')">
+                    El campo confirmar contraseña es requerido
+                </mat-error>
+                <mat-error *ngIf="errorHandlingPassword('passwordConfirm', 'MatchPassword')">
+                    Las contraseñas no coinciden
+                </mat-error>
+            </mat-form-field>
+            <div class="col-md-8 row text-center mx-auto">
+                <button class="col-md-8 mx-auto" [disabled]="!updatePasswordForm.valid" mat-raised-button color="accent" type="submit">
+                    Actualizar contraseña
+                </button>
+            </div>     
+        </form>
+    </div>
+    </div>
+</div>

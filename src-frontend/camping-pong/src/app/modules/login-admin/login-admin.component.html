@@ -1,27 +1,31 @@
 
-<div class="row my-auto py-5 text-center">
-    <div class="col-md-4 col-8 m-auto">
-        <div>
-            <h4 class="fw-bold">Iniciar sesión</h4>
+<div class="container">
+    <div class="row my-auto py-5 text-center">
+        <div class="col-sm-8 col-lg-6 mx-auto">
+            <div class="mx-auto">
+                <h4 class="fw-bold">Iniciar sesión</h4>
 
             
-                <form (submit)="signIn()" class="d-flex flex-column w-75 mx-auto my-4">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Introduzca su email</mat-label>
-                        <input matInput placeholder="pat@example.com" [(ngModel)] = "user.email" required name="email"> 
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Introduzca su contraseña</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)] = "user.contrasena" required name="contrasena">
-                        <button mat-icon-button  matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
-                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
-                    </mat-form-field>         
-                    <button mat-raised-button color="accent" type="submit">
+            <form (submit)="signIn()" class=" my-4 row text-center">
+                <mat-form-field appearance="fill" class="col-md-8 mx-auto">
+                    <mat-label>Introduzca su email</mat-label>
+                    <input matInput placeholder="pat@example.com" [(ngModel)] = "user.email" required name="email"> 
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="col-md-8 mx-auto">
+                    <mat-label>Introduzca su contraseña</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)] = "user.contrasena" required name="contrasena">
+                    <button mat-icon-button  matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>   
+                    <div class="col-md-8 row text-center mx-auto">
+                        <button mat-raised-button color="accent" type="submit" class="col-md-8 mx-auto">
                         Iniciar sesión
                     </button>
-                </form>
+                    </div>        
+            </form>
         
         </div>
     </div>
+</div>
 </div>

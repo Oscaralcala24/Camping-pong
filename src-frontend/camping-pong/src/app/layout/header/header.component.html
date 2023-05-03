@@ -1,6 +1,7 @@
-<header class="row mx-auto">
+<div class="container-fluid">
+  <header class="row">
     <div class="col-6">
-        <img id="imgLogo" src="../../../assets/img/Logo2_final.png" alt="logo_pequeno">
+        <img id="imgLogo" src="../../../assets/images/Logo2_final.png" alt="logo_pequeno">
 
     </div>
     <div class="col-6  d-flex justify-content-end" >
@@ -12,18 +13,18 @@
                 <ul class="navbar-nav me-auto mb-lg-0 ">
                   <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
                     <li class="nav-item ms-auto">
-                      <a class="nav-link link-dark" aria-current="page" href="/login">Iniciar sesión</a>
+                      <a class="nav-link link-dark text-end" aria-current="page" routerLink="/login">Iniciar sesión</a>
                     </li>
                     <li class="nav-item ms-auto">
-                      <a class="nav-link link-dark" href="/registro">Registrarse</a>
+                      <a class="nav-link link-dark text-end" href="/registro">Registrarse</a>
                     </li>
                   </ng-container>
                   <ng-template #loggedIn>
                     <li class="nav-item">
-                      <a class="nav-link link-dark" aria-current="page" href="/perfil">{{user.nickname}}</a>
+                      <a class="nav-link link-dark text-end" aria-current="page" href="/perfil">{{user.nickname || async}}</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link link-dark" role="button" aria-current="page" (click)="authService.logout()">
+                      <a class="nav-link link-dark text-end" role="button" aria-current="page" (click)="authService.logout()">
                         Cerrar sesión
                       </a>
                     </li>
@@ -33,3 +34,5 @@
           </nav>
     </div>
 </header>
+</div>
+

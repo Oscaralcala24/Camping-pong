@@ -20,6 +20,7 @@ export class LoginAdminComponent {
     this.authService.signInAdmin(this.user).subscribe(
       res => {
         localStorage.setItem('token', res.token)
+        localStorage.setItem('role', res.data.role)
         const getID = this.authService.getInfoToken(this.authService.getToken());
 
         if(getID){

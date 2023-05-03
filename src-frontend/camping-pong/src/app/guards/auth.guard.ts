@@ -9,19 +9,21 @@ import { Observable } from 'rxjs';
 })
 export class AuthGuard {
 
+    
   constructor(private authService: AuthService, private router: Router) { }
+  
   canActivate():
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+      
     if (!this.authService.loggedIn()) {
   
-      this.router.navigate(['/login']);
+      this.router.createUrlTree(['/login']);
       return false;
     }
-    // logged in, so return true
-    this.authService.loggedIn();
+
     return true;
   }
 }

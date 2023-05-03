@@ -10,13 +10,14 @@ import { CampingService } from 'src/app/service/campingService/camping.service';
 export class HomeComponent implements OnInit {
   constructor(private campingService : CampingService){}
   campings: any[] = [];
+
   ngOnInit(): void {
-    this.campingService.getAllCamping().subscribe((data) =>{
+    this.campingService.getMejoresCamping().subscribe((data) =>{
       this.campings = data.consulta;
       console.log(this.campings);
 
     })
-    
+
   }
   
 }

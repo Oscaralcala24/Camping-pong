@@ -1,32 +1,26 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, CanActivate,Route, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable, map, tap } from 'rxjs';
 import { UserService } from '../service/userService/user.service';
-import { AuthService } from '../service/auth/auth.service';
-import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RolGuard implements CanActivate {
-  user!:User
-  constructor(private userService: UserService,private router: Router,private authService: AuthService){
-    this.userService.dataUser.subscribe((data) =>{
-      this.user = data;
-      console.log(this.user);
-    })
-  }
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  constructor(private userService: UserService, private router:Router){}
 
-      if (this.user.role === 'administrador' && this.authService.loggedIn()) {
-        return true;
-      }else{
-      this.router.navigate(["/"])
-      return false;
-      }
+  canActivate(route: Route): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.hasRole(route);
+  }
+
+  hasRole(route:Route | ActivatedRouteSnapshot){
     
+    const allowedRoles = route.data?.['allowedRoles']
+    
+    return this.userService.dataUser.pipe(
+      map((user) => Boolean(allowedRoles.includes(localStorage.getItem("role")))),
+      tap((hasRole) => hasRole === false && this.router.navigate(["/"]))
+    )
   }
   
 }

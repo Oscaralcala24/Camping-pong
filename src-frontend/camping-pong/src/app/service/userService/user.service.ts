@@ -12,16 +12,7 @@ export class UserService implements OnInit {
   private URL = "http://localhost:3000/usuarios/";
   
   
-  private userobj$ = new BehaviorSubject<User>({
-    nombre: "",
-    apellidos: "",
-    dni: "",
-    nickname: "",
-    email: "",
-    telefono: null,
-    role: ""
-  });
-  
+  private userobj$ = new BehaviorSubject<User>(null);
   constructor(private http:HttpClient , private router : Router , private authService: AuthService) {}
   ngOnInit(): void {
     
@@ -36,11 +27,14 @@ export class UserService implements OnInit {
   }
 
   setUser(user:User) : void{
-    console.log(user)
     this.userobj$.next(user);
   }
-
-
+  updateUser(user:any, id:string) : Observable<any>{
+    return this.http.put<User[]>(this.URL +'updateUser/' +id, user)
+  }
+  updatePassword(user:any, id:string) : Observable<any>{
+    return this.http.put<User[]>(this.URL +'updatePassword/' +id, user)
+  }
 }
 
 

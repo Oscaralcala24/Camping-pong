@@ -1,20 +1,20 @@
 <div class="container mx-auto">
-    <div id="carouselExampleControls" class="carousel slide h-50" data-bs-ride="carousel">
+  <div id="carouselExampleControls" class="carousel slide h-50" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="../../../assets/img/carrusel_auto_x2-prueba.jpg.png" class="d-block w-100" alt="...">
+        <img src="../../../assets/images/carrusel.png" class="d-block w-100" alt="...">
       </div>
       <div class="carousel-item">
-        <img src="../../../assets/img/.PNG" class="d-block w-100" alt="...">
+        <img src="../../../assets/images/carousel2.png" class="d-block w-100" alt="...">
       </div>
       <div class="carousel-item">
-        <img src="../../../assets/img/.PNG" class="d-block w-100" alt="...">
+        <img src="../../../assets/images/carousel3.png" class="d-block w-100" alt="...">
       </div>
       <div class="carousel-item">
-        <img src="../../../assets/img/.PNG" class="d-block w-100" alt="...">
+        <img src="../../../assets/images/carousel4.png" class="d-block w-100" alt="...">
       </div>
       <div class="carousel-item">
-        <img src="../../../assets/img/.PNG" class="d-block w-100" alt="...">
+        <img src="../../../assets/images/carousel5.png" class="d-block w-100" alt="...">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -26,32 +26,34 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
-  <div class="mt-5">
-      <h4 class="text-center">Mejores valorados</h4>
-      <hr>
+  <div class="mt-5 row">
+    <h4 class="text-center">Mejores valorados</h4>
+    <hr>
 
-      <div class="row camping">
-        <div class="col-3 my-3">
-            <img src="../../../assets/img/Logo.png" alt="">
+    <div class="row camping col-10 col-sm-12 mx-auto">
+      <div class="col-8 mx-auto col-md-3 my-md-3 mt-3">
+        <img src="../../../assets/images/Logo.png" alt="">
+      </div>
+      <div class="col-12 mx-auto col-md-9 row mt-3" *ngFor="let camping of campings">
+        <div class="col-12 col-sm-9 d-flex">
+          <h3>{{camping.nombre}}</h3>
+            <star-rating class="text-left ms-4 mt-1" [showHalfStars]="true" [readOnly]="true" staticColor="ok" size="medium"
+              [starType]="'svg'" rating="{{camping.valoracion}}"></star-rating>
+          
         </div>
-        <div class="col-9 row mt-3" *ngFor="let camping of campings">
-            <h3 class="col-3">{{camping.nombre}}</h3>
-            <p class="col-6">
-      
-              {{camping.valoracion}}
-            </p>
-            <p class="col-3">{{camping.ciudad}}</p>
-            <p class="col-12">{{camping.descripcion}}</p>
-            <a class="col-6"> Campings {{camping.ciudad}}</a>
-            <div class="col-6">
-                <button>Consultar disponibilidad </button>
-            </div>
+
+
+        <h4 class="col-12 col-sm-3 text-center mt-1 mb-0">{{camping.ciudad}}</h4>
+        <p class="col-12 col-md-10 my-4 mx-auto descripcion">{{camping.descripcion}}</p>
+        <a class="col-6 "> Campings {{camping.ciudad}}</a>
+        <div class="col-6 mb-3 d-flex justify-content-center">
+          <button mat-flat-button color="accent">Consultar disponibilidad </button>
         </div>
+      </div>
     </div>
-<!-- 
+    <!-- 
       <app-card-camping *ngFor="let camping of campings">
 
       </app-card-camping> -->
   </div>
 </div>
-

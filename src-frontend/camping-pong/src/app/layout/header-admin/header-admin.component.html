@@ -1,6 +1,6 @@
 <header class="row mx-auto">
   <div class="col-6">
-      <img id="imgLogo" src="../../../assets/img/Logo2_final.png" alt="logo_pequeno">
+      <img id="imgLogo" src="../../../assets/images/Logo2_final.png" alt="logo_pequeno">
 
   </div>
   <div class="col-6  d-flex justify-content-end" >
@@ -15,10 +15,10 @@
                 </ng-container>
                 <ng-template #loggedIn>
                   <li class="nav-item">
-                    <a class="nav-link link-dark" aria-current="page" href="/perfil">{{user.nickname}}</a>
+                    <a class="nav-link link-dark text-end" aria-current="page" routerLink="/perfil">{{user.nickname || async}}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link link-dark" role="button" aria-current="page" (click)="authService.logoutAdmin()">
+                    <a class="nav-link link-dark text-end" role="button" aria-current="page" (click)="authService.logoutAdmin()">
                       Cerrar sesión
                     </a>
                   </li>
@@ -30,7 +30,7 @@
 </header>
 <nav class="col-12 row container mx-auto">
         <div class="col-md-4 text-center  mx-auto">
-            <img id="imgLogo2" src="../../../assets/img/Logo.png" alt="logo_grande">
+            <img id="imgLogo2" src="../../../assets/images/Logo.png" alt="logo_grande">
             
         </div>
         <h3 class="text-center font-weight-bold">PANEL ADMINISTRADOR</h3>

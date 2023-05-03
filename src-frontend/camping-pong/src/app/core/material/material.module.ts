@@ -16,6 +16,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import { FormsModule } from '@angular/forms';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatSelectModule} from '@angular/material/select';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -34,7 +36,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDividerModule,
     FormsModule,
     MatAutocompleteModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   exports: [
     MatSlideToggleModule,
@@ -51,7 +54,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDividerModule,
     FormsModule,
     MatAutocompleteModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ]
 })
 
