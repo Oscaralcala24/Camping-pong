@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AuthService } from '../auth/auth.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,6 +35,18 @@ export class UserService implements OnInit {
   }
   updatePassword(user:any, id:string) : Observable<any>{
     return this.http.put<User[]>(this.URL +'updatePassword/' +id, user)
+  }
+
+  getAllUsers() : Observable<any>{
+    return this.http.get<any>(this.URL+ "listaUsuarios")
+  }
+
+  deleteUser(id:string) : Observable<User>{
+    return this.http.delete<any>(this.URL + 'borrar/'+id);
+  }
+
+  generatePassword(id:string,email:string) : Observable<any>{
+    return this.http.put<User[]>(this.URL +'generarContrasena', {_id:id,email:email});
   }
 }
 

@@ -6,11 +6,11 @@ var Reserva = require('../models/Reserva.js');
 
 var detalleReservaSchema = new Schema({
     id_reserva: [{
-        type: Schema.ObjectId,
+        type: String,
         ref: 'Reserva'
     }],
     detalle :[{type: Boolean}]
 })
 
 
-module.exports = mongoose.model('Precio', precioSchema);
+module.exports = mongoose.model('Detalle-Reserva', detalleReservaSchema);

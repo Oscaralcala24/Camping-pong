@@ -6,18 +6,18 @@ var Usuario = require('../models/Usuario.js');
 var Parcela = require('../models/Parcela.js');
 
 var reservaSchema = new Schema({
-    id_camping: [{
-        type: Schema.ObjectId,
+    id_camping: {
+        type: String,
         ref: 'Camping'
-    }],
-    id_usuario: [{
-        type: Schema.ObjectId,
+    },
+    id_usuario: {
+        type: String,
         ref: 'Usuario'
-    }],
-    id_parcela: [{
-        type: Schema.ObjectId,
+    },
+    id_parcela: {
+        type: String,
         ref: 'Parcela'
-    }],
+    },
     fecha_pago: { type: Date, default: Date.now()},
     fecha_entrada: { type: Date, required: true},
     fecha_salida: { type: Date, required: true},
@@ -29,4 +29,4 @@ var reservaSchema = new Schema({
 })
 
 
-module.exports = mongoose.model('Precio', precioSchema);
+module.exports = mongoose.model('Reserva', reservaSchema);

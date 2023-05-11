@@ -1,1 +1,42 @@
-<p>lista-camping-admin works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10 mx-auto row">
+            <h5 class="col-6" type="button" routerLink="/admin/dashboard">
+                <mat-icon>keyboard_return</mat-icon>
+                Volver Atras
+            </h5>
+            <div class="col-6 d-flex justify-content-end">
+                <button mat-flat-button color="accent" routerLink="/admin/agregar-camping">
+                    <mat-icon>add</mat-icon>
+                    Agregar camping
+                </button>
+            </div>
+            <h4 class="col-12 fw-bold text-center my-4">Lista de campings</h4>
+            <mat-form-field class="col-md-8 col-12 mx-auto">
+                <input type="text" placeholder="Busca por nombre, ciudad o region" matInput [(ngModel)]="filterText" name="filterText">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row text-center justify-content-center tabla">
+        <div class="col-12 row pt-4 encabezado mb-4">
+            <h3 class="col-5 col-sm-4 bg-light py-3 mb-0 text-break">Nombre camping</h3>
+            <h3 class="col-3 bg-light py-3 mb-0 text-break">Region</h3>
+            <h3 class="col-3 bg-light py-3 mb-0 text-break">Ciudad</h3>
+        </div>
+        <div class="col-12 mb-4 row encabezado " *ngFor="let camping of campings | filter: filterText | paginate : { itemsPerPage:10,currentPage:p}">
+            <p class="col-5 col-sm-4  text-bold text-break">{{camping.nombre}}</p>
+            <p class="col-3 text-break">{{camping.region}}</p>
+            <p class="col-3 text-break">{{camping.ciudad}}</p>
+            <div class="col-1 d-flex justify-content-center align-items-start">
+                <p mat-button [matMenuTriggerFor]="menu"><mat-icon >settings</mat-icon></p>
+                    <mat-menu #menu="matMenu" xPosition="after">
+                    <a mat-menu-item routerLink="/admin/lista-camping/modificar">Modificar datos</a>
+                    <button mat-menu-item id={{camping._id}}
+                    (click)="openModal('400ms', '300ms', $event)"><mat-icon id={{camping._id}}
+                        >delete</mat-icon></button>
+                    </mat-menu>
+            </div>
+        </div>
+        <pagination-controls  (pageChange)="p = $event"></pagination-controls>
+    </div>
+</div>

@@ -1,1 +1,44 @@
-<p>lista-usuarios-admin works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10 mx-auto row">
+
+
+            <h5 class="col-6" type="button" routerLink="/admin/dashboard">
+                <mat-icon>keyboard_return</mat-icon>
+                Volver Atras
+            </h5>
+            <div class="col-6 d-flex justify-content-end">
+                <button mat-flat-button color="accent">
+                    <mat-icon>add</mat-icon>
+                    Crear usuario
+                </button>
+            </div>
+            <h4 class="col-12 fw-bold text-center my-4">Lista de usuarios</h4>
+            <mat-form-field class="col-md-8 col-12 mx-auto">
+                <input type="text" placeholder="Busca por nombre" matInput [(ngModel)]="filterText" name="filterText">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row text-center justify-content-center tabla">
+        <div class="col-12 row pt-4 encabezado mb-4">
+            <h3 class="col-3 bg-light py-3 mb-0 text-break">Dni</h3>
+            <h3 class="col-4 bg-light py-3 mb-0 text-break">Nombre y apellidos</h3>
+            <h3 class="col-4 bg-light py-3 mb-0 text-break">Email</h3>
+        </div>
+        <div class="col-12 row encabezado mb-4" *ngFor="let usuario of usuarios | filterUser: filterText | paginate : { itemsPerPage:10,currentPage:p}">
+            <p class="col-3 text-break">{{usuario.dni}}</p>
+            <p class="col-4 text-break">{{usuario.nombre}} {{usuario.apellidos}}</p>
+            <p class="col-4 text-break">{{usuario.email}}</p>
+            <div class="col-1 d-flex justify-content-center align-items-start">
+                <p mat-button [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon></p>
+                <mat-menu #menu="matMenu" xPosition="after">
+                    <a mat-menu-item routerLink="/admin/lista-usuarios/modificar/{{usuario._id}}"><span>Ver perfil</span></a>
+                    <button mat-menu-item id={{usuario._id}} (click)="openModalContrasena('400ms', '300ms', $event)"><span id={{usuario._id}}>Cambiar contraseña</span></button>
+                    <button mat-menu-item id={{usuario._id}} (click)="openModal('400ms', '300ms', $event)"><mat-icon id={{usuario._id}}>delete</mat-icon></button>
+                </mat-menu>
+            </div>
+        </div>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        
+    </div>
+</div>

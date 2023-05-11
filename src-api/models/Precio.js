@@ -9,11 +9,11 @@ var precioSchema = new Schema({
         enum: ['Baja', 'Media', 'Alta'],
         required: true
     },
-    id_camping: [{
-        type: Schema.ObjectId,
+    id_camping: {
+        type:String,
         ref: 'Camping',
         default: null
-    }],
+    },
     fecha_inicio: { type: Date, required: true},
     fecha_fin: { type: Date, required: true},
     detalle_precio: [{ type: String, required: true }]

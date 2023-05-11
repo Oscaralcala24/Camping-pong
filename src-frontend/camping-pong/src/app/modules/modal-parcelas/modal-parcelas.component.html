@@ -1,0 +1,27 @@
+<h1 mat-dialog-title align="center">Añadir parcelas</h1>
+<div mat-dialog-content class="align-items-center" align="center">
+    <h3>Selecciona imagen del plano</h3>
+
+    <div class="mb-4">
+        <input type="file" name="" id="file" (change)="selectFile($event)" />
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+        
+        <mat-form-field appearance="fill" class="mx-3">
+            <mat-label>Tamaño parcela</mat-label>
+            <mat-select [(ngModel)]="selectedValue" name="food">
+              <mat-option *ngFor="let tamano of tamanos" [value]="tamano.nombre">
+                {{tamano.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        <button mat-flat-button (click)="guardarParcela()" [disabled]="!selectedValue" color="accent" cdkFocusInitial>Introducir parcela</button>
+        <button mat-flat-button (click)="Edit()"  color="accent" cdkFocusInitial>Editar</button>
+    </div>
+    <canvas id="canvas" #myCanvas width="1280" height="720" style="border: 1px solid black; "></canvas>
+</div>
+<div mat-dialog-actions class="mt-3 justify-content-evenly">
+
+    <button mat-stroked-button color="primary" mat-dialog-close>Cancelar</button>
+    <button mat-flat-button color="accent" (click)="confirmParcelas()" cdkFocusInitial>Aceptar</button>
+</div>

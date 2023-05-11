@@ -18,6 +18,8 @@ import { UserService } from './service/userService/user.service';
 import { AdminSkeletonComponent } from './layout/admin-skeleton/admin-skeleton.component';
 import { HeaderAdminComponent } from './layout/header-admin/header-admin.component';
 import { FooterAdminComponent } from './layout/footer-admin/footer-admin.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +31,6 @@ import { FooterAdminComponent } from './layout/footer-admin/footer-admin.compone
     AdminSkeletonComponent,
     HeaderAdminComponent,
     FooterAdminComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -39,13 +40,14 @@ import { FooterAdminComponent } from './layout/footer-admin/footer-admin.compone
     CoreModule,
     ModulesModule,
     HttpClientModule,
+    NgxPaginationModule,
     StarRatingModule.forRoot(),
   ],
   providers: [UserService,AuthGuard,{
       provide : HTTP_INTERCEPTORS,
       useClass : TokenInterceptorService,
       multi : true
-    }    
+    }
   ],
   bootstrap: [AppComponent],
 })

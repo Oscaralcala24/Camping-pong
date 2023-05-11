@@ -1,16 +1,18 @@
 <div class="container">
     <div class="row">
         <div class="col-12 row ">
-            <h3 class="col-5">Campings en <strong>{{ciudadActual}}</strong> - Descubra las mejores ofertas</h3>
+            <p class="col-5">Campings en <strong>{{ciudadActual}}</strong> - Descubra las mejores ofertas</p>
 
             <nav class="col-5 ms-auto text-end">
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-sliders2" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5ZM12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5Zm-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5ZM1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8Zm9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5Zm1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5Z"/>
-                      </svg>
-                      Filtro
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        class="bi bi-sliders2" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5ZM12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5Zm-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5ZM1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8Zm9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5Zm1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5Z" />
+                    </svg>
+                    Filtro
                 </button>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel">
@@ -87,31 +89,32 @@
                 </div>
             </nav>
         </div>
-
-
-
     </div>
-    <div class="row mt-5 camping col-10 col-sm-12 mx-auto">
-        <div class="col-8 mx-auto col-md-3 my-md-3 mt-3">
-          <img src="../../../assets/images/Logo.png" alt="">
-        </div>
-        <div class="col-12 mx-auto col-md-9 row mt-3" *ngFor="let camping of campings">
-          <div class="col-12 col-sm-9 d-flex">
+    <div class="row mt-5 camping col-10 col-sm-12 mx-auto d-flex align-items-center"
+        *ngFor="let camping of campings | paginate : { itemsPerPage:10,currentPage:p}">
+        <div class=" col-8 mx-auto col-md-3 my-md-3 mt-3">
+        <img [src]="camping.imagenes[0]" alt="">
+    </div>
+    <div class="col-12 mx-auto col-md-9 row mt-3">
+        <div class="col-12 col-sm-9 d-flex">
             <h3>{{camping.nombre}}</h3>
-              <star-rating class="text-left ms-4 mt-1" [showHalfStars]="true" [readOnly]="true" staticColor="ok" size="medium"
-                [starType]="'svg'" rating="{{camping.valoracion}}"></star-rating>
-            
-          </div>
-  
-  
-          <h4 class="col-12 col-sm-3 text-center mt-1 mb-0">{{camping.ciudad}}</h4>
-          <p class="col-12 col-md-10 my-4 mx-auto descripcion">{{camping.descripcion}}</p>
-          <a class="col-6 "> Campings {{camping.ciudad}}</a>
-          <div class="col-6 mb-3 d-flex justify-content-center">
-            <button mat-flat-button color="accent">Consultar disponibilidad </button>
-          </div>
+            <star-rating class="text-left ms-4 mt-1 " [showHalfStars]="true" [readOnly]="true" staticColor="ok"
+                size="medium" [starType]="'svg'" rating="{{camping.valoracion}}"></star-rating>
+
         </div>
-      </div>
+
+
+        <h4 class="col-12 col-sm-3 text-center mt-1 mb-0">{{camping.ciudad}}</h4>
+        <p class="col-12 col-md-10 my-4 mx-auto descripcion">{{camping.descripcion}}</p>
+        <a class="col-6 "> Campings {{camping.ciudad}}</a>
+        <div class="col-6 mb-3 d-flex justify-content-center">
+            <button mat-flat-button color="accent">Consultar disponibilidad </button>
+        </div>
+    </div>
+</div>
+<div class="row text-center">
+    <pagination-controls class="mt-4" (pageChange)="p = $event"></pagination-controls>
+</div>
 
 
 

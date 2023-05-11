@@ -8,16 +8,7 @@ import { Camping } from 'src/app/models/camping';
 })
 export class CampingService {
   private URL = "http://localhost:3000/camping/";
-  private campingobj$ = new BehaviorSubject<Camping>({
-    nombre: "",
-    descripcion:"",
-    region:"",
-    ciudad:"",
-    ubicacion: "",
-    valoracion:null,
-    telefono:null,
-    email:"",
-  });
+  private campingobj$ = new BehaviorSubject<Camping>(null);
   constructor(private http:HttpClient , private router : Router ) { }
 
   getCamping(id) : Observable<any>{
@@ -26,21 +17,28 @@ export class CampingService {
   getListaCamping(queryParams) : Observable<any>{
     console.log(queryParams);
     
-    return this.http.get<any>(this.URL + '/listaCampings',{params:queryParams})
+    return this.http.get<any>(this.URL + 'listaCampings',{params:queryParams})
   }
   getMejoresCamping() : Observable<any>{
-    return this.http.get<any>(this.URL + '/mejoresCamping')
+    return this.http.get<any>(this.URL + 'mejoresCamping')
   }
   getCiudadesDisponibles() : Observable<any>{
-    return this.http.get<any>(this.URL + '/ciudadesDisponibles')
+    return this.http.get<any>(this.URL + 'ciudadesDisponibles')
   }
 
   get dataCamping() : Observable<Camping>{
     return this.campingobj$.asObservable();
   }
 
-  getCampingdata(camping:Camping) : void{
-    console.log(camping)
+  setCampingdata(camping:Camping) : void{
     this.campingobj$.next(camping);
+  }
+  deleteCamping(id:string) : Observable<Camping>{
+    return this.http.delete<any>(this.URL + 'borrar/'+id);
+  }
+
+  addCamping(Camping:FormData) : Observable<any>{
+    console.log(Camping)
+    return this.http.post<FormData>(this.URL + 'agregarCamping', Camping);
   }
 }

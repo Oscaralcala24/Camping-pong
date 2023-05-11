@@ -5,12 +5,15 @@ var Camping = require('../models/Camping.js');
 var Usuario = require('../models/Usuario.js');
 
 var parcelaSchema = new Schema({
-    id_camping: [{
+    id_camping: {
         type: String,
         ref: 'Camping'
+    },
+    coordenadas:[{
+        x: Number, 
+        y: Number 
     }],
-    num_parcela: { type: Number, required: true },
-    tamaño:{
+    tamano:{
         type: String,
         enum: ['Pequeña', 'Mediana', 'Grande'],
         required: true

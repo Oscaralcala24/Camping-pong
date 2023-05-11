@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var db = mongoose.connection;
 var bcrypt = require('bcryptjs');
+require('dotenv').config();
 const SALT_WORK_FACTOR = 10;
 
 

@@ -30,11 +30,11 @@
     <h4 class="text-center">Mejores valorados</h4>
     <hr>
 
-    <div class="row camping col-10 col-sm-12 mx-auto">
-      <div class="col-8 mx-auto col-md-3 my-md-3 mt-3">
-        <img src="../../../assets/images/Logo.png" alt="">
+    <div class="row camping col-10 col-sm-12  mx-auto" *ngFor="let camping of campings">
+      <div class="col-8 mx-auto col-md-4 col-lg-3 mt-md-0 mt-3 d-flex align-items-center">
+        <img [src]="camping.imagenes[0]" class="">
       </div>
-      <div class="col-12 mx-auto col-md-9 row mt-3" *ngFor="let camping of campings">
+      <div class="col-12 mx-auto col-md-8 col-lg-9 row mt-3" >
         <div class="col-12 col-sm-9 d-flex">
           <h3>{{camping.nombre}}</h3>
             <star-rating class="text-left ms-4 mt-1" [showHalfStars]="true" [readOnly]="true" staticColor="ok" size="medium"

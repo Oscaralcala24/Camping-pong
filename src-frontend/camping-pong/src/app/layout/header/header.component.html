@@ -16,12 +16,12 @@
                       <a class="nav-link link-dark text-end" aria-current="page" routerLink="/login">Iniciar sesión</a>
                     </li>
                     <li class="nav-item ms-auto">
-                      <a class="nav-link link-dark text-end" href="/registro">Registrarse</a>
+                      <a class="nav-link link-dark text-end" routerLink="/registro">Registrarse</a>
                     </li>
                   </ng-container>
                   <ng-template #loggedIn>
                     <li class="nav-item">
-                      <a class="nav-link link-dark text-end" aria-current="page" href="/perfil">{{user.nickname || async}}</a>
+                      <a class="nav-link link-dark text-end" aria-current="page" routerLink="/perfil">{{user.nickname || async}}</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link link-dark text-end" role="button" aria-current="page" (click)="authService.logout()">

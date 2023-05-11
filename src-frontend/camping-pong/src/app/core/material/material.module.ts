@@ -1,7 +1,3 @@
-
-
-
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -17,6 +13,10 @@ import { FormsModule } from '@angular/forms';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [],
@@ -30,14 +30,18 @@ import {MatSelectModule} from '@angular/material/select';
     MatFormFieldModule,
     MatCardModule,
     MatCardModule,
-    MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
     MatDividerModule,
     FormsModule,
+    FormsModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule,
+    MatMenuModule,
+    MatChipsModule,
+    MatTabsModule
   ],
   exports: [
     MatSlideToggleModule,
@@ -48,14 +52,16 @@ import {MatSelectModule} from '@angular/material/select';
     MatFormFieldModule,
     MatCardModule,
     MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatCheckboxModule,
     MatDividerModule,
     FormsModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule,
+    MatMenuModule,
+    MatChipsModule,
+    MatTabsModule
   ]
 })
 

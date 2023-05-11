@@ -1,0 +1,98 @@
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-10 mx-auto row">
+
+
+            <div class="col-12 ">
+                <h5 class="col-6" type="button" routerLink="/admin/lista-usuarios">
+                    <mat-icon>keyboard_return</mat-icon>
+                    Volver Atras
+                </h5>
+            </div>
+            <div class="col-12">
+                <mat-tab-group fitInkBarToContent dynamicHeight>
+                    <mat-tab label="Datos de la cuenta"><mat-divider></mat-divider>
+                        <div class="row mt-5">
+                            <div class="col-10 mx-auto">
+                                <form [formGroup]="updateDataForm" class="mx-auto col-12  row"
+                                    (ngSubmit)="actualizardatos()" novalidate>
+                                    <mat-form-field appearance="fill" class="col-md-4 me-auto">
+                                        <mat-label>Introduzca su nombre</mat-label>
+                                        <input matInput placeholder="Antonio" formControlName="nombre" required
+                                            name="nombre" [ngModel]="this.user.nombre">
+                                        <mat-icon matSuffix>mode_edit</mat-icon>
+                                        <mat-error *ngIf="errorHandling('nombre', 'required')">
+                                            El campo nombre es requerido
+                                        </mat-error>
+                                        <mat-error *ngIf="errorHandling('nombre', 'pattern')">
+                                            El campo nombre solo puede incluir letras
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="fill" class="col-md-8 ms-auto">
+                                        <mat-label>Introduzca sus apellidos</mat-label>
+                                        <input matInput placeholder="Pérez Rodríguez" formControlName="apellidos"
+                                            required name="apellidos" [ngModel]="this.user.apellidos">
+                                        <mat-icon matSuffix>mode_edit</mat-icon>
+                                        <mat-error *ngIf="errorHandling('apellidos', 'required')">
+                                            El campo apellido es requerido
+                                        </mat-error>
+                                        <mat-error *ngIf="errorHandling('apellidos', 'pattern')">
+                                            El campo apellidos solo puede incluir letras
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Introduzca su dni</mat-label>
+                                        <input matInput placeholder="12345678X" formControlName="dni" required
+                                            name="dni" [ngModel]="this.user.dni">
+                                        <mat-icon matSuffix>mode_edit</mat-icon>
+                                        <mat-error *ngIf="errorHandling('dni', 'required')">
+                                            El campo dni es requerido
+                                        </mat-error>
+                                        <mat-error *ngIf="errorHandling('dni', 'pattern')">
+                                            El formato del dni no es correcto
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Introduzca su email</mat-label>
+                                        <input matInput placeholder="pat@example.com" formControlName="email" required
+                                            name="email" [ngModel]="this.user.email">
+                                        <mat-icon matSuffix>mode_edit</mat-icon>
+                                        <mat-error *ngIf="errorHandling('email', 'required')">
+                                            El campo email es requerido
+                                        </mat-error>
+                                        <mat-error *ngIf="errorHandling('email', 'email')">
+                                            EL formato del email no es correcto
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Introduzca su telefono</mat-label>
+                                        <span matPrefix>+34 &nbsp;</span>
+                                        <input type="number" matInput placeholder="658736465" formControlName="telefono"
+                                            name="telefono" pattern="^[0-9]{9}$" [ngModel]="this.user.telefono">
+                                        <mat-icon matSuffix>mode_edit</mat-icon>
+                                        <mat-error *ngIf="errorHandling('telefono', 'pattern')">
+                                            El teléfono debe ser 9 carácteres numéricos
+                                        </mat-error>
+                                        <mat-error *ngIf="errorHandling('telefono', 'required')">
+                                            El teléfono es requerido
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <div class="col-md-8 row text-center mx-auto">
+                                        <button class="col-md-8 mx-auto" mat-raised-button color="accent" type="submit">
+                                            Guardar cambios
+                                        </button>
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Historico reservas"><mat-divider></mat-divider> Content 2 </mat-tab>
+
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+
+</div>

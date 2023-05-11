@@ -1,0 +1,9 @@
+<h1 mat-dialog-title align="center">Borrar camping</h1>
+  <div mat-dialog-content class="align-items-center" align="center"> 
+    ¿Estás seguro de que desea eliminar este Camping?
+  </div>
+  <div mat-dialog-actions class="mt-3 justify-content-evenly" >
+   
+    <button mat-stroked-button color="primary" mat-dialog-close>Cancelar</button>
+    <button mat-flat-button color="warn"  (click)="confirmDelete()" cdkFocusInitial>Eliminar</button>
+  </div>
