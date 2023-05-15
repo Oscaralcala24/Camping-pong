@@ -6,8 +6,11 @@ import * as L from 'leaflet';
 import { Camping } from 'src/app/models/camping';
 import { CampingService } from 'src/app/service/campingService/camping.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ModalParcelasComponent } from '../modal-parcelas/modal-parcelas.component';
+
 import { Router } from '@angular/router';
+import { ModalParcelasComponent } from '../modal-parcelas/modal-parcelas.component';
+
+
 
 @Component({
   selector: 'app-agregar-camping',
@@ -95,6 +98,7 @@ ciudades = {
   imagenesArray:string [] = [];
   comunidadSeleccionada: string;
   dialogRef: MatDialogRef<ModalParcelasComponent>;
+  rows: FormArray;
   parcelas:[] = [];
   serviciosPrincipales: any[] = [
     { nombre: 'Piscina', disponible: false },
@@ -173,6 +177,12 @@ ciudades = {
       imagenes: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       telefono: new FormControl('', [Validators.pattern("^[0-9]{9}$"), Validators.required]),
+      fechaTBajaInicio: ['', Validators.required],
+      fechaTBajaFin: ['', Validators.required],
+      fechaTMediaFin: ['', Validators.required],
+      fechaTMediaInicio: ['', Validators.required],
+      fechaTAltaInicio: ['', Validators.required],
+      fechaTAltaFin: ['', Validators.required],
       arrayService: this.fb.array([{ nombre: 'Piscina', disponible: false },
       { nombre: 'Barbacoa', disponible: false  },
       { nombre: 'Supermercado', disponible: false},
@@ -180,11 +190,18 @@ ciudades = {
       { nombre: 'Wifi', disponible: false },
       { nombre: 'Gimnasio', disponible: false },
       { nombre: 'Se admiten mascotas', disponible: false },
-      { nombre: 'Medico', disponible: false}])
+      { nombre: 'Medico', disponible: false}]),
       
-    });
-  }
+        });
 
+        this.rows = this.fb.array([]);
+  }
+  // fechaTBajaInicio:Date;
+  // fechaTBajaFin:Date;
+  // fechaTMediaInicio:Date;
+  // fechaTMediaFin:Date;
+  // fechaTAltaInicio:Date;
+  // fechaTAltaFin:Date;
   onCheckboxChange(event: any) {
     const formArray: FormArray = this.campingForm.get('arrayService') as FormArray;
     for (let index = 0; index < formArray.length; index++) {
@@ -212,7 +229,7 @@ ciudades = {
 
 
   ngOnInit() {
-    
+    this.campingForm.addControl('rows', this.rows);
   }
   //--------------MAPA---------------
     map: L.Map;
@@ -237,8 +254,10 @@ ciudades = {
 //--------------Agrega camping---------------
 agregarCamping(){
   const formData = new FormData();
-  
-  
+  console.log(this.campingForm.get('rows').value);
+  console.log(this.campingForm.get('rows').value[0]);
+  console.log(this.campingForm.get('rows').value[0].nombre);
+
 
 
   for (var i = 0; i < this.imagenesArray.length; i++) { 
@@ -256,6 +275,13 @@ agregarCamping(){
   console.log(this.parcelas);
   formData.append('parcelas', JSON.stringify(this.parcelas));
   formData.append('serviciosAdicional', JSON.stringify(this.seviciosAgregados));
+  formData.append('precios',  JSON.stringify(this.campingForm.get('rows').value));
+  formData.append('fechaTBajaInicio', this.campingForm.get('fechaTBajaInicio').value);
+  formData.append('fechaTBajaFin', this.campingForm.get('fechaTBajaFin').value);
+  formData.append('fechaTMediaInicio', this.campingForm.get('fechaTMediaInicio').value);
+  formData.append('fechaTMediaFin', this.campingForm.get('fechaTMediaFin').value);
+  formData.append('fechaTAltaInicio', this.campingForm.get('fechaTAltaInicio').value);
+  formData.append('fechaTAltaFin', this.campingForm.get('fechaTAltaFin').value);
 
   this.campingService.addCamping(formData).subscribe(
     res => {
@@ -296,6 +322,22 @@ openModal(enterAnimationDuration: string, exitAnimationDuration: string, event :
 }
 
 
+onAddRow() {
+  this.rows.push(this.createItemFormGroup());
+  console.log(this.campingForm);
+}
 
+onRemoveRow(rowIndex:number){
+  this.rows.removeAt(rowIndex);
+}
+
+createItemFormGroup(): FormGroup {
+  return this.fb.group({
+    nombre: null,
+    preciobaja: null,
+    preciomedia: null,
+    precioalta: null,
+  });
+}
 
 }

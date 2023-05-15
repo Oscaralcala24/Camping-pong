@@ -16,6 +16,8 @@ import { ListaCampingAdminComponent } from './modules/lista-camping-admin/lista-
 import { IngresosCampingComponent } from './modules/ingresos-camping/ingresos-camping.component';
 import { AgregarCampingComponent } from './modules/agregar-camping/agregar-camping.component';
 import { ModificarUsuarioAdminComponent } from './modules/modificar-usuario-admin/modificar-usuario-admin.component';
+import { ModificarCampingComponent } from './modules/modificar-camping/modificar-camping.component';
+import { InformacionCampingComponent } from './modules/informacion-camping/informacion-camping.component';
 //canActivate: [AuthGuard] Verifica si el usuario ue intenta entrar en la ruta tiene el token o no
 const routes: Routes = [
   {
@@ -28,6 +30,7 @@ const routes: Routes = [
       { path: 'registro', component: RegistroComponent  },
       { path: 'login', component: LoginComponent },
       { path: 'listado-camping', component: ListaCampingComponent },
+      { path: 'camping/:id', component: InformacionCampingComponent },
       { path: 'perfil', component: PerfilComponent },
     ]
   },
@@ -68,6 +71,14 @@ const routes: Routes = [
         allowedRoles: ['administrador']
       },
        component: ListaCampingAdminComponent ,
+       
+      },
+      { path: 'lista-camping/modificar/:id',
+      canActivate:[AuthGuard,RolGuard],
+      data: {
+        allowedRoles: ['administrador']
+      },
+       component: ModificarCampingComponent ,
        
       },
       { path: 'agregar-camping',

@@ -30,7 +30,7 @@
             <div class="col-1 d-flex justify-content-center align-items-start">
                 <p mat-button [matMenuTriggerFor]="menu"><mat-icon >settings</mat-icon></p>
                     <mat-menu #menu="matMenu" xPosition="after">
-                    <a mat-menu-item routerLink="/admin/lista-camping/modificar">Modificar datos</a>
+                    <a mat-menu-item routerLink="/admin/lista-camping/modificar/{{camping._id}}">Modificar datos</a>
                     <button mat-menu-item id={{camping._id}}
                     (click)="openModal('400ms', '300ms', $event)"><mat-icon id={{camping._id}}
                         >delete</mat-icon></button>

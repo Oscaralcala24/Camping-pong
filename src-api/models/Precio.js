@@ -16,7 +16,10 @@ var precioSchema = new Schema({
     },
     fecha_inicio: { type: Date, required: true},
     fecha_fin: { type: Date, required: true},
-    detalle_precio: [{ type: String, required: true }]
+    detalle_precio: [{
+        nombre: String, 
+        precio: Number 
+    }]
 })
 
 precioSchema.index({ temporada: 1, id_camping: 1, _id:1}, { unique: true });

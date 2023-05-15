@@ -19,6 +19,8 @@ import { AdminSkeletonComponent } from './layout/admin-skeleton/admin-skeleton.c
 import { HeaderAdminComponent } from './layout/header-admin/header-admin.component';
 import { FooterAdminComponent } from './layout/footer-admin/footer-admin.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxGalleryModule } from 'ngx-gallery';
+
 
 
 @NgModule({
@@ -38,6 +40,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     BrowserAnimationsModule,
     RouterModule,
     CoreModule,
+    NgxGalleryModule,
     ModulesModule,
     HttpClientModule,
     NgxPaginationModule,

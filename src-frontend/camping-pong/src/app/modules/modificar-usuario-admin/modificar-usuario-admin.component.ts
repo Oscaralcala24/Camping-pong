@@ -41,7 +41,6 @@ export class ModificarUsuarioAdminComponent {
     );
     this.userService.getUsuario(this.idUsuario).subscribe((data) =>{
       this.user = data.consulta;
-      console.log(this.user);
     })
   }
   

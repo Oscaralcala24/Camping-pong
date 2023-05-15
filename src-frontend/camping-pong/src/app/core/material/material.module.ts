@@ -17,6 +17,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [],
@@ -41,7 +42,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatDialogModule,
     MatMenuModule,
     MatChipsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDatepickerModule
   ],
   exports: [
     MatSlideToggleModule,
@@ -61,7 +63,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatDialogModule,
     MatMenuModule,
     MatChipsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDatepickerModule
   ]
 })
 

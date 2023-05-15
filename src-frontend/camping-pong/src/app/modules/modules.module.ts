@@ -22,6 +22,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AgregarCampingComponent } from './agregar-camping/agregar-camping.component';
 import { ModalParcelasComponent } from './modal-parcelas/modal-parcelas.component';
 import { ModificarUsuarioAdminComponent } from './modificar-usuario-admin/modificar-usuario-admin.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { InformacionCampingComponent } from './informacion-camping/informacion-camping.component';
+import { ModificarCampingComponent } from './modificar-camping/modificar-camping.component';
+import { NgxGalleryModule } from 'ngx-gallery';
 @NgModule({
   declarations: [
     RegistroComponent,
@@ -42,6 +46,8 @@ import { ModificarUsuarioAdminComponent } from './modificar-usuario-admin/modifi
     AgregarCampingComponent,
     ModalParcelasComponent,
     ModificarUsuarioAdminComponent,
+    InformacionCampingComponent,
+    ModificarCampingComponent,
     
   ],
   imports: [
@@ -49,7 +55,9 @@ import { ModificarUsuarioAdminComponent } from './modificar-usuario-admin/modifi
     CoreModule,
     HttpClientModule,
     AppRoutingModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatNativeDateModule,
+    NgxGalleryModule
     
   ], 
 

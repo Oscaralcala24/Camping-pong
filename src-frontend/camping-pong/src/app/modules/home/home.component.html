@@ -47,7 +47,7 @@
         <p class="col-12 col-md-10 my-4 mx-auto descripcion">{{camping.descripcion}}</p>
         <a class="col-6 "> Campings {{camping.ciudad}}</a>
         <div class="col-6 mb-3 d-flex justify-content-center">
-          <button mat-flat-button color="accent">Consultar disponibilidad </button>
+          <button mat-flat-button color="accent" routerLink="/camping/{{camping._id}}">Consultar disponibilidad </button>
         </div>
       </div>
     </div>

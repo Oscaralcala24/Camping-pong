@@ -118,18 +118,114 @@
                     <mat-label class="h5">Introduzca la ubicación</mat-label>
                     <div class="col-12  mx-auto" id="map"></div>
                 </div>
-                <div class="col-12 text-center mb-5">
-
-                    <button type='button' mat-raised-button color="accent" (click)="openModal('400ms', '300ms', $event)">Definir parcelas</button>
+                <mat-divider></mat-divider>
+                <mat-label class="h5 mt-5 text-center">Temporadas</mat-label>
+                <div class="col-12 row my-4 mx-auto text-center justify-content-between">
+                    <div class="col-12 col-md-4 row ">
+                        <h4><strong>Temporada Baja</strong></h4>
+                        <mat-form-field  color="primary" appearance="fill">
+                            <mat-label>Inicio temporada baja</mat-label>
+                            <input matInput [matDatepicker]="picker1" formControlName="fechaTBajaInicio" >
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                          </mat-form-field>
+                          
+                          <mat-form-field  color="accent" appearance="fill">
+                            <mat-label>Fin temporada baja</mat-label>
+                            <input matInput [matDatepicker]="picker2" formControlName="fechaTBajaFin">
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                          </mat-form-field>
+                    </div>
+                     <div class="col-12 col-md-4 row">
+                        <h4><strong>Temporada Media</strong></h4>
+                        <mat-form-field color="primary" appearance="fill">
+                            <mat-label>Inicio temporada Media</mat-label>
+                            <input matInput [matDatepicker]="picker3" formControlName="fechaTMediaInicio" >
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+                            <mat-datepicker #picker3></mat-datepicker>
+                          </mat-form-field>
+                          
+                          <mat-form-field  color="accent" appearance="fill">
+                            <mat-label>Fin temporada Media</mat-label>
+                            <input matInput [matDatepicker]="picker4" formControlName="fechaTMediaFin">
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
+                            <mat-datepicker #picker4 color="primary"></mat-datepicker>
+                          </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-4 row">
+                        <h4><strong>Temporada Alta</strong></h4>
+                        <mat-form-field color="primary" appearance="fill">
+                            <mat-label>Inicio temporada Alta</mat-label>
+                            <input matInput [matDatepicker]="picker5" formControlName="fechaTAltaInicio" >
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker5"></mat-datepicker-toggle>
+                            <mat-datepicker #picker5></mat-datepicker>
+                          </mat-form-field>
+                          
+                          <mat-form-field  color="accent" appearance="fill">
+                            <mat-label>Fin temporada Alta</mat-label>
+                            <input matInput [matDatepicker]="picker6" formControlName="fechaTAltaFin">
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker6"></mat-datepicker-toggle>
+                            <mat-datepicker #picker6 color="primary"></mat-datepicker>
+                          </mat-form-field>
+                    </div> 
                 </div>
+                <mat-label class="h5 mt-5 text-center">Precios</mat-label>
+                <div class="col-12 col-md-4  row ">
+                    <button type='button' mat-raised-button color="accent" (click)="onAddRow()"><mat-icon>add</mat-icon>Añadir precio</button>
+                </div>
+                <div class="col-12 mt-5 row mx-auto ">
+                    <div class="col-12 row mx-auto justify-content-between mt-5" *ngFor="let row of campingForm.get('rows')?.controls;let index = index;">
+                        
+                            <mat-form-field class="col-12 col-md-3">
+                                <mat-label>Introduzca nombre</mat-label>
+                                <input  type="text" matInput placeholder="Adulto" [formControl]="row.get('nombre')" >
+                            </mat-form-field>
+                            <mat-form-field class="col-12 col-md-3" appearance="outline" floatLabel="always">
+                                <mat-label>Precio T.Baja</mat-label>
+                                <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="row.get('preciobaja')">
+                                <span matTextPrefix>€&nbsp;</span>
+                                <span matTextSuffix>.00</span>
+                            </mat-form-field>
+                            <mat-form-field class="col-12 col-md-3" appearance="outline" floatLabel="always">
+                                <mat-label>Precio T.Media</mat-label>
+                                <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="row.get('preciomedia')">
+                                <span matTextPrefix>€&nbsp;</span>
+                                <span matTextSuffix>.00</span>
+                            </mat-form-field>
+                            <mat-form-field class="col-12 col-md-3" appearance="outline" floatLabel="always">
+                                <mat-label>Precio T.Alta</mat-label>
+                                <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="row.get('precioalta')">
+                                <span matTextPrefix>€&nbsp;</span>
+                                <span matTextSuffix>.00</span>
+                            </mat-form-field>
+                            <mat-divider></mat-divider>
+                    </div>
+                </div>
+                
+                <div class="col-12 row my-4 mx-auto text-center justify-content-between">
+
+                </div>
+                <div class="col-12 text-center mb-5">
+                    
+
+                    <button type='button' mat-raised-button color="accent"  (click)="openModal('400ms', '300ms', $event)">Definir parcelas</button>
+                </div>
+                
                 <div class="col-md-8 row text-center mx-auto">
 
-                    <button class="col-md-8 mx-auto" [disabled]="!campingForm.valid"  mat-raised-button color="accent"
+                    <button class="col-md-8 mx-auto" [disabled]="!campingForm.valid || this.parcelas.length == 0 "  mat-raised-button color="accent"
                         type="submit">
                         Agregar camping
                     </button>
                 </div>
-
+                
             </form>
 
         </div>

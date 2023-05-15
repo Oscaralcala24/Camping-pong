@@ -2,16 +2,10 @@ const Parcela = require('../models/Parcela');
 const Camping = require('./../models/Camping');
 const uploadFile = require('../middleware/multer');
 const Servicio = require('../models/Servicio');
+const Precio = require('../models/Precio');
 
 
 const registrarCamping = async function (req, res) {
-    console.log("------------------------------------------PARCELAS------------------------------------------------------")
-        console.log(req.body.parcelas)
-        console.log(JSON.parse(req.body.parcelas));
-    console.log("------------------------------------------SERVICIOS------------------------------------------------------")
-        console.log(req.body.servicios)
-        console.log(JSON.parse(req.body.servicios));
-
     const dataCamping = new Camping({
         "nombre": req.body.nombre,
         "descripcion": req.body.descripcion,
@@ -45,8 +39,7 @@ const registrarCamping = async function (req, res) {
         console.log("-------------------COORDENADAS------------------------------");
         
         JsonParcela = JSON.parse(req.body.parcelas)
-        console.log(JSON.parse(JsonParcela[1].coordenadas));
-        console.log(JsonParcela[1].coordenadas);
+        
 
         for (let index = 0; index < JsonParcela.length; index++) {
             let coordenadas = JSON.parse(JsonParcela[index].coordenadas);
@@ -64,7 +57,55 @@ const registrarCamping = async function (req, res) {
         console.log(parcelasArray);
         
         await Parcela.insertMany(parcelasArray);
+        console.log("------------------------------------------------------FECHAR--------------------------------");
+
+
+        bajaInicio = new Date(req.body.fechaTBajaInicio)
+        bajaIFin = new Date(req.body.fechaTBajaInicio)
+        mediaInicio = new Date(req.body.fechaTBajaInicio)
+        mediaIFin = new Date(req.body.fechaTBajaInicio)
+        altaInicio = new Date(req.body.fechaTBajaInicio)
+        altaIFin = new Date(req.body.fechaTBajaInicio)
+
+
+        var preciosArray = [];
+        let precioBaja = new Precio({
+            temporada : "Baja",
+            id_camping : campingCreado.id,
+            fecha_inicio: bajaInicio,
+            fecha_fin: bajaIFin,
+            detalle_precio:[]
+
+        })
+        let precioMedia = new Precio({
+            temporada : "Media",
+            id_camping : campingCreado.id,
+            fecha_inicio: mediaInicio,
+            fecha_fin: mediaIFin,
+            detalle_precio:[]
+
+        })
+        let precioAlta = new Precio({
+            temporada : "Alta",
+            id_camping : campingCreado.id,
+            fecha_inicio: altaInicio,
+            fecha_fin: altaIFin,
+            detalle_precio:[]
+
+        })
+        precios = JSON.parse(req.body.precios)
         
+        
+        for (let index = 0; index < precios.length; index++) {
+            console.log(precios[index]); 
+            precioBaja.detalle_precio.push({nombre:precios[index].nombre, precio:precios[index].preciobaja})
+            precioMedia.detalle_precio.push({nombre:precios[index].nombre, precio:precios[index].preciomedia})
+            precioAlta.detalle_precio.push({nombre:precios[index].nombre, precio:precios[index].precioalta})
+        }
+        preciosArray.push(precioBaja)
+        preciosArray.push(precioMedia)
+        preciosArray.push(precioAlta)
+        await Precio.insertMany(preciosArray);
         
         res.status(200).json({ status: "Ingresado correctamente" })
 
