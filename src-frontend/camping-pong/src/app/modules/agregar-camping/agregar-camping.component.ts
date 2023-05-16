@@ -242,6 +242,7 @@ ciudades = {
     }).addTo(this.map);
     this.map.on('click', (e) => {
       if (!this.marker) {
+        console.log(e.latlng);
         this.marker = L.marker(e.latlng).addTo(this.map);
       } else {
         this.marker.setLatLng(e.latlng);

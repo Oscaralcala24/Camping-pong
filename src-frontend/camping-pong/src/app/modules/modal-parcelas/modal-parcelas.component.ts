@@ -116,7 +116,9 @@ export class ModalParcelasComponent {
          x: event.layerX,
          y: event.layerY
        };
+       console.log(this.newPt);
        this.points.push(this.newPt);
+       console.log(this.points);
        this.canvas.add(this.polygon);
      }
    }

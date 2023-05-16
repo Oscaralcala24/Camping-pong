@@ -25,7 +25,7 @@ import { ModificarUsuarioAdminComponent } from './modificar-usuario-admin/modifi
 import { MatNativeDateModule } from '@angular/material/core';
 import { InformacionCampingComponent } from './informacion-camping/informacion-camping.component';
 import { ModificarCampingComponent } from './modificar-camping/modificar-camping.component';
-import { NgxGalleryModule } from 'ngx-gallery';
+import { GalleryModule } from  'ng-gallery';
 @NgModule({
   declarations: [
     RegistroComponent,
@@ -57,7 +57,9 @@ import { NgxGalleryModule } from 'ngx-gallery';
     AppRoutingModule,
     NgxPaginationModule,
     MatNativeDateModule,
-    NgxGalleryModule
+    GalleryModule,
+  
+
     
   ], 
 

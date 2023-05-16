@@ -1,12 +1,83 @@
 <div class="container-fluid">
     <div class="row">
 
-        <h5 class="col-12" type="button" routerLink="/">
+        <h5 class="col-10 mx-auto" type="button" routerLink="/">
             <mat-icon>keyboard_return</mat-icon>
             Volver Atras
         </h5>
-        <h4 class="col-12 fw-bold text-center my-4">{{camping.nombre}}</h4>
-            <mat-divider></mat-divider>
-        <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+        <h1 class="col-12 fw-bold text-center my-4 ">{{camping.nombre}}</h1>
+        <div class="col-12 col-sm-10 mx-auto row">
+            <gallery class="col-12 col-md-8 mx-auto mt-5" [items]="images"></gallery>
+            <div class="col-12 col-md-6 text-md-start text-center mt-5 me-auto descripcion mb-4">
+                <p>{{camping.descripcion}}</p>
+            </div>
+            <div class="map col-12 col-md-5 row my-4 mx-auto text-center d-flex align-content-center">
+                <mat-label class="h5">Ubicación</mat-label>
+                <div class="col-12 mb-4 mx-auto" id="map"></div>
+            </div>
+            <div class="col-12 row">
+                <mat-label class="h5 mt-5 text-center">Servicios</mat-label>
+                <div class="col-6 col-sm-4 text-center mt-5" *ngFor="let servicio of servicios.servicios_disponibles">
+                    <p *ngIf="servicio.disponible == true; else noDisponible">- {{servicio.nombre}}</p>
+                    <ng-template #noDisponible>- <strike>{{servicio.nombre}}</strike></ng-template>
+
+
+                </div>
+            </div>
+            <div class="col-12 row ">
+                <mat-label class="h5 mt-5 text-center py-5 ">Precios</mat-label>
+                <div *ngFor="let precio of precios">
+                    <p class="text-center"><Strong>Temporada {{precio.temporada}}:</Strong></p>
+                    <p class="text-center">{{precio.fecha_inicio}} --- {{precio.fecha_fin}}</p>
+                </div>
+            </div>
+            <div class="col-12 row mx-auto justify-content-center mt-5">
+                <div class="col-12 text-center row justify-content-center  align-items-center" *ngFor="let servicio of this.preciosBaja; let index = index;">
+                    <div class="col-12 col-md-6 d-flex py-2">
+                        <input type="number"  name="servicio.nombre" value="0" step="1" min="0" [(ngModel)]="valores[index].cantidad">
+                        <label class="ms-3" for="servicio.nombre">{{servicio.nombre}}</label>
+                    </div>
+                    <div class="col-12 col-md-2 baja py-2">
+                        <p>{{servicio.precio}}€</p>
+                    </div>
+                    <div class="col-12 col-md-2 media py-2">
+                        <p>{{this.preciosMedia[index].precio}}€</p>
+                    </div>
+                    <div class="col-12 col-md-2 alta py-2">
+                        <p>{{this.preciosAlta[index].precio}}€</p>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            <div class="col-12 row">
+                <mat-label class="h5 mt-5 text-center py-5 ">Fechas</mat-label>
+                <mat-form-field color="primary" appearance="fill">
+                    <mat-label>Fecha entrada</mat-label>
+                    <input matInput [matDatepicker]="picker5" [(ngModel)]="fechaEntrada" >
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker5"></mat-datepicker-toggle>
+                    <mat-datepicker #picker5></mat-datepicker>
+                  </mat-form-field>
+                  
+                  <mat-form-field  color="accent" appearance="fill">
+                    <mat-label>Fecha salida</mat-label>
+                    <input matInput [matDatepicker]="picker6" [(ngModel)]="fechaSalida">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker6"></mat-datepicker-toggle>
+                    <mat-datepicker #picker6 color="primary"></mat-datepicker>
+                  </mat-form-field>
+            </div> 
+            <div class="col-12 row">
+                <mat-label class="h5 mt-5 text-center py-5 " >Selecciona parcela</mat-label>
+                
+                <img [src]="plano" alt="Workplace" usemap="#plano" width="1280" height="720">
+
+                <map name="plano">
+                    <area data-maphilight="{'stroke':false,'fillColor':'ff0000','fillOpacity':0.6}" shape="poly" *ngFor="let parcela of this.coordenadas;" href="_blank" [coords]="parcela.coordenadas.toString()" alt="Computer" href="https://www.w3schools.com/html/html_images_imagemap.asp">
+                    
+                </map>
+            </div> 
+        </div>
     </div>
 </div>

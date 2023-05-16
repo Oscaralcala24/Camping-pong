@@ -62,10 +62,10 @@ const registrarCamping = async function (req, res) {
 
         bajaInicio = new Date(req.body.fechaTBajaInicio)
         bajaIFin = new Date(req.body.fechaTBajaInicio)
-        mediaInicio = new Date(req.body.fechaTBajaInicio)
-        mediaIFin = new Date(req.body.fechaTBajaInicio)
-        altaInicio = new Date(req.body.fechaTBajaInicio)
-        altaIFin = new Date(req.body.fechaTBajaInicio)
+        mediaInicio = new Date(req.body.fechaTMediaInicio)
+        mediaIFin = new Date(req.body.fechaTMediaInicio)
+        altaInicio = new Date(req.body.fechaTMediaInicio)
+        altaIFin = new Date(req.body.fechaTMediaInicio)
 
 
         var preciosArray = [];
