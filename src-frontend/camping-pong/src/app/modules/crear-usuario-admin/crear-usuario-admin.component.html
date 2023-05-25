@@ -1,0 +1,95 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10 mx-auto row">
+
+            <h5 class="col-12" type="button" routerLink="/admin/lista-usuarios">
+                <mat-icon>keyboard_return</mat-icon>
+                Volver Atras
+            </h5>
+            <h4 class="fw-bold text-center">Crear usuario</h4>
+            <mat-divider></mat-divider>
+            <div class="row">
+
+            
+            <form [formGroup]="registerForm" class="mx-auto my-4 row col-12 col-md-8" (ngSubmit)="signUp()" novalidate>
+                <mat-form-field appearance="fill" class="col-md-4 me-auto">
+                    <mat-label>Introduzca nombre</mat-label>
+                    <input matInput placeholder="Antonio" formControlName="nombre" required name="nombre">
+                    <mat-error *ngIf="errorHandling('nombre', 'required')">
+                        El campo nombre es requerido
+                    </mat-error>
+                    <mat-error *ngIf="errorHandling('nombre', 'pattern')">
+                        El campo nombre solo puede incluir letras
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="col-md-8 ms-auto">
+                    <mat-label>Introduzca apellidos</mat-label>
+                    <input matInput placeholder="Pérez Rodríguez" formControlName="apellidos" required name="apellidos">
+                    <mat-error *ngIf="errorHandling('apellidos', 'required')">
+                        El campo apellido es requerido
+                    </mat-error>
+                    <mat-error *ngIf="errorHandling('apellidos', 'pattern')">
+                        El campo apellidos solo puede incluir letras
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Introduzca dni</mat-label>
+                    <input matInput placeholder="12345678X" formControlName="dni" required name="dni">
+                    <mat-error *ngIf="errorHandling('dni', 'required')">
+                        El campo dni es requerido
+                    </mat-error>
+                    <mat-error *ngIf="errorHandling('dni', 'pattern')">
+                        El formato del dni no es correcto
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Introduzca nombre de usuario</mat-label>
+                    <input matInput placeholder="antoniopr3" formControlName="nickname" required name="nickname">
+                    <mat-error *ngIf="errorHandling('nickname', 'required')">
+                        El campo nickname es requerido
+                    </mat-error>
+                    <mat-error *ngIf="errorHandling('nickname', 'pattern')">
+                        El campo nickname solo puede incluir alfanuméricos
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Introduzca email</mat-label>
+                    <input matInput placeholder="pat@example.com" formControlName="email" required name="email">
+                    <mat-error *ngIf="errorHandling('email', 'required')">
+                        El campo email es requerido
+                    </mat-error>
+                    <mat-error *ngIf="errorHandling('email', 'email')">
+                        EL formato del email no es correcto
+                    </mat-error>
+                </mat-form-field>
+
+            
+                <mat-form-field>
+                    <mat-label>Tipo de usuario</mat-label>
+                    <mat-select formControlName="tipo_usuario" required name="tipo_usuario">
+                        <mat-option value="administrador">
+                            Administrador
+                        </mat-option>
+                        <mat-option value="usuario_registrado">
+                            Usuario registrado
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="col-md-8 mt-3 row text-center mx-auto">
+                    <div>
+                        <button class=" mx-auto" [disabled]="!registerForm.valid" mat-raised-button color="accent"
+                            type="submit">
+                            Confirmar registro
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+        </div>
+
+    </div>
+</div>

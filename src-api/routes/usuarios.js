@@ -3,7 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 const validationToken = require('./../middleware/ValidacionToken')
 const { registrarUsuario, mostrarUsuarios, loginUsuario, mostrarDatosUsuario, loginUsuarioAdministrador,updateUser,
-    updatePassword, deleteUser,generateRandomPassword } = require('../controllers/UsersController');
+    updatePassword, deleteUser,generateRandomPassword,registrarUsuarioAdmin } = require('../controllers/UsersController');
 var db = mongoose.connection;
 
 
@@ -14,6 +14,7 @@ var db = mongoose.connection;
 
 // POST - Crear un nuevo usuario y validación lado servidor
 router.post('/registro', registrarUsuario);
+router.post('/registroAdmin', registrarUsuarioAdmin);
 router.post('/login', loginUsuario);
 router.post('/loginAdmin', loginUsuarioAdministrador);
 router.get('/listaUsuarios',validationToken , mostrarUsuarios);

@@ -1,0 +1,140 @@
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-12 mx-auto row">
+
+
+            <div class="col-10 mx-auto row">
+                <h5 class="col-6" type="button" routerLink="/">
+                    <mat-icon>keyboard_return</mat-icon>
+                    Volver Atras
+                </h5>
+            </div>
+            <div class="col-12 mx-auto">
+                <mat-tab-group fitInkBarToContent dynamicHeight>
+                    <mat-tab label="Pendientes"><mat-divider></mat-divider>
+                        <div class="row mt-5">
+                            <div class="container-fluid">
+                                <div *ngIf="reservasPendientes.length > 0; else reservaVaciaPendiente">
+                                    <div class="col-12 mx-auto reservas row" *ngFor="let detalle of reservasPendientes">
+                                        <h3 class="text-center mt-3 ">{{detalle.nombre_camping}}</h3>
+                                        <div
+                                            class="col-12 col-md-7 row justify-content-center align-content-center text-center">
+                                            <p>Fecha de pago: {{detalle.fecha_pago}}</p>
+                                            <p>Fecha de entrada: {{detalle.fechaEntradaAux}}</p>
+                                            <p>Fecha de Salida: {{detalle.fechaSalidaAux}}</p>
+                                            <div class="col-12 row mt-3 justify-content-end"
+                                                *ngFor="let detallereserva of detalle.detalle">
+                                                <div class="col-8 col-md-7 text-start ">
+                                                    <ul>
+                                                        <li>x{{detallereserva.cantidadNoches}} Noches</li>
+                                                        <ul>
+                                                            <li class="my-1"
+                                                                *ngFor="let precios of detallereserva.precios">
+                                                                x{{precios.cantidad}}
+                                                                {{precios.nombre}}</li>
+                                                        </ul>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-4 text-end  ">
+                                                    <ul>
+                                                        <li>{{detallereserva.temporada}} </li>
+                                                        <ul>
+                                                            <li class="my-1"
+                                                                *ngFor="let precios of detallereserva.precios">
+                                                                {{precios.precio}}€</li>
+                                                        </ul>
+                                                    </ul>
+
+                                                </div>
+                                                <mat-divider></mat-divider>
+                                                <p class="text-end"><strong>{{detalle.sumatotal}}€</strong></p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="col-12 col-md-5 mx-auto py-5 row justify-content-center align-content-center text-center">
+                                            <img [src]="detalle.imagen" alt="imagen_camping">
+                                            <div>
+
+                                            </div>
+                                            <p class="my-4">Estado <strong class="pendiente">{{detalle.estado}}</strong>
+                                            </p>
+                                            <div>
+                                                <button mat-raised-button color="warn" id={{detalle.id_reserva._id}} type="button" (click)="openModal('400ms', '300ms', $event)" class=" mx-auto">
+                                                    <span id={{detalle.id_reserva._id}}>Cancelar reserva</span> 
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-template #reservaVaciaPendiente>
+                            <h2 class="text-center">No hay reservas pendientes</h2>
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="Pasadas"><mat-divider></mat-divider>
+                        
+                        
+                        <div class="row mt-5">
+                            <div class="container-fluid">
+                                <div *ngIf="reservasPasadas.length > 0; else reservaVaciaPasadas">
+                                <div class="col-12 mx-auto reservas row" *ngFor="let detalle of reservasPasadas">
+                                    <h3 class="text-center mt-3 ">{{detalle.nombre_camping}}</h3>
+                                    <div
+                                        class="col-12 col-md-7 row justify-content-center align-content-center text-center">
+                                        <p>Fecha de pago: {{detalle.fecha_pago}}</p>
+                                        <p>Fecha de entrada: {{detalle.fechaEntradaAux}}</p>
+                                        <p>Fecha de Salida: {{detalle.fechaSalidaAux}}</p>
+                                        <div class="col-12 row mt-3 justify-content-end"
+                                            *ngFor="let detallereserva of detalle.detalle">
+                                            <div class="col-8 col-md-7 text-start ">
+                                                <ul>
+                                                    <li>x{{detallereserva.cantidadNoches}} Noches</li>
+                                                    <ul>
+                                                        <li class="my-1" *ngFor="let precios of detallereserva.precios">
+                                                            x{{precios.cantidad}}
+                                                            {{precios.nombre}}</li>
+                                                    </ul>
+                                                </ul>
+                                            </div>
+                                            <div class="col-4 text-end  ">
+                                                <ul>
+                                                    <li>{{detallereserva.temporada}} </li>
+                                                    <ul>
+                                                        <li class="my-1" *ngFor="let precios of detallereserva.precios">
+                                                            {{precios.precio}}€</li>
+                                                    </ul>
+                                                </ul>
+
+                                            </div>
+                                            <mat-divider></mat-divider>
+                                            <p class="text-end"><strong>{{detalle.sumatotal}}€</strong></p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="col-12 col-md-5 mx-auto py-5 row justify-content-center align-content-center text-center">
+                                        <img [src]="detalle.imagen" alt="imagen_camping">
+                                        <div *ngIf="detalle.estado == 'Cancelado'; else estadoFinalizado">
+                                            <p class="my-4">Estado <strong class="cancelado">{{detalle.estado}}</strong></p>
+                                        </div>  
+                                        <ng-template #estadoFinalizado> <p class="my-4">Estado <strong class="finalizado">{{detalle.estado}}</strong></p></ng-template>
+                                        <div>
+                                            <button mat-raised-button color="accent"  id={{detalle.id_reserva}} type="button"  class=" mx-auto" [disabled]="detalle.estado == 'Cancelado'">
+                                                Realizar reserva
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-template #reservaVaciaPasadas><h2 class="text-center">No hay reservas pasadas o canceladas</h2></ng-template>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+
+</div>

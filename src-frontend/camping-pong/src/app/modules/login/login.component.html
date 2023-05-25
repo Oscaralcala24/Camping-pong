@@ -23,6 +23,10 @@
                         </button>
                     </mat-form-field>
                     <div class="col-md-8 row text-center mx-auto">
+                        <div [hidden]="!requestFailed" class="alert alert-danger  my-3 m-auto " id="dangerWarning" role="alert">
+                            {{ error }}
+                        </div>
+
                         <button mat-raised-button color="accent" type="submit" class="col-md-8 mx-auto">
                         Iniciar sesión
                     </button>
@@ -33,6 +37,7 @@
                     </div>         
                     
                 </form>
+                
         
         </div>
     </div>

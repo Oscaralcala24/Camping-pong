@@ -48,6 +48,11 @@ export class UserService implements OnInit {
   generatePassword(id:string,email:string) : Observable<any>{
     return this.http.put<User[]>(this.URL +'generarContrasena', {_id:id,email:email});
   }
+  registerUserAdmin(data) : Observable<any>{
+    return this.http.post<User[]>(this.URL +'registroAdmin',data);
+  }
+
+  
 }
 
 

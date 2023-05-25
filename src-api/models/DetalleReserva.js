@@ -5,11 +5,14 @@ var Reserva = require('../models/Reserva.js');
 
 
 var detalleReservaSchema = new Schema({
-    id_reserva: [{
+    id_reserva: {
         type: String,
         ref: 'Reserva'
-    }],
-    detalle :[{type: Boolean}]
+    },
+    detalle :[{
+        nombre: String,
+        cantidad: Number
+    }]
 })
 
 

@@ -15,7 +15,7 @@
                 </ng-container>
                 <ng-template #loggedIn>
                   <li class="nav-item">
-                    <a class="nav-link link-dark text-end" aria-current="page" routerLink="admin/perfil">{{user.nickname || async}}</a>
+                    <a class="nav-link link-dark text-end" aria-current="page" routerLink="admin/perfil">{{user?.nickname || async}}</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link link-dark text-end" role="button" aria-current="page" (click)="authService.logoutAdmin()">

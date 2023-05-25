@@ -196,12 +196,7 @@ ciudades = {
 
         this.rows = this.fb.array([]);
   }
-  // fechaTBajaInicio:Date;
-  // fechaTBajaFin:Date;
-  // fechaTMediaInicio:Date;
-  // fechaTMediaFin:Date;
-  // fechaTAltaInicio:Date;
-  // fechaTAltaFin:Date;
+
   onCheckboxChange(event: any) {
     const formArray: FormArray = this.campingForm.get('arrayService') as FormArray;
     for (let index = 0; index < formArray.length; index++) {
@@ -242,7 +237,7 @@ ciudades = {
     }).addTo(this.map);
     this.map.on('click', (e) => {
       if (!this.marker) {
-        console.log(e.latlng);
+
         this.marker = L.marker(e.latlng).addTo(this.map);
       } else {
         this.marker.setLatLng(e.latlng);
@@ -255,9 +250,7 @@ ciudades = {
 //--------------Agrega camping---------------
 agregarCamping(){
   const formData = new FormData();
-  console.log(this.campingForm.get('rows').value);
-  console.log(this.campingForm.get('rows').value[0]);
-  console.log(this.campingForm.get('rows').value[0].nombre);
+
 
 
 
@@ -273,7 +266,6 @@ agregarCamping(){
   formData.append('email', this.campingForm.get('email').value);
   formData.append('telefono', this.campingForm.get('telefono').value);
   formData.append('servicios',  JSON.stringify(this.campingForm.get('arrayService').value));
-  console.log(this.parcelas);
   formData.append('parcelas', JSON.stringify(this.parcelas));
   formData.append('serviciosAdicional', JSON.stringify(this.seviciosAgregados));
   formData.append('precios',  JSON.stringify(this.campingForm.get('rows').value));
@@ -325,7 +317,7 @@ openModal(enterAnimationDuration: string, exitAnimationDuration: string, event :
 
 onAddRow() {
   this.rows.push(this.createItemFormGroup());
-  console.log(this.campingForm);
+
 }
 
 onRemoveRow(rowIndex:number){

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GalleryItem, ImageItem } from 'ng-gallery';
 import * as L from 'leaflet';
 import { CampingService } from 'src/app/service/campingService/camping.service';
@@ -7,6 +7,8 @@ import { ServiciosServiceService } from 'src/app/service/serviciosService/servic
 import { PreciosService } from 'src/app/service/preciosService/precios.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ParcelaService } from 'src/app/service/parcelaService/parcela.service';
+import { UserService } from 'src/app/service/userService/user.service';
+import { ReservaService } from 'src/app/service/reservaService/reserva.service';
 
 @Component({
   selector: 'app-informacion-camping',
@@ -14,7 +16,9 @@ import { ParcelaService } from 'src/app/service/parcelaService/parcela.service';
   styleUrls: ['./informacion-camping.component.scss']
 })
 export class InformacionCampingComponent {
-constructor(private route : ActivatedRoute , private campingService: CampingService, private serviciosService: ServiciosServiceService , private preciosService: PreciosService, private fb: FormBuilder,private parcelaService: ParcelaService){}
+constructor(private reservaService : ReservaService,private userService: UserService, private router: Router,private route : ActivatedRoute , 
+  private campingService: CampingService, private serviciosService: ServiciosServiceService , 
+  private preciosService: PreciosService, private fb: FormBuilder,private parcelaService: ParcelaService){}
 reservaForm: FormGroup;
 idCamping:string;
 camping:any;
@@ -30,9 +34,15 @@ plano:string;
 valores:any = [];
 fechaEntrada:Date;
 fechaSalida:Date;
+reserva:any;
+minDate = new Date();
+
+
+
+
 ngOnInit(): void {
   
-
+  
   this.route.params
     .subscribe(params => {
       this.idCamping = params['id']
@@ -41,6 +51,7 @@ ngOnInit(): void {
   );
   this.campingService.getCamping(this.idCamping).subscribe((data) =>{
     this.camping = data.consulta;
+    this.campingService.setCampingdata(this.camping)
     console.log(this.camping);
 
     for (let index = 0; index < this.camping.imagenes.length; index++) {
@@ -80,10 +91,18 @@ ngOnInit(): void {
       
     }
     for (let index = 0; index < this.preciosBaja.length; index++) {
-      this.valores.push({
-        nombre: this.preciosBaja[index].nombre,
-        cantidad: 0
-      })
+      if (this.preciosBaja[index].nombre === "Parcela"){
+        this.valores.push({
+          nombre: this.preciosBaja[index].nombre,
+          cantidad: 1
+        })
+      }else{
+        this.valores.push({
+          nombre: this.preciosBaja[index].nombre,
+          cantidad: 0
+        })
+
+      }
       
     }
 
@@ -105,6 +124,7 @@ ngOnInit(): void {
     }
     console.log(this.coordenadas[0].coordenadas.toString());
   })
+
 }
 
 
@@ -114,7 +134,7 @@ map: L.Map;
 marker: L.Marker;
 ngAfterViewInit() {
   
-  let auxCoords = this.camping.ubicacion.split(","); 
+  let auxCoords = this.camping?.ubicacion.split(","); 
   let x = auxCoords[0].split(" ");
   let y = auxCoords[1].split(" ");
   let marcador ={
@@ -129,5 +149,22 @@ ngAfterViewInit() {
   }).addTo(this.map);
  
 }
+
+detalleReserva() {
+  this.userService.dataUser.subscribe((data) =>{ 
+    this.reserva = ({
+    id_camping: this.idCamping,
+    id_usuario: data._id,
+    id_parcela:"64621545ed7fba88906715ba",
+    fecha_entrada:this.fechaEntrada,
+    fecha_salida:this.fechaSalida,
+  })
+  this.campingService.setCampingdata(this.camping)
+  this.reservaService.setDataReserva(this.reserva)
+  this.preciosService.setDataPrecios(this.precios)
+  this.router.navigate(['/detallePago'], { state: this.valores});
+  })
+}
+
 
 }

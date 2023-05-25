@@ -15,10 +15,10 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true })
   
 var db = mongoose.connection;
 var campingRouter = require('./routes/camping');
-// var detalleReservaRouter = require('./routes/detalleReserva');
+var detalleReservaRouter = require('./routes/detalleReserva');
 var parcelaRouter = require('./routes/parcela');
 var precioRouter = require('./routes/precio');
-// var reservaRouter = require('./routes/reserva');
+var reservaRouter = require('./routes/reserva');
 var servicioRouter = require('./routes/servicio');
 var usuarioRouter = require('./routes/usuarios');
 
@@ -35,10 +35,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/usuarios', usuarioRouter);
 app.use('/servicio', servicioRouter);
-// app.use('/reserva', reservaRouter);
+app.use('/reserva', reservaRouter);
 app.use('/precio', precioRouter);
 app.use('/parcela', parcelaRouter);
-// app.use('/detalleReserva', detalleReservaRouter);
+app.use('/detalleReserva', detalleReservaRouter);
 app.use('/camping', campingRouter);
 
 // catch 404 and forward to error handler

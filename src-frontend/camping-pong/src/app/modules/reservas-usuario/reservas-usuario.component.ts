@@ -7,48 +7,38 @@ import { ReservaService } from 'src/app/service/reservaService/reserva.service';
 import * as moment from 'moment';
 import { CampingService } from 'src/app/service/campingService/camping.service';
 import { PreciosService } from 'src/app/service/preciosService/precios.service';
+import { AuthService } from 'src/app/service/auth/auth.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ModalCancelarReservaComponent } from '../modal-cancelar-reserva/modal-cancelar-reserva.component';
 
 @Component({
-  selector: 'app-modificar-usuario-admin',
-  templateUrl: './modificar-usuario-admin.component.html',
-  styleUrls: ['./modificar-usuario-admin.component.scss']
+  selector: 'app-reservas-usuario',
+  templateUrl: './reservas-usuario.component.html',
+  styleUrls: ['./reservas-usuario.component.scss']
 })
-export class ModificarUsuarioAdminComponent {
+export class ReservasUsuarioComponent {
   user!: User
   disabled = true;
   updateDataForm: FormGroup;
   idUsuario: string;
   reservas: any = [];
-  reservasAux: any=[];
+  reservasAux: any = [];
   precios: any;
-  constructor(private fb: FormBuilder, private userService: UserService, private route: ActivatedRoute, private reservaService: ReservaService, private campingService: CampingService, private preciosService: PreciosService) {
+  reservasPendientes = [];
+  reservasPasadas = [];
+  dialogRef: MatDialogRef<ModalCancelarReservaComponent>;
+  constructor(private dialog: MatDialog,private authService: AuthService, private fb: FormBuilder, private userService: UserService, private route: ActivatedRoute, private reservaService: ReservaService, private campingService: CampingService, private preciosService: PreciosService) {
 
-    this.reactiveForm()
   }
 
-  reactiveForm() {
-    this.updateDataForm = this.fb.group({
-      nombre: new FormControl('', [Validators.required, Validators.pattern("^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ]{1,}$")]),
-      apellidos: new FormControl('', [Validators.required, Validators.pattern("^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ]{1,}$")]),
-      dni: new FormControl('', [Validators.pattern('^[0-9]{8,8}[A-Za-z]$'), Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      telefono: new FormControl('', [Validators.pattern("^[0-9]{9}$"), Validators.required]),
-    });
-  }
 
 
   ngOnInit(): void {
 
-    this.route.params
-      .subscribe(params => {
-        this.idUsuario = params['id']
-      }
-      );
-    this.userService.getUsuario(this.idUsuario).subscribe((data) => {
-      this.user = data.consulta;
-    })
 
-
+    this.idUsuario = this.authService.getInfoToken(this.authService.getToken()).id;
+    
+    console.log(this.idUsuario);
     this.reservaService.getReservas().subscribe((data) => {
       data.consulta.forEach(element => {
         if (element.id_reserva.id_usuario == this.idUsuario) {
@@ -62,64 +52,80 @@ export class ModificarUsuarioAdminComponent {
           camping = data.consulta
           this.preciosService.getPrecios(camping._id).subscribe(data => {
             this.precios = data.consulta
-            
+
             let fechaPago = new Date(element.id_reserva.fecha_pago);
             let fechaEntrada = new Date(element.id_reserva.fecha_entrada);
             let fechaSalida = new Date(element.id_reserva.fecha_salida);
             let fechaEntrada2 = moment(fechaEntrada.getFullYear() + "-" + (fechaEntrada.getMonth() + 1) + "-" + fechaEntrada.getDate(), 'YYYY-MM-DD');
             let fechaSalida2 = moment(fechaSalida.getFullYear() + "-" + (fechaSalida.getMonth() + 1) + "-" + fechaSalida.getDate(), 'YYYY-MM-DD');
             const noches = this.calcularNochesPorTemporada(fechaEntrada2, fechaSalida2);
-            let datosAux= [];
-    
-            if(noches.Baja > 0){
-              datosAux.push({temporada: "Baja", cantidadNoches: noches.Baja, precios:[]});
+            let datosAux = [];
+
+            if (noches.Baja > 0) {
+              datosAux.push({ temporada: "Baja", cantidadNoches: noches.Baja, precios: [] });
             }
-            if(noches.Media > 0){
-              datosAux.push({temporada: "Media", cantidadNoches: noches.Media, precios:[]});
-              
+            if (noches.Media > 0) {
+              datosAux.push({ temporada: "Media", cantidadNoches: noches.Media, precios: [] });
+
             }
-            if(noches.Alta > 0){
-              datosAux.push({temporada: "Alta", cantidadNoches: noches.Alta, precios:[]});
+            if (noches.Alta > 0) {
+              datosAux.push({ temporada: "Alta", cantidadNoches: noches.Alta, precios: [] });
             }
 
             var sumatotal = 0
 
             this.precios.forEach(element => {
-              
-              for (let j = 0; j < datosAux.length; j++) {
-                if(element.temporada == datosAux[j].temporada){
-                  for (let l = 0; l < this.reservas.length; l++) {
-                    
-                    this.reservas[l].detalle.forEach(precios =>{
-                      element.detalle_precio.forEach(k=>{
 
-                      if(k.nombre == precios.nombre && precios.cantidad>0){
-                        sumatotal += precios.cantidad*k.precio;
-                        datosAux[j].precios.push({nombre: precios.nombre, cantidad: precios.cantidad, precio:k.precio})
-                      }
+              for (let j = 0; j < datosAux.length; j++) {
+                if (element.temporada == datosAux[j].temporada) {
+                  for (let l = 0; l < this.reservas.length; l++) {
+
+                    this.reservas[l].detalle.forEach(precios => {
+                      element.detalle_precio.forEach(k => {
+
+                        if (k.nombre == precios.nombre && precios.cantidad > 0) {
+                          sumatotal += precios.cantidad * k.precio;
+                          datosAux[j].precios.push({ nombre: precios.nombre, cantidad: precios.cantidad, precio: k.precio })
+                        }
+                      })
                     })
-                  })
                   }
                 }
               }
 
             });
-            this.reservasAux.push({
-              nombre_camping: camping.nombre,
-              fecha_pago: fechaPago.getDate() + "/" + (fechaPago.getMonth() + 1) + "/" + fechaPago.getFullYear(),
-              fechaEntradaAux: fechaEntrada.getDate() + "/" + (fechaEntrada.getMonth() + 1) + "/" + fechaEntrada.getFullYear(),
-              fechaSalidaAux: fechaSalida.getDate() + "/" + (fechaSalida.getMonth() + 1) + "/" + fechaSalida.getFullYear(),
-              detalle: datosAux,
-              sumatotal: sumatotal,
-              imagen: camping.imagenes[0],
-              estado: element.id_reserva.estado
-            })
-            console.log(this.reservasAux);
+            if (element.id_reserva.estado == "Pendiente") {
+              this.reservasPendientes.push({
+                id_reserva: element.id_reserva,
+                nombre_camping: camping.nombre,
+                fecha_pago: fechaPago.getDate() + "/" + (fechaPago.getMonth() + 1) + "/" + fechaPago.getFullYear(),
+                fechaEntradaAux: fechaEntrada.getDate() + "/" + (fechaEntrada.getMonth() + 1) + "/" + fechaEntrada.getFullYear(),
+                fechaSalidaAux: fechaSalida.getDate() + "/" + (fechaSalida.getMonth() + 1) + "/" + fechaSalida.getFullYear(),
+                detalle: datosAux,
+                sumatotal: sumatotal,
+                imagen: camping.imagenes[0],
+                estado: element.id_reserva.estado
+              })
+            } else {
+              this.reservasPasadas.push({
+                id_reserva: element.id_reserva,
+                nombre_camping: camping.nombre,
+                fecha_pago: fechaPago.getDate() + "/" + (fechaPago.getMonth() + 1) + "/" + fechaPago.getFullYear(),
+                fechaEntradaAux: fechaEntrada.getDate() + "/" + (fechaEntrada.getMonth() + 1) + "/" + fechaEntrada.getFullYear(),
+                fechaSalidaAux: fechaSalida.getDate() + "/" + (fechaSalida.getMonth() + 1) + "/" + fechaSalida.getFullYear(),
+                detalle: datosAux,
+                sumatotal: sumatotal,
+                imagen: camping.imagenes[0],
+                estado: element.id_reserva.estado
+              })
+
+            }
 
           });
 
         });
       })
+
     });
 
 
@@ -215,6 +221,35 @@ export class ModificarUsuarioAdminComponent {
     } else {
       return 'Alta';
     }
+  }
+
+  cancelarReserva(id:string){
+    this.reservaService.deleteReserva(id).subscribe(data =>{
+      console.log(data);
+
+    })
+  }
+
+
+  
+  openModal(enterAnimationDuration: string, exitAnimationDuration: string, event :Event): void {
+   
+    const target = event.target as HTMLElement;
+    const buttonId = target.id;
+
+
+    this.dialogRef = this.dialog.open(ModalCancelarReservaComponent, {
+      width: '500px',
+      height: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+
+    this.dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.cancelarReserva(buttonId)
+      }
+    });
   }
 
 

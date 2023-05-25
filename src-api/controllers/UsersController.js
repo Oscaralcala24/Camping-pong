@@ -35,6 +35,24 @@ const registrarUsuario = async function (req, res) {
     res.json({ status: "No se ha ingresado correctamente" })
   }
 };
+const registrarUsuarioAdmin = async function (req, res) {
+  try {
+    const data = req.body
+    const consultaAux = await Usuario.findOne({ "dni": data.dni }, { contrasena: 0 }).exec();
+    if (consultaAux == null) {
+      await Usuario.create(data)
+      
+      res.status(201).json({ status: "Usuario ya resgistrado correctamente" });
+    } else {
+      res.json({ status: "Usuario ya esta registrado" })
+    }
+
+  } catch (err) {
+    console.log(err)
+    console.log()
+    res.json({ status: "No se ha ingresado correctamente" })
+  }
+};
 
 
 
@@ -264,5 +282,6 @@ module.exports = {
   updateUser,
   updatePassword,
   deleteUser,
-  generateRandomPassword
+  generateRandomPassword,
+  registrarUsuarioAdmin
 }

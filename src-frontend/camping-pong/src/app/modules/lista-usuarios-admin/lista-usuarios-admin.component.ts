@@ -34,16 +34,7 @@ export class ListaUsuariosAdminComponent {
    
   }
 
-  onClick(event: Event) {
-    console.log(this.usuarios);
-    // Obtener el elemento HTML del botón
-    const target = event.target as HTMLElement;
-    
-    // Obtener el ID del botón
-    const buttonId = target.id;
-    
-    console.log('ID del botón:', buttonId);
-  }
+
 
 
 

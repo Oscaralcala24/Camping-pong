@@ -1,0 +1,89 @@
+<div class="container-fluid">
+    <div class="row">
+
+        <h5 class="col-10 mx-auto" type="button" routerLink="/">
+            <mat-icon>keyboard_return</mat-icon>
+            Volver Atras
+        </h5>
+        <h1 class="col-12 fw-bold text-center my-4 ">{{camping.nombre}}</h1>
+        <div class="col-12 row">
+
+            <div class="col-12 col-md-7 row justify-content-center align-content-center text-center">
+                <mat-label class="h5 mt-5 text-center py-5 ">Fechas</mat-label>
+                <p class="col-4 text-end">{{fechaEntradaAux}}</p>
+                <div class="col-2">
+                    <mat-icon>arrow_right_alt</mat-icon>
+                </div>
+                <p class="col-4 text-start">{{fechaSalidaAux}}</p>
+                <mat-divider></mat-divider>
+
+                <mat-label class="h5 text-center py-5 ">Detalle reserva</mat-label>
+                <div class="col-8 text-start">
+                    <ul *ngFor="let servicio of datosAux">
+                        <li>x{{servicio.cantidadNoches}} Noches</li>
+                        <ul>
+                            <li class="my-1" *ngFor="let precios of servicio.precios">x{{precios.cantidad}}
+                                {{precios.nombre}}</li>
+                        </ul>
+                    </ul>
+
+                </div>
+                <div class="col-4 text-end">
+                    <ul *ngFor="let servicio of datosAux">
+                        <li>Temporada {{servicio.temporada}} </li>
+                        <ul>
+                            <li class="my-1" *ngFor="let precios of servicio.precios">{{precios.precio}}€</li>
+                        </ul>
+                    </ul>
+
+                </div>
+
+                <mat-divider></mat-divider>
+                <p class="text-end">{{sumatotal}}€</p>
+            </div>
+            <div class="col-12 col-md-5 mx-auto mt-5 row justify-content-center align-content-center text-center">
+                <img [src]="camping.imagenes[0]" alt="imagen camping">
+            </div>
+        </div>
+        <mat-label class="h5 text-center py-5 ">Método de pago</mat-label>
+        <mat-divider></mat-divider>
+        <div class="col-10 mx-auto mt-5 row justify-content-evenly">
+            <form [formGroup]="reservaForm" class="col-12 col-md-6 row mt-6 justify-content-between" (ngSubmit)="reservar()">
+
+                <mat-form-field>
+                    <mat-label>Numero de la tarjeta</mat-label>
+                    <input matInput formControlName="ntarjeta" required name="ntarjeta">
+                </mat-form-field>
+
+
+                <mat-form-field class="col-md-6 ">
+                    <mat-label>Fecha de expiración</mat-label>
+                    <input matInput formControlName="fexpiracion" required name="fexpiracion">
+                </mat-form-field>
+
+                <mat-form-field class="col-md-6 ">
+                    <mat-label>CVC/CVV</mat-label>
+                    <input matInput formControlName="cvv" required name="cvv">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Titular de la tarjeta</mat-label>
+                    <input matInput formControlName="titular" required name="titular">
+                </mat-form-field>
+                <button mat-raised-button color="accent" type="submit" class="col-md-8 mx-auto" [disabled]="!reservaForm.valid">
+                    Realizar reserva
+                </button>
+            </form>
+            <div class="col-12 col-md-3 mt-5 justify-content-center align-items-center">
+                <div class="pago row">
+                    <mat-label class="h5 text-center py-2 mb-2">Total a pagar</mat-label>
+                    <p class="col-6">Total a pagar</p>
+                    <p class="col-6 text-end">{{sumatotal}}€</p>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>

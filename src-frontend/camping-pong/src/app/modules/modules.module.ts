@@ -26,6 +26,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { InformacionCampingComponent } from './informacion-camping/informacion-camping.component';
 import { ModificarCampingComponent } from './modificar-camping/modificar-camping.component';
 import { GalleryModule } from  'ng-gallery';
+import { DetallePagoReservaComponent } from './detalle-pago-reserva/detalle-pago-reserva.component';
+import { ReservasUsuarioComponent } from './reservas-usuario/reservas-usuario.component';
+import { ModalCancelarReservaComponent } from './modal-cancelar-reserva/modal-cancelar-reserva.component';
+import { CrearUsuarioAdminComponent } from './crear-usuario-admin/crear-usuario-admin.component';
 @NgModule({
   declarations: [
     RegistroComponent,
@@ -48,6 +52,10 @@ import { GalleryModule } from  'ng-gallery';
     ModificarUsuarioAdminComponent,
     InformacionCampingComponent,
     ModificarCampingComponent,
+    DetallePagoReservaComponent,
+    ReservasUsuarioComponent,
+    ModalCancelarReservaComponent,
+    CrearUsuarioAdminComponent,
     
   ],
   imports: [
