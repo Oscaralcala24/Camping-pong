@@ -74,7 +74,6 @@ export class ModalParcelasComponent {
    crearParcela(){
     this.newPt = null;
     this.points =[];
-    this.selectedValue="";
      this.polygon = new fabric.Polygon(this.points, {
        left: 0,
        top: 0,
@@ -98,12 +97,9 @@ export class ModalParcelasComponent {
        reader.readAsDataURL(file);
        reader.onload = (event: any) => {
          this.url = event.target.result;
- 
+        
          fabric.Image.fromURL(this.url, function(img) {
-           canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-             scaleX: canvas.width / img.width,
-             scaleY: canvas.height / img.height
-           });
+           canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
          });
        };
        this.isImageDrawn = true;

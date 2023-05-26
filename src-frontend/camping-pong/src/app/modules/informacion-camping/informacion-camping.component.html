@@ -76,10 +76,14 @@
             <div class="col-12 row">
                 <mat-label class="h5 mt-5 text-center py-5 " >Selecciona parcela</mat-label>
                 
+                <div  class="col-6">
+                    <img class="mapper"  id="img_ID" [src]="plano" usemap="#map" border="0" />
 
-                    <img [src]="plano" id="map" alt="Workplace" usemap="#plano"> 
+                </div>
+                
+                    
     
-                    <map name="plano" id="map">
+                    <map name="map" id="map_ID">
                         <area shape="poly" *ngFor="let parcela of this.coordenadas;" href="_blank" [coords]="parcela.coordenadas.toString()" alt="Computer" href="https://www.w3schools.com/html/html_images_imagemap.asp">
                         
                     </map>
