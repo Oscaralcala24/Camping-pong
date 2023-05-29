@@ -31,26 +31,26 @@
                                 </header>
                                 <div class="filter-content">
                                     <div class="card-body">
-                                        <form>
+                                        <!-- <form>
                                             <label class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="">
+                                                <input class="form-check-input" type="checkbox" [(ngModel)]="filterValues.filter1" (ngModelChange)="updateQueryParams()">
                                                 <span class="form-check-label">
                                                     Mersedes Benz
                                                 </span>
-                                            </label> <!-- form-check.// -->
+                                            </label> 
                                             <label class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="">
+                                                <input class="form-check-input" type="checkbox" [(ngModel)]="filterValues.filter2" (ngModelChange)="updateQueryParams()">
                                                 <span class="form-check-label">
                                                     Nissan Altima
                                                 </span>
-                                            </label> <!-- form-check.// -->
+                                            </label> 
                                             <label class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="">
+                                                <input class="form-check-input" type="checkbox" [(ngModel)]="filterValues.filter3" (ngModelChange)="updateQueryParams()">
                                                 <span class="form-check-label">
                                                     Another Brand
                                                 </span>
-                                            </label> <!-- form-check.// -->
-                                        </form>
+                                            </label> 
+                                        </form> -->
 
                                     </div> <!-- card-body.// -->
                                 </div>
@@ -98,7 +98,7 @@
     <div class="col-12 mx-auto col-md-9 row mt-3">
         <div class="col-12 col-sm-9 d-flex">
             <h3>{{camping.nombre}}</h3>
-            <star-rating class="text-left ms-4 mt-1 " [showHalfStars]="true" [readOnly]="true" staticColor="ok"
+            <star-rating class="text-left ms-4 mt-1 " [step]="0.5" [showHalfStars]="true" [readOnly]="true" staticColor="ok"
                 size="medium" [starType]="'svg'" rating="{{camping.valoracion}}"></star-rating>
 
         </div>

@@ -133,6 +133,7 @@ const mostrarDatosCamping = async function (req, res) {
 
 };
 
+
 //MEjorar eficiencia
 const mostrarCampings = async function (req, res) {
     try {

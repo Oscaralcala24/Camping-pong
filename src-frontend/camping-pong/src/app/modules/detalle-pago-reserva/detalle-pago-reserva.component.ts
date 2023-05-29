@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/service/userService/user.service';
 import { User } from 'src/app/models/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-detalle-pago-reserva',
   templateUrl: './detalle-pago-reserva.component.html',
@@ -20,6 +21,7 @@ export class DetallePagoReservaComponent implements OnInit {
    reserva: any;
    fechaEntrada:any;
    fechaSalida:any;
+   parcelaElegida:any;
    fechaEntradaAux:any;
    fechaSalidaAux:any;
    TBajaFechaInicio;
@@ -35,8 +37,8 @@ export class DetallePagoReservaComponent implements OnInit {
    reservaForm: FormGroup;
    user:User;
    
-   constructor(private campingService:CampingService,private preciosService:PreciosService,private reservaService: ReservaService, private route:ActivatedRoute, private router:Router, private fb:FormBuilder, private userService:UserService){
-     this.valores =this.router.getCurrentNavigation().extras.state;
+   constructor(private _snackBar: MatSnackBar,private campingService:CampingService,private preciosService:PreciosService,private reservaService: ReservaService, private route:ActivatedRoute, private router:Router, private fb:FormBuilder, private userService:UserService){
+     this.valores =this.router?.getCurrentNavigation()?.extras.state;
      this.reservaForm = this.fb.group({
       ntarjeta: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{15,16}$")]),
       fexpiracion: new FormControl(''),
@@ -86,6 +88,7 @@ export class DetallePagoReservaComponent implements OnInit {
     this.reservaService.dataReserva.subscribe(data => {
       this.reserva = data
       console.log(this.reserva);
+      this.parcelaElegida = this.reserva.id_parcela;
       let fechaIni = new Date(this.reserva.fecha_entrada)
       let fechaFin = new Date(this.reserva.fecha_salida)
       this.fechaEntradaAux = fechaIni.getDate()+"/"+(fechaIni.getMonth()+1)+"/"+fechaIni.getFullYear()
@@ -179,11 +182,18 @@ console.log(this.valores);
     let reserva = {
       id_camping: this.camping._id,
       id_usuario: this.user._id,
-      // id_parcela:
-      fecha_entrada : this.fechaEntrada,
-      fecha_salida : this.fechaSalida,
+      id_parcela: this.parcelaElegida,
+      fecha_entrada : new Date(this.fechaEntrada),
+      fecha_salida : new Date(this.fechaSalida),
       detalleReserva : this.valores
     }
+    this.reservaService.addReserva(reserva).subscribe(data=>{
+      console.log(data);
+      if(data.status === 'success'){
+        this._snackBar.open(data, "Aceptar");
+        this.router.navigate["/"]
+      }
+    })
 
   }
 }

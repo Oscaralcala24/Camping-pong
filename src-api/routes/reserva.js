@@ -3,10 +3,12 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 const validationToken = require('./../middleware/ValidacionToken')
-const { addReserva,getReservas,deleteReserva } = require('../controllers/ReservaController');
+const { addReserva , getReservas,cancelarReserva,comprobarReserva,valorarReserva } = require('../controllers/ReservaController');
 
-router.post('/addReserva',validationToken, addReserva);
 router.get('/getReservas',validationToken, getReservas);
-router.delete('/deleteReserva/:id',validationToken, deleteReserva);
+router.post('/checkReserva', comprobarReserva);
+router.post('/anadirReserva',validationToken, addReserva);
+router.put('/cancelarReserva/:id',validationToken, cancelarReserva);
+router.put('/valorar/:id',validationToken, valorarReserva);
 
 module.exports = router;

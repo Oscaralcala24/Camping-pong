@@ -1,1 +1,31 @@
-<p>ingresos-camping works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10 mx-auto row">
+            <h5 class="col-6" type="button" routerLink="/admin/dashboard">
+                <mat-icon>keyboard_return</mat-icon>
+                Volver Atras
+            </h5>
+            <div class="col-6 d-flex justify-content-end">
+
+            </div>
+            <h4 class="col-12 fw-bold text-center my-4">Ingresos mensuales</h4>
+
+        </div>
+    </div>
+    <div class="row text-center justify-content-center tabla">
+        <div>
+            <mat-form-field>
+                <mat-label>Año</mat-label>
+                <mat-select (ngModelChange)="updateChart()" [(ngModel)]="anoSeleccionado">
+                    <mat-option *ngFor="let ano of anos" [value]=ano >
+                        {{ano}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <div class="col-12 col-lg-6 text-center justify-content-center">
+            <canvas #mychart></canvas>
+        </div>
+    </div>
+</div>

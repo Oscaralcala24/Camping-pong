@@ -13,13 +13,21 @@ export class ReservaService {
 
   addReserva(Reserva:any) : Observable<any>{
     console.log(Reserva)
-    return this.http.post<FormData>(this.URL + 'addReserva', Reserva);
+    return this.http.post<any>(this.URL + 'anadirReserva', Reserva);
   }
   getReservas() : Observable<any>{
     return this.http.get<any>(this.URL + 'getReservas');
   }
-  deleteReserva(id_reserva:string) : Observable<any>{
-    return this.http.delete<any>(this.URL + 'deleteReserva/'+id_reserva);
+  checkReserva(reserva) : Observable<any>{
+    return this.http.post<any>(this.URL + 'checkReserva',reserva);
+  }
+  cancelarReserva(id_reserva:string) : Observable<any>{
+    let body = {estado:"Cancelado"} 
+    return this.http.put<any>(this.URL + 'cancelarReserva/'+id_reserva, body);
+  }
+  valorarReserva(id_reserva:string, valoracion) : Observable<any>{
+    let body = {valoracion:valoracion} 
+    return this.http.put<any>(this.URL + 'cancelarReserva/'+id_reserva, body);
   }
 
   get dataReserva() : Observable<any>{

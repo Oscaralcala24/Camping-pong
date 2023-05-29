@@ -30,6 +30,7 @@ import { DetallePagoReservaComponent } from './detalle-pago-reserva/detalle-pago
 import { ReservasUsuarioComponent } from './reservas-usuario/reservas-usuario.component';
 import { ModalCancelarReservaComponent } from './modal-cancelar-reserva/modal-cancelar-reserva.component';
 import { CrearUsuarioAdminComponent } from './crear-usuario-admin/crear-usuario-admin.component';
+import { ModalValorarCampingComponent } from './modal-valorar-camping/modal-valorar-camping.component';
 @NgModule({
   declarations: [
     RegistroComponent,
@@ -56,6 +57,7 @@ import { CrearUsuarioAdminComponent } from './crear-usuario-admin/crear-usuario-
     ReservasUsuarioComponent,
     ModalCancelarReservaComponent,
     CrearUsuarioAdminComponent,
+    ModalValorarCampingComponent,
     
   ],
   imports: [

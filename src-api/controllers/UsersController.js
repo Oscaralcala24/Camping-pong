@@ -200,11 +200,7 @@ const updatePassword = async function (req, res) {
 const generateRandomPassword = async function (req, res) {
   const idUser = req.body._id
   const email = req.body.email
-  
-  console.log(email);
-  console.log(typeof(email));
-  console.log(idUser);
-  console.log(typeof(idUser));
+
   const password = () => {
     const buffer = crypto.randomBytes(10);
     return buffer.toString('hex');

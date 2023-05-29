@@ -10,6 +10,7 @@ import { PreciosService } from 'src/app/service/preciosService/precios.service';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModalCancelarReservaComponent } from '../modal-cancelar-reserva/modal-cancelar-reserva.component';
+import { ModalValorarCampingComponent } from '../modal-valorar-camping/modal-valorar-camping.component';
 
 @Component({
   selector: 'app-reservas-usuario',
@@ -27,6 +28,7 @@ export class ReservasUsuarioComponent {
   reservasPendientes = [];
   reservasPasadas = [];
   dialogRef: MatDialogRef<ModalCancelarReservaComponent>;
+  dialogReValorar: MatDialogRef<ModalValorarCampingComponent>;
   constructor(private dialog: MatDialog,private authService: AuthService, private fb: FormBuilder, private userService: UserService, private route: ActivatedRoute, private reservaService: ReservaService, private campingService: CampingService, private preciosService: PreciosService) {
 
   }
@@ -224,7 +226,7 @@ export class ReservasUsuarioComponent {
   }
 
   cancelarReserva(id:string){
-    this.reservaService.deleteReserva(id).subscribe(data =>{
+    this.reservaService.cancelarReserva(id).subscribe(data =>{
       console.log(data);
 
     })
@@ -248,6 +250,28 @@ export class ReservasUsuarioComponent {
     this.dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this.cancelarReserva(buttonId)
+      }
+    });
+  }
+
+
+  valorarCamping(enterAnimationDuration: string, exitAnimationDuration: string, event :Event){
+    const target = event.target as HTMLElement;
+    const buttonId = target.id;
+
+
+    this.dialogReValorar = this.dialog.open(ModalValorarCampingComponent, {
+      width: '500px',
+      height: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+
+    this.dialogReValorar.afterClosed().subscribe((body) => {
+      if (body.resultado == true) {
+        this.reservaService.valorarReserva(buttonId, body.puntuacion).subscribe(data=>{
+          console.log(data);
+        })
       }
     });
   }

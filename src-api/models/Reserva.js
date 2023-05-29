@@ -21,6 +21,7 @@ var reservaSchema = new Schema({
     fecha_pago: { type: Date, default: Date.now()},
     fecha_entrada: { type: Date, required: true},
     fecha_salida: { type: Date, required: true},
+    valoracion: { type: Number, default: null},
     estado: {
         type: String,
         enum: ['Pendiente', 'Cancelado', 'Finalizado'],

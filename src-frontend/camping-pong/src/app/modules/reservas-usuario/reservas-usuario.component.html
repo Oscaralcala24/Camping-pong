@@ -120,8 +120,8 @@
                                         </div>  
                                         <ng-template #estadoFinalizado> <p class="my-4">Estado <strong class="finalizado">{{detalle.estado}}</strong></p></ng-template>
                                         <div>
-                                            <button mat-raised-button color="accent"  id={{detalle.id_reserva}} type="button"  class=" mx-auto" [disabled]="detalle.estado == 'Cancelado'">
-                                                Realizar reserva
+                                            <button mat-raised-button color="accent"  id={{detalle.id_reserva}} type="button" (click)="valorarCamping('400ms', '300ms', $event)" class=" mx-auto" [disabled]="detalle.estado == 'Cancelado'">
+                                                Valorar camping
                                             </button>
                                         </div>
                                     </div>
