@@ -21,7 +21,7 @@ export class ListaCampingAdminComponent {
   ngOnInit(): void {
 
     this.campingService.getListaCamping({}).subscribe((data) =>{
-      console.log(data);
+      console.log(data.filteredCamping);
       this.campings = data.filteredCamping;
     })
     

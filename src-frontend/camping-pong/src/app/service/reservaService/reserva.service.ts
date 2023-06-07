@@ -12,7 +12,6 @@ export class ReservaService {
   constructor(private http:HttpClient , private router : Router ) { }
 
   addReserva(Reserva:any) : Observable<any>{
-    console.log(Reserva)
     return this.http.post<any>(this.URL + 'anadirReserva', Reserva);
   }
   getReservas() : Observable<any>{
@@ -27,7 +26,7 @@ export class ReservaService {
   }
   valorarReserva(id_reserva:string, valoracion) : Observable<any>{
     let body = {valoracion:valoracion} 
-    return this.http.put<any>(this.URL + 'cancelarReserva/'+id_reserva, body);
+    return this.http.put<any>(this.URL + 'valorar/'+id_reserva, body);
   }
 
   get dataReserva() : Observable<any>{

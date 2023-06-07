@@ -24,15 +24,15 @@
             <h3 class="col-3 bg-light py-3 mb-0 text-break">Ciudad</h3>
         </div>
         <div class="col-12 mb-4 row encabezado " *ngFor="let camping of campings | filter: filterText | paginate : { itemsPerPage:10,currentPage:p}">
-            <p class="col-5 col-sm-4  text-bold text-break">{{camping.nombre}}</p>
-            <p class="col-3 text-break">{{camping.region}}</p>
-            <p class="col-3 text-break">{{camping.ciudad}}</p>
+            <p class="col-5 col-sm-4  text-bold text-break">{{camping.id_camping.nombre}}</p>
+            <p class="col-3 text-break">{{camping.id_camping.region}}</p>
+            <p class="col-3 text-break">{{camping.id_camping.ciudad}}</p>
             <div class="col-1 d-flex justify-content-center align-items-start">
                 <p mat-button [matMenuTriggerFor]="menu"><mat-icon >settings</mat-icon></p>
                     <mat-menu #menu="matMenu" xPosition="after">
-                    <a mat-menu-item routerLink="/admin/lista-camping/modificar/{{camping._id}}">Modificar datos</a>
-                    <button mat-menu-item id={{camping._id}}
-                    (click)="openModal('400ms', '300ms', $event)"><mat-icon id={{camping._id}}
+                    <a mat-menu-item routerLink="/admin/lista-camping/modificar/{{camping.id_camping._id}}">Modificar datos</a>
+                    <button mat-menu-item id={{camping.id_camping._id}}
+                    (click)="openModal('400ms', '300ms', $event)"><mat-icon id={{camping.id_camping._id}}
                         >delete</mat-icon></button>
                     </mat-menu>
             </div>

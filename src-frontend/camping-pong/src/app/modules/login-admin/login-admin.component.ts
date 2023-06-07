@@ -14,6 +14,8 @@ export class LoginAdminComponent {
       email:"",
       contrasena: ""
   }
+  error: string;
+  requestFailed: boolean;
     constructor( private authService: AuthService, private router : Router ,private userService: UserService){}
 
   signIn(){
@@ -29,7 +31,11 @@ export class LoginAdminComponent {
         this.router.navigate(['/admin/dashboard']);
         }
       },
-      err => console.log(err),
+      err => {
+        console.log(err.error.error);
+        this.requestFailed = true,
+        this.error = err.error.error;
+      },
     )
   }
 }

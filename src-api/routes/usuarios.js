@@ -7,18 +7,13 @@ const { registrarUsuario, mostrarUsuarios, loginUsuario, mostrarDatosUsuario, lo
 var db = mongoose.connection;
 
 
-
-// POST - Crear un nuevo usuario y validación lado servidor
-// router.post('/registrarUsuario', registrarUsuario);
-
-
 // POST - Crear un nuevo usuario y validación lado servidor
 router.post('/registro', registrarUsuario);
 router.post('/registroAdmin', registrarUsuarioAdmin);
 router.post('/login', loginUsuario);
 router.post('/loginAdmin', loginUsuarioAdministrador);
-router.get('/listaUsuarios',validationToken , mostrarUsuarios);
-router.get('/:id',validationToken , mostrarDatosUsuario);
+router.get('/listaUsuarios',validationToken , mostrarUsuarios); 
+router.get('/:id',validationToken , mostrarDatosUsuario); 
 router.put('/updateUser/:id', validationToken, updateUser);
 router.put('/generarContrasena', generateRandomPassword);
 router.put('/updatePassword/:id', validationToken, updatePassword);

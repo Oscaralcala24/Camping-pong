@@ -7,6 +7,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
+const schedule = require('node-schedule');
+const Reserva = require('./models/Reserva');
 
 
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true })
@@ -15,7 +17,6 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true })
   
 var db = mongoose.connection;
 var campingRouter = require('./routes/camping');
-var detalleReservaRouter = require('./routes/detalleReserva');
 var parcelaRouter = require('./routes/parcela');
 var precioRouter = require('./routes/precio');
 var reservaRouter = require('./routes/reserva');
@@ -38,12 +39,22 @@ app.use('/servicio', servicioRouter);
 app.use('/reserva', reservaRouter);
 app.use('/precio', precioRouter);
 app.use('/parcela', parcelaRouter);
-app.use('/detalleReserva', detalleReservaRouter);
 app.use('/camping', campingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
+});
+ //Tarea programada
+const job = schedule.scheduleJob('0 * * * *',async function(){
+  let reservas = await Reserva.find({estado: "Pendiente"});
+  var fechaActual = new Date()
+  for(let index = 0; index < reservas.length; index++) {
+    let fechaAux = reservas[index].fecha_salida;
+    if (fechaActual < fechaAux) {
+      await Reserva.updateOne({ _id: consulta._id }, { estado: 'Finalizado' }).exec();
+    } 
+  }
 });
 
 // error handler

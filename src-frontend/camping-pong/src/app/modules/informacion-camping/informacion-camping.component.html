@@ -7,7 +7,7 @@
         </h5>
         <h1 class="col-12 fw-bold text-center my-4 ">{{camping?.nombre}}</h1>
         <div class="col-12 col-sm-10 mx-auto row">
-            <gallery class="col-12 col-md-8 mx-auto mt-5" [items]="images"></gallery>
+            <gallery class="col-12 col-md-8 mx-auto mt-5"  id="myGallery"></gallery>
             <div class="col-12 col-md-6 text-md-start text-center mt-5 me-auto descripcion mb-4">
                 <p>{{camping?.descripcion}}</p>
             </div>
@@ -87,7 +87,7 @@
 
                 <map name="map" id="map_ID" >
                     <area type="button" #areaElement shape="poly" *ngFor="let parcela of this.coordenadas;" [id]="parcela.id" (click)="comprobarParcela($event)" 
-                        [coords]="parcela.coordenadas.toString()" alt="Parcela"
+                        [coords]="parcela.coordenadas.toString()" alt="Parcela"  [title]="parcela.tamano"
                     >
                 </map>
 

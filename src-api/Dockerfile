@@ -1,23 +1,20 @@
-# Create image based off of the official Node 6 image
-FROM node:latest
+# Imagen de node que se va a usar (establecer vuestra versión, en el ejemplo es la 14)
+FROM node:14 
 
-# Create a directory where our app will be placed
-RUN mkdir -p /usr/src/app
+# Directorio de trabajo en el contenedor
+WORKDIR /app 
 
-# Change directory so that our commands run inside this new dir
-WORKDIR /usr/src/app
+# Copiar el archivo package.json y package-lock.json al contenedor para que se puedan instalar las dependencias
+COPY package*.json ./ 
 
-# Copy dependency definitions
-COPY package.json /usr/src/app
+# Instalar las dependencias 
+RUN npm install 
 
-# Install dependecies
-RUN npm install
+# Copiar el código fuente al contenedor ( el primer punto es el directorio local donde está el dockerfile y el segundo punto es el directorio WORKDIR definido más arriba)
+COPY . . 
 
-# Get all the code needed to run the app
-COPY . /usr/src/app
+# Exponer el puerto en el que se ejecutará la API 
+EXPOSE 3000 
 
-# Expose the port the app runs in
-EXPOSE 3000
-
-# Serve the app
+# Arranque del servicio
 CMD ["npm", "start"]

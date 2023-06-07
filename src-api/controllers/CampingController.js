@@ -30,7 +30,6 @@ const registrarCamping = async function (req, res) {
             dataServices.servicios_disponibles.push(JSON.parse(req.body.serviciosAdicional)[index]);
          
         }
-        dataServices.servicios_disponibles.push()
         console.log(dataServices);
         
         await Servicio.create(dataServices);
@@ -134,17 +133,17 @@ const mostrarDatosCamping = async function (req, res) {
 };
 
 
-//MEjorar eficiencia
 const mostrarCampings = async function (req, res) {
+    
     try {
-        consulta = await Camping.find().sort({ valoracion: -1 }).exec()
+        
+        consulta = await Servicio.find().populate("id_camping").sort({ valoracion: -1 }).exec()
         const filters = req.query;
         const filteredCamping = consulta.filter(camping  => {
             let isValid = true;
             for (key in filters) {
-                console.log("prueba")
-                console.log(key, camping[key], filters[key]);
-                isValid = isValid && camping[key] == filters[key];
+
+                isValid = isValid && camping.id_camping[key] == filters[key];
             }
             return isValid;
         });

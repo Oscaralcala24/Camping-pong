@@ -23,7 +23,7 @@ export class AuthGuard {
       this.router.createUrlTree(['/login']);
       return false;
     }
-
     return true;
+
   }
 }

@@ -25,7 +25,6 @@ export class DetallePagoReservaComponent implements OnInit {
    fechaEntradaAux:any;
    fechaSalidaAux:any;
    TBajaFechaInicio;
-   valores:any;
    tempBajaInicio;
    tempBajaFin;
    tempMediaInicio;
@@ -38,7 +37,7 @@ export class DetallePagoReservaComponent implements OnInit {
    user:User;
    
    constructor(private _snackBar: MatSnackBar,private campingService:CampingService,private preciosService:PreciosService,private reservaService: ReservaService, private route:ActivatedRoute, private router:Router, private fb:FormBuilder, private userService:UserService){
-     this.valores =this.router?.getCurrentNavigation()?.extras.state;
+     
      this.reservaForm = this.fb.group({
       ntarjeta: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{15,16}$")]),
       fexpiracion: new FormControl(''),
@@ -100,8 +99,7 @@ export class DetallePagoReservaComponent implements OnInit {
     
     const noches = this.calcularNochesPorTemporada(this.fechaEntrada, this.fechaSalida);
 
-    console.log(noches);
-    console.log(this.valores);
+  
     if(noches.Baja > 0){
       this.datosAux.push({temporada: "Baja", cantidadNoches: noches.Baja, precios:[]});
     }
@@ -113,18 +111,17 @@ export class DetallePagoReservaComponent implements OnInit {
       this.datosAux.push({temporada: "Alta", cantidadNoches: noches.Alta, precios:[]});
     }
     
-console.log(this.valores);
 
     var contador= 0;
     this.precios.forEach(element => {
       for (let j = 0; j < this.datosAux.length; j++) {
         
         if(element.temporada == this.datosAux[j].temporada){
-          this.valores.forEach(k =>{
+          this.reserva.detalleReserva.forEach(k =>{
             element.detalle_precio.forEach(precios =>{
               console.log(k.cantidad);
               if(k.nombre == precios.nombre && k.cantidad>0){
-                this.sumatotal += k.cantidad*precios.precio;
+                this.sumatotal += k.cantidad*precios.precio*this.datosAux[j].cantidadNoches;
                 this.datosAux[j].precios.push({nombre: k.nombre, cantidad: k.cantidad, precio:precios.precio})
               }
             })
@@ -133,6 +130,10 @@ console.log(this.valores);
       }
     });
     console.log(this.datosAux);
+    this.userService.dataUser.subscribe(user=>{
+      this.user = user;
+      console.log(this.user);
+    })
 
   }
 
@@ -176,23 +177,19 @@ console.log(this.valores);
   }
 
   reservar(){
-    this.userService.dataUser.subscribe(user=>{
-      this.user = user;
-    })
+
     let reserva = {
       id_camping: this.camping._id,
       id_usuario: this.user._id,
       id_parcela: this.parcelaElegida,
       fecha_entrada : new Date(this.fechaEntrada),
       fecha_salida : new Date(this.fechaSalida),
-      detalleReserva : this.valores
+      detalleReserva : this.reserva.detalleReserva
     }
-    this.reservaService.addReserva(reserva).subscribe(data=>{
-      console.log(data);
-      if(data.status === 'success'){
-        this._snackBar.open(data, "Aceptar");
-        this.router.navigate["/"]
-      }
+    console.log(reserva);
+    this.reservaService.addReserva(reserva).subscribe((data)=>{
+      this._snackBar.open(data, "Aceptar");    
+      this.router.navigate(["/"])
     })
 
   }

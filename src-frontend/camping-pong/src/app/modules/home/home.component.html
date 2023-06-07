@@ -45,15 +45,12 @@
 
         <h4 class="col-12 col-sm-3 text-center mt-1 mb-0">{{camping.ciudad}}</h4>
         <p class="col-12 col-md-10 my-4 mx-auto descripcion">{{camping.descripcion}}</p>
-        <a class="col-6 "> Campings {{camping.ciudad}}</a>
-        <div class="col-6 mb-3 d-flex justify-content-center">
+        <a class="col-5 "> Campings {{camping.ciudad}}</a>
+        <div class="col-7 mb-3 d-flex justify-content-center">
           <button mat-flat-button color="accent" routerLink="/camping/{{camping._id}}">Consultar disponibilidad </button>
         </div>
       </div>
     </div>
-    <!-- 
-      <app-card-camping *ngFor="let camping of campings">
 
-      </app-card-camping> -->
   </div>
 </div>

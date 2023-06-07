@@ -1,15 +1,18 @@
-
-version: '3' # specify docker-compose version
-
-# Define the services/containers to be run
+version: '3'
 services:
-  angular:
-    hostname: localhost
-    #container_name: angular-app
-    build: ./src-frontend/camping-pong
+  backend:
+    build:
+      context: ./src-api  # Ruta al directorio del backend
+      dockerfile: Dockerfile
     ports:
-      - 8181:80
-  express: #name of the second service
-    build: ./src-api # specify the directory of the Dockerfile
+      - 3000:3000  # Puerto de la API
+
+  frontend:
+    build:
+      context: ./src-frontend/camping-pong  # Ruta al directorio del frontend
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000" #specify ports forewarding
+      - 80:80  # Puerto del frontend
+    depends_on:
+      - backend
+

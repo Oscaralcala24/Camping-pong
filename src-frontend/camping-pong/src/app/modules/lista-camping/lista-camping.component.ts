@@ -14,6 +14,17 @@ export class ListaCampingComponent implements OnInit{
   ciudadActual:string = "";
   query:any = {};
   campings: any[] = [];
+  campingsFiltrados: any[] = [];
+  filterValues = {
+    Piscina: false,
+    Barbacoa: false,
+    Supermercado: false,
+    Bar: false,
+    Wifi: false,
+    Gimnasio: false,
+    Mascotas: false,
+    Medico: false,
+  };
   ngOnInit(): void {
 
     this.route.queryParams
@@ -25,11 +36,36 @@ export class ListaCampingComponent implements OnInit{
     }
     this.campingService.getListaCamping(this.query).subscribe((data) =>{
       this.campings = data.filteredCamping;
+      this.campingsFiltrados = this.campings
+      console.log(this.campings);
     })
       }
     );
     
    
+  }
+
+  updateQueryParams(){
+    let filterValuesAux = {};
+    for (let servicio in this.filterValues) {
+      if (this.filterValues[servicio] === true) {
+        filterValuesAux[servicio] = true;
+      }
+  }
+
+    this.campingsFiltrados = this.campings.filter(camping => {
+   
+      for (let index = 0; index < camping.servicios_disponibles.length; index++) {
+        for (let servicio in filterValuesAux) {
+          if (servicio == camping.servicios_disponibles[index].nombre && filterValuesAux[servicio] != camping.servicios_disponibles[index].disponible){
+            return false
+          }
+          
+      }
+        
+      }
+      return true;
+    });
   }
   
 }

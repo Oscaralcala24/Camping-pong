@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/service/userService/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReservaService } from 'src/app/service/reservaService/reserva.service';
 import * as moment from 'moment';
 import { CampingService } from 'src/app/service/campingService/camping.service';
@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/service/auth/auth.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModalCancelarReservaComponent } from '../modal-cancelar-reserva/modal-cancelar-reserva.component';
 import { ModalValorarCampingComponent } from '../modal-valorar-camping/modal-valorar-camping.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-reservas-usuario',
@@ -20,7 +21,7 @@ import { ModalValorarCampingComponent } from '../modal-valorar-camping/modal-val
 export class ReservasUsuarioComponent {
   user!: User
   disabled = true;
-  updateDataForm: FormGroup;
+
   idUsuario: string;
   reservas: any = [];
   reservasAux: any = [];
@@ -29,7 +30,7 @@ export class ReservasUsuarioComponent {
   reservasPasadas = [];
   dialogRef: MatDialogRef<ModalCancelarReservaComponent>;
   dialogReValorar: MatDialogRef<ModalValorarCampingComponent>;
-  constructor(private dialog: MatDialog,private authService: AuthService, private fb: FormBuilder, private userService: UserService, private route: ActivatedRoute, private reservaService: ReservaService, private campingService: CampingService, private preciosService: PreciosService) {
+  constructor(private router:Router,private _snackBar: MatSnackBar,private dialog: MatDialog, private authService: AuthService, private fb: FormBuilder, private userService: UserService, private route: ActivatedRoute, private reservaService: ReservaService, private campingService: CampingService, private preciosService: PreciosService) {
 
   }
 
@@ -39,7 +40,7 @@ export class ReservasUsuarioComponent {
 
 
     this.idUsuario = this.authService.getInfoToken(this.authService.getToken()).id;
-    
+
     console.log(this.idUsuario);
     this.reservaService.getReservas().subscribe((data) => {
       data.consulta.forEach(element => {
@@ -47,55 +48,55 @@ export class ReservasUsuarioComponent {
           this.reservas.push(element);
         }
       })
-      console.log(this.reservas);
+
       this.reservas.forEach(element => {
         var camping;
         this.campingService.getCamping(element.id_reserva.id_camping).subscribe(data => {
           camping = data.consulta
-          this.preciosService.getPrecios(camping._id).subscribe(data => {
-            this.precios = data.consulta
-
+          var sumatotal = 0
+          this.preciosService.getPrecios(camping._id).subscribe(precios => {
+            this.precios = precios.consulta
             let fechaPago = new Date(element.id_reserva.fecha_pago);
             let fechaEntrada = new Date(element.id_reserva.fecha_entrada);
             let fechaSalida = new Date(element.id_reserva.fecha_salida);
             let fechaEntrada2 = moment(fechaEntrada.getFullYear() + "-" + (fechaEntrada.getMonth() + 1) + "-" + fechaEntrada.getDate(), 'YYYY-MM-DD');
             let fechaSalida2 = moment(fechaSalida.getFullYear() + "-" + (fechaSalida.getMonth() + 1) + "-" + fechaSalida.getDate(), 'YYYY-MM-DD');
+            
             const noches = this.calcularNochesPorTemporada(fechaEntrada2, fechaSalida2);
+            console.log(noches);
             let datosAux = [];
-
             if (noches.Baja > 0) {
-              datosAux.push({ temporada: "Baja", cantidadNoches: noches.Baja, precios: [] });
+              datosAux.push({ temporada: "Baja", cantidadNoches: noches.Baja, preciosAux: [] });
             }
             if (noches.Media > 0) {
-              datosAux.push({ temporada: "Media", cantidadNoches: noches.Media, precios: [] });
-
+              datosAux.push({ temporada: "Media", cantidadNoches: noches.Media, preciosAux: [] });
             }
             if (noches.Alta > 0) {
-              datosAux.push({ temporada: "Alta", cantidadNoches: noches.Alta, precios: [] });
+              datosAux.push({ temporada: "Alta", cantidadNoches: noches.Alta, preciosAux: [] });
             }
-
-            var sumatotal = 0
-
-            this.precios.forEach(element => {
-
-              for (let j = 0; j < datosAux.length; j++) {
-                if (element.temporada == datosAux[j].temporada) {
-                  for (let l = 0; l < this.reservas.length; l++) {
-
-                    this.reservas[l].detalle.forEach(precios => {
-                      element.detalle_precio.forEach(k => {
-
-                        if (k.nombre == precios.nombre && precios.cantidad > 0) {
-                          sumatotal += precios.cantidad * k.precio;
-                          datosAux[j].precios.push({ nombre: precios.nombre, cantidad: precios.cantidad, precio: k.precio })
-                        }
-                      })
-                    })
-                  }
+            
+            
+            this.precios.forEach(precios => {
+              
+              for (let index = 0; index < datosAux.length; index++) {
+                if(precios.temporada === datosAux[index].temporada){
+                  element.detalle.forEach(detalle => {
+                    
+                    
+                    for (let j = 0; j < precios.detalle_precio.length; j++) {
+                      
+                      if (detalle.nombre == precios.detalle_precio[j].nombre && detalle.cantidad > 0) {
+                        sumatotal += detalle.cantidad * precios.detalle_precio[j].precio * datosAux[index].cantidadNoches;
+                        datosAux[index].preciosAux.push({ nombre: precios.detalle_precio[j].nombre, cantidad: detalle.cantidad, precio: precios.detalle_precio[j].precio })
+                        
+                      }
+                      
+                    }
+                  })
                 }
               }
-
             });
+            console.log(sumatotal);
             if (element.id_reserva.estado == "Pendiente") {
               this.reservasPendientes.push({
                 id_reserva: element.id_reserva,
@@ -120,43 +121,16 @@ export class ReservasUsuarioComponent {
                 imagen: camping.imagenes[0],
                 estado: element.id_reserva.estado
               })
-
+      
             }
-
-          });
-
+            console.log(this.reservasPasadas);
+          })
         });
       })
-
-    });
-
-
-  }
-
-  public errorHandling = (control: string, error: string) => {
-    return this.updateDataForm.controls[control].hasError(error);
+    })
   }
 
 
-
-  actualizardatos() {
-
-    let userAux = {
-      nombre: this.updateDataForm.get("nombre").value,
-      apellidos: this.updateDataForm.get("apellidos").value,
-      dni: this.updateDataForm.get("dni").value,
-      email: this.updateDataForm.get("email").value,
-      telefono: this.updateDataForm.get("telefono").value,
-    }
-
-
-    this.userService.updateUser(userAux, this.user._id).subscribe(
-      res => {
-        console.log(res)
-      },
-      err => console.log(err),
-    )
-  }
 
 
 
@@ -194,25 +168,28 @@ export class ReservasUsuarioComponent {
     for (let index = 0; index < this.precios.length; index++) {
       let arrayini;
       let arrayfin;
-      arrayini = this.precios[index].fecha_inicio.split("/")
-      arrayfin = this.precios[index].fecha_fin.split("/")
+      
       if (this.precios[index].temporada == "Baja") {
 
-        tempBajaInicio = moment({ month: arrayini[1], day: arrayini[0] });
-        tempBajaFin = moment({ month: arrayfin[1], day: arrayfin[0] });
+        tempBajaInicio = moment(this.precios[index].fecha_inicio);
+        tempBajaFin = moment(this.precios[index].fecha_fin);
         if (!tempBajaInicio.isBefore(tempBajaFin)) {
           let fechaActual = new Date()
-          tempBajaInicio = moment({ year: fechaActual.getFullYear(), month: arrayini[1], day: arrayini[0] });
-          tempBajaFin = moment({ year: fechaActual.getFullYear() + 1, month: arrayfin[1], day: arrayfin[0] });
+          
+          tempBajaFin.add(1, 'year') 
         }
       } else if (this.precios[index].temporada == "Media") {
-        tempMediaInicio = moment({ month: arrayini[1], day: arrayini[0] });
-        tempMediaFin = moment({ month: arrayfin[1], day: arrayfin[0] });
+        tempMediaInicio = moment(this.precios[index].fecha_inicio);
+        tempMediaFin = moment(this.precios[index].fecha_fin);
+        if (!tempMediaInicio.isBefore(tempMediaFin)) {
+          tempMediaFin.add(1, 'year') 
+        }
       } else {
 
-        tempAltaInicio = moment({ month: arrayini[1], day: arrayini[0] });
-        tempAltaFin = moment({ month: arrayfin[1], day: arrayfin[0] });
+        tempAltaInicio = moment(this.precios[index].fecha_inicio);
+        tempAltaFin = moment(this.precios[index].fecha_fin);
       }
+      
     }
 
 
@@ -225,17 +202,17 @@ export class ReservasUsuarioComponent {
     }
   }
 
-  cancelarReserva(id:string){
-    this.reservaService.cancelarReserva(id).subscribe(data =>{
+  cancelarReserva(id: string) {
+    this.reservaService.cancelarReserva(id).subscribe(data => {
       console.log(data);
 
     })
   }
 
 
-  
-  openModal(enterAnimationDuration: string, exitAnimationDuration: string, event :Event): void {
-   
+
+  openModal(enterAnimationDuration: string, exitAnimationDuration: string, event: Event): void {
+
     const target = event.target as HTMLElement;
     const buttonId = target.id;
 
@@ -255,10 +232,9 @@ export class ReservasUsuarioComponent {
   }
 
 
-  valorarCamping(enterAnimationDuration: string, exitAnimationDuration: string, event :Event){
-    const target = event.target as HTMLElement;
+  valorarCamping(enterAnimationDuration: string, exitAnimationDuration: string, event) {
+    const target = event.currentTarget as HTMLElement;
     const buttonId = target.id;
-
 
     this.dialogReValorar = this.dialog.open(ModalValorarCampingComponent, {
       width: '500px',
@@ -269,8 +245,9 @@ export class ReservasUsuarioComponent {
 
     this.dialogReValorar.afterClosed().subscribe((body) => {
       if (body.resultado == true) {
-        this.reservaService.valorarReserva(buttonId, body.puntuacion).subscribe(data=>{
-          console.log(data);
+        this.reservaService.valorarReserva(buttonId, body.puntuacion).subscribe(data => {
+          this._snackBar.open(data, "Aceptar");    
+          location.reload();
         })
       }
     });

@@ -18,6 +18,9 @@
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>   
+                <div [hidden]="!requestFailed" class="alert alert-danger  my-3 col-md-8 text-center m-auto " id="dangerWarning" role="alert">
+                    {{ error }}
+                </div>
                     <div class="col-md-8 row text-center mx-auto">
                         <button mat-raised-button color="accent" type="submit" class="col-md-8 mx-auto">
                         Iniciar sesión

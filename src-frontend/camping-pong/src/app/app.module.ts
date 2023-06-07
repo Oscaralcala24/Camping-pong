@@ -20,7 +20,7 @@ import { HeaderAdminComponent } from './layout/header-admin/header-admin.compone
 import { FooterAdminComponent } from './layout/footer-admin/footer-admin.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GalleryModule } from  'ng-gallery';
-
+import { PathLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -49,7 +49,8 @@ import { GalleryModule } from  'ng-gallery';
       provide : HTTP_INTERCEPTORS,
       useClass : TokenInterceptorService,
       multi : true
-    }
+    },
+    { provide: PathLocationStrategy }
   ],
   bootstrap: [AppComponent],
 })

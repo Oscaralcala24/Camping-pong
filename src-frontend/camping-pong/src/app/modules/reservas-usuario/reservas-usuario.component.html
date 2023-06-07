@@ -15,21 +15,21 @@
                         <div class="row mt-5">
                             <div class="container-fluid">
                                 <div *ngIf="reservasPendientes.length > 0; else reservaVaciaPendiente">
-                                    <div class="col-12 mx-auto reservas row" *ngFor="let detalle of reservasPendientes">
+                                    <div class="col-12 mx-auto reservas row" *ngFor="let detalle of reservasPendientes; let i = index">
                                         <h3 class="text-center mt-3 ">{{detalle.nombre_camping}}</h3>
                                         <div
                                             class="col-12 col-md-7 row justify-content-center align-content-center text-center">
                                             <p>Fecha de pago: {{detalle.fecha_pago}}</p>
                                             <p>Fecha de entrada: {{detalle.fechaEntradaAux}}</p>
-                                            <p>Fecha de Salida: {{detalle.fechaSalidaAux}}</p>
-                                            <div class="col-12 row mt-3 justify-content-end"
+                                            <p class="mb-3">Fecha de Salida: {{detalle.fechaSalidaAux}}</p>
+                                            <div class="col-12 row justify-content-end"
                                                 *ngFor="let detallereserva of detalle.detalle">
                                                 <div class="col-8 col-md-7 text-start ">
                                                     <ul>
                                                         <li>x{{detallereserva.cantidadNoches}} Noches</li>
                                                         <ul>
                                                             <li class="my-1"
-                                                                *ngFor="let precios of detallereserva.precios">
+                                                                *ngFor="let precios of detallereserva.preciosAux">
                                                                 x{{precios.cantidad}}
                                                                 {{precios.nombre}}</li>
                                                         </ul>
@@ -40,15 +40,15 @@
                                                         <li>{{detallereserva.temporada}} </li>
                                                         <ul>
                                                             <li class="my-1"
-                                                                *ngFor="let precios of detallereserva.precios">
+                                                                *ngFor="let precios of detallereserva.preciosAux">
                                                                 {{precios.precio}}€</li>
                                                         </ul>
                                                     </ul>
 
                                                 </div>
-                                                <mat-divider></mat-divider>
-                                                <p class="text-end"><strong>{{detalle.sumatotal}}€</strong></p>
                                             </div>
+                                            <mat-divider></mat-divider>
+                                            <p class="text-end"><strong>{{detalle.sumatotal}}€</strong></p>
                                         </div>
                                         <div
                                             class="col-12 col-md-5 mx-auto py-5 row justify-content-center align-content-center text-center">
@@ -92,7 +92,7 @@
                                                 <ul>
                                                     <li>x{{detallereserva.cantidadNoches}} Noches</li>
                                                     <ul>
-                                                        <li class="my-1" *ngFor="let precios of detallereserva.precios">
+                                                        <li class="my-1" *ngFor="let precios of detallereserva.preciosAux">
                                                             x{{precios.cantidad}}
                                                             {{precios.nombre}}</li>
                                                     </ul>
@@ -102,15 +102,15 @@
                                                 <ul>
                                                     <li>{{detallereserva.temporada}} </li>
                                                     <ul>
-                                                        <li class="my-1" *ngFor="let precios of detallereserva.precios">
+                                                        <li class="my-1" *ngFor="let precios of detallereserva.preciosAux">
                                                             {{precios.precio}}€</li>
                                                     </ul>
                                                 </ul>
 
                                             </div>
-                                            <mat-divider></mat-divider>
-                                            <p class="text-end"><strong>{{detalle.sumatotal}}€</strong></p>
                                         </div>
+                                        <mat-divider></mat-divider>
+                                        <p class="text-end"><strong>{{detalle.sumatotal}}€</strong></p>
                                     </div>
                                     <div
                                         class="col-12 col-md-5 mx-auto py-5 row justify-content-center align-content-center text-center">
@@ -120,9 +120,11 @@
                                         </div>  
                                         <ng-template #estadoFinalizado> <p class="my-4">Estado <strong class="finalizado">{{detalle.estado}}</strong></p></ng-template>
                                         <div>
-                                            <button mat-raised-button color="accent"  id={{detalle.id_reserva}} type="button" (click)="valorarCamping('400ms', '300ms', $event)" class=" mx-auto" [disabled]="detalle.estado == 'Cancelado'">
-                                                Valorar camping
+                                            
+                                            <button mat-raised-button color="accent"  id={{detalle.id_reserva._id}} type="button" (click)="valorarCamping('400ms', '300ms', $event)" class=" mx-auto" [disabled]="detalle.estado == 'Cancelado' || detalle.id_reserva.valoracion !=null">
+                                                 Valorar camping
                                             </button>
+                                            <p class="mt-2" *ngIf="detalle.id_reserva.valoracion != null">Camping ya valorado</p>
                                         </div>
                                     </div>
                                 </div>
