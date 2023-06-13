@@ -31,63 +31,72 @@
                                 </header>
                                 <div class="filter-content">
                                     <div class="card-body">
-                                        
-                                            <label class="form-check">
-                                                <input class="form-check-input" type="checkbox" [(ngModel)]="filterValues.Piscina">
-                                                <span class="form-check-label">
-                                                    Piscina
-                                                </span>
-                                            </label> 
-                                            <label class="form-check">
-                                                <input class="form-check-input" type="checkbox" [(ngModel)]="filterValues.Barbacoa">
-                                                <span class="form-check-label">
-                                                    Barbacoa
-                                                </span>
-                                            </label> 
-                                            <label class="form-check">
-                                                <input class="form-check-input" type="checkbox" [(ngModel)]="filterValues.Supermercado">
-                                                <span class="form-check-label">
-                                                    Supermercado
-                                                </span>
-                                            </label> 
-                                            <label class="form-check">
-                                                <input class="form-check-input" type="checkbox" [(ngModel)]="filterValues.Bar">
-                                                <span class="form-check-label">
-                                                    Bar
-                                                </span>
-                                            </label> 
-                                            <label class="form-check">
-                                                <input class="form-check-input" type="checkbox" [(ngModel)]="filterValues.Wifi">
-                                                <span class="form-check-label">
-                                                    Wifi
-                                                </span>
-                                            </label> 
-                                            <label class="form-check">
-                                                <input class="form-check-input" type="checkbox" [(ngModel)]="filterValues.Gimnasio" >
-                                                <span class="form-check-label">
-                                                    Gimnasio
-                                                </span>
-                                            </label> 
-                                            <label class="form-check">
-                                                <input class="form-check-input" type="checkbox" [(ngModel)]="filterValues.Mascotas">
-                                                <span class="form-check-label">
-                                                    Se admiten mascotas
-                                                </span>
-                                            </label> 
-                                            <label class="form-check">
-                                                <input class="form-check-input" type="checkbox" [(ngModel)]="filterValues.Medico">
-                                                <span class="form-check-label">
-                                                    Médico
-                                                </span>
-                                            </label> 
-                                        
+
+                                        <label class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                [(ngModel)]="filterValues.Piscina">
+                                            <span class="form-check-label">
+                                                Piscina
+                                            </span>
+                                        </label>
+                                        <label class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                [(ngModel)]="filterValues.Barbacoa">
+                                            <span class="form-check-label">
+                                                Barbacoa
+                                            </span>
+                                        </label>
+                                        <label class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                [(ngModel)]="filterValues.Supermercado">
+                                            <span class="form-check-label">
+                                                Supermercado
+                                            </span>
+                                        </label>
+                                        <label class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                [(ngModel)]="filterValues.Bar">
+                                            <span class="form-check-label">
+                                                Bar
+                                            </span>
+                                        </label>
+                                        <label class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                [(ngModel)]="filterValues.Wifi">
+                                            <span class="form-check-label">
+                                                Wifi
+                                            </span>
+                                        </label>
+                                        <label class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                [(ngModel)]="filterValues.Gimnasio">
+                                            <span class="form-check-label">
+                                                Gimnasio
+                                            </span>
+                                        </label>
+                                        <label class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                [(ngModel)]="filterValues.Mascotas">
+                                            <span class="form-check-label">
+                                                Se admiten mascotas
+                                            </span>
+                                        </label>
+                                        <label class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                [(ngModel)]="filterValues.Medico">
+                                            <span class="form-check-label">
+                                                Médico
+                                            </span>
+                                        </label>
+
 
                                     </div> <!-- card-body.// -->
                                 </div>
                             </article> <!-- card-group-item.// -->
 
-                            
-                            <button mat-flat-button color="accent" class="mt-3" (click)="updateQueryParams()">Buscar</button>
+
+                            <button mat-flat-button color="accent" class="mt-3"
+                                (click)="updateQueryParams()">Buscar</button>
                         </div> <!-- card.// -->
 
                     </div>
@@ -95,37 +104,40 @@
             </nav>
         </div>
     </div>
-    <div class="row mt-5 camping col-10 col-sm-12 mx-auto d-flex align-items-center" *ngIf="campingsFiltrados.length > 0; else campingVacio">
-        <div class="row mx-auto"
-            *ngFor="let camping of campingsFiltrados | paginate : { itemsPerPage:10,currentPage:p}" >
+    <div class="row mt-5  col-10 col-sm-12 mx-auto d-flex align-items-center"
+        *ngIf="campingsFiltrados.length > 0; else campingVacio">
+        <div class="row mx-auto mt-2 mb-3 camping"
+            *ngFor="let camping of campingsFiltrados | paginate : { itemsPerPage:10,currentPage:p}">
             <div class=" col-8 mx-auto col-md-3 my-md-3 mt-3">
-            <img [src]="camping.id_camping.imagenes[0]" alt="">
-        </div>
-        <div class="col-12 mx-auto col-md-9 row mt-3">
-            <div class="col-12 col-sm-9 d-flex mx-auto">
-                <h3>{{camping.id_camping.nombre}}</h3>
-                <star-rating class="text-left ms-4 mt-1 " [step]="0.5" [showHalfStars]="true" [readOnly]="true" staticColor="ok"
-                    size="medium" [starType]="'svg'" rating="{{camping.id_camping.valoracion}}"></star-rating>
-    
+                <img [src]="camping.id_camping.imagenes[0]" alt="">
             </div>
-    
-    
-            <h4 class="col-12 col-sm-3 text-center mt-1 mb-0">{{camping.id_camping.ciudad}}</h4>
-            <p class="col-12 col-md-10 my-4 mx-auto descripcion">{{camping.id_camping.descripcion}}</p>
-            <a class="col-5 "> Campings {{camping.id_camping.ciudad}}</a>
-            <div class="col-7 mb-3 d-flex justify-content-center">
-                <button mat-flat-button color="accent" routerLink="/camping/{{camping.id_camping._id}}">Consultar disponibilidad </button>
+            <div class="col-12 mx-auto col-md-9 row mt-3">
+                <div class="col-12 col-sm-9 d-flex mx-auto">
+                    <h3>{{camping.id_camping.nombre}}</h3>
+                    <star-rating class="text-left ms-4 mt-1 " [step]="0.5" [showHalfStars]="true" [readOnly]="true"
+                        staticColor="ok" size="medium" [starType]="'svg'"
+                        rating="{{camping.id_camping.valoracion}}"></star-rating>
+
+                </div>
+
+
+                <h4 class="col-12 col-sm-3 text-center mt-1 mb-0">{{camping.id_camping.ciudad}}</h4>
+                <p class="col-12 col-md-10 my-4 mx-auto descripcion">{{camping.id_camping.descripcion}}</p>
+                <a class="col-5 "> Campings {{camping.id_camping.ciudad}}</a>
+                <div class="col-7 mb-3 d-flex justify-content-center">
+                    <button mat-flat-button color="accent" routerLink="/camping/{{camping.id_camping._id}}">Consultar
+                        disponibilidad </button>
+                </div>
             </div>
         </div>
-    </div>
 
     </div>
-<ng-template #campingVacio>
-    <h2 class="mt-5 text-center">No hay campings disponibles con estos filtros</h2>
-</ng-template>
-<div class="row text-center">
-    <pagination-controls class="mt-4" (pageChange)="p = $event"></pagination-controls>
-</div>
+    <ng-template #campingVacio>
+        <h2 class="mt-5 text-center">No hay campings disponibles con estos filtros</h2>
+    </ng-template>
+    <div class="row text-center">
+        <pagination-controls class="mt-4" (pageChange)="p = $event"></pagination-controls>
+    </div>
 
 
 

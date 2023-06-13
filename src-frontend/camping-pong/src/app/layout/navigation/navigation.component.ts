@@ -21,8 +21,12 @@ export class NavigationComponent {
   ngOnInit() {
     this.campingService.getCiudadesDisponibles().subscribe((data) => {
       for (let i = 0; i < data.consulta.length; i++){
-        this.options.push(data.consulta[i].ciudad)
+        if(this.options.indexOf(data.consulta[i].ciudad) === -1){
+          this.options.push(data.consulta[i].ciudad)
+
+        }
       }
+      console.log(this.options);
     })
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -37,7 +41,7 @@ export class NavigationComponent {
   }
 
   goCampingFilter(ciudad : string) { 
-    
+    ciudad = ciudad.toLowerCase();
     this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
       this.router.navigate(['/listado-camping'],{queryParams: { ciudad: ciudad}}).then(()=>{
       console.log(`After navigation I am on:${this.router.url}`)

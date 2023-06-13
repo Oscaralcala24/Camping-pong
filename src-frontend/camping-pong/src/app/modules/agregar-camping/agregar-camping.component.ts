@@ -279,7 +279,7 @@ agregarCamping(){
 
   this.campingService.addCamping(formData).subscribe(
     res => {
-      this.toastr.success(res)
+      this.toastr.success("Has agregado un camping con éxito")
       this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
       this.router.navigate(["/admin/lista-camping"]));
     },

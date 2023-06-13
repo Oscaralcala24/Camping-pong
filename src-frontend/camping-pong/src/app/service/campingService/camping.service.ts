@@ -41,4 +41,8 @@ export class CampingService {
     console.log(Camping)
     return this.http.post<FormData>(this.URL + 'agregarCamping', Camping);
   }
+  
+  modificarCamping(Camping:any, id:string) : Observable<any>{
+    return this.http.put<any>(this.URL + 'modificarCamping/'+ id, Camping);
+  }
 }

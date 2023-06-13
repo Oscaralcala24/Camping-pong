@@ -11,14 +11,14 @@
           <ul class="navbar-nav me-auto mb-lg-0 d-flex justify-content-evenly text-center w-100">
             <ng-container *ngIf="!authService.loggedIn(); else loggedInNav">
               <li class="nav-item">
-                <a class="nav-link"  aria-current="page" [routerLink]="['/listado-camping']" [queryParams]="{ciudad: 'Huelva'}">Camping Huelva</a>
+                <a class="nav-link"  aria-current="page" [routerLink]="['/listado-camping']" [queryParams]="{ciudad: 'huelva'}">Camping Huelva</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" [routerLink]="['/listado-camping']" [queryParams]="{ciudad: 'Valencia'}">Camping Valencia</a>
+                <a class="nav-link" aria-current="page" [routerLink]="['/listado-camping']" [queryParams]="{ciudad: 'valencia'}">Camping Valencia</a>
               </li>
               <li class="nav-item">
                 
-                <a class="nav-link" aria-current="page" [routerLink]="['/listado-camping']" [queryParams]="{ciudad: 'Almeria'}">Camping Almeria</a>
+                <a class="nav-link" aria-current="page" [routerLink]="['/listado-camping']" [queryParams]="{ciudad: 'almeria'}">Camping Almeria</a>
               </li>
             </ng-container>
             <ng-template #loggedInNav>

@@ -83,51 +83,8 @@
                             El teléfono es requerido
                         </mat-error>
                     </mat-form-field>
-                    <!-- <div class="example-full-width d-flexrow col-12 my-4 mx-auto">
-                        <mat-label class="">Imagenes</mat-label>
-                        <input class="d-block" (change)="imagenesChange($event)" type="file" formControlName="imagenes"
-                            name="imagenes" multiple />
-                        <mat-error class="" *ngIf="errorHandling('imagenes', 'required')">
-                            Las imagenes son requeridas
-                        </mat-error>
-                    </div> -->
-
-
                 </div>
-                <!-- <div class="col-md-6 col-12 ms-auto text-center">
-                    <mat-label class="h5 col-12 ">Servicios disponibles</mat-label>
-                    <div class="row mx-auto mt-4 text-start justify-content-between">
-                        <div class="row mb-2 col-12 col-sm-6 justify-content-center" *ngFor="let servicio of serviciosPrincipales; let i =index">
-                                 
-                            <input type="checkbox" [value]="servicio.nombre" (change)="onCheckboxChange($event)" class="col-1 p-5">
-                            <label class="col-6">{{servicio.nombre}}</label>
-
-                        </div>
-                        
-                        <mat-form-field class="example-chip-list mt-3" appearance="fill">
-                            <mat-label>Otros servicios</mat-label>
-                            <mat-chip-grid #chipGrid aria-label="Introduce servicio">
-                              <mat-chip-row *ngFor="let servicioAux of seviciosAgregados"
-                                            (removed)="remove(servicioAux)"
-                                            [editable]="true"
-                                            (edited)="edit(servicioAux, $event)"
-                                            [aria-description]="'press enter to edit ' + servicioAux.nombre">
-                                {{servicioAux.nombre}}
-                                <button matChipRemove [attr.aria-label]="'remove ' + servicioAux.nombre">
-                                  <mat-icon>cancel</mat-icon>
-                                </button>
-                              </mat-chip-row>
-                              <input placeholder="Nuevo servicio..."
-                                     [matChipInputFor]="chipGrid"
-                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                     [matChipInputAddOnBlur]="addOnBlur"
-                                     (matChipInputTokenEnd)="add($event)"/>
-                            </mat-chip-grid>
-                          </mat-form-field>
-                    </div>
-
-
-                </div> -->
+                
                 <div class="map col-12 col-md-5 row my-4 mx-auto text-center d-flex align-content-center">
                     <mat-label class="h5">Ubicación</mat-label>
                     <div class="col-12 mb-4 mx-auto" id="map"></div>
@@ -190,51 +147,13 @@
                           </mat-form-field>
                     </div> 
                 </div>
-                <mat-label class="h5 mt-5 text-center">Precios</mat-label>
-                <div class="col-12 col-md-4  row ">
-                    <button type='button' mat-raised-button color="accent" (click)="onAddRow()"><mat-icon>add</mat-icon>Añadir precio</button>
-                </div>
-                <div class="col-12 mt-5 row mx-auto ">
-                    <div class="col-12 row mx-auto justify-content-between align-items-center mt-5" *ngFor="let row of campingForm.get('rows')?.controls;let index = index;">
-                        
-                            <mat-form-field class="col-12 col-md-3">
-                                <mat-label>Introduzca nombre</mat-label>
-                                <input  type="text" matInput placeholder="Adulto" [formControl]="row.get('nombre')" >
-                            </mat-form-field>
-                            <mat-form-field class="col-12 col-md-2" appearance="outline" floatLabel="always">
-                                <mat-label>Precio T.Baja</mat-label>
-                                <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="row.get('preciobaja')">
-                                <span matTextPrefix>€&nbsp;</span>
-                                
-                            </mat-form-field>
-                            <mat-form-field class="col-12 col-md-2" appearance="outline" floatLabel="always">
-                                <mat-label>Precio T.Media</mat-label>
-                                <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="row.get('preciomedia')">
-                                <span matTextPrefix>€&nbsp;</span>
-                                
-                            </mat-form-field>
-                            <mat-form-field class="col-12 col-md-2" appearance="outline" floatLabel="always">
-                                <mat-label>Precio T.Alta</mat-label>
-                                <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="row.get('precioalta')">
-                                <span matTextPrefix>€&nbsp;</span>
-                                
-                            </mat-form-field>
-                            <div class="col-12 col-md-3" (click)="onRemoveRow(index)">
-                                <mat-icon>delete</mat-icon>
-                            </div>
-                            <mat-divider></mat-divider>
-                    </div>
-                </div>
-                
-                
-                
-                <!-- <div class="col-md-8 row text-center mx-auto">
+                <div class="col-md-8 row text-center mx-auto">
 
                     <button class="col-md-8 mx-auto" [disabled]="!campingForm.valid "  mat-raised-button color="accent"
                         type="submit">
                         Confirmar cambios
                     </button>
-                </div> -->
+                </div>
                 
             </form>
 

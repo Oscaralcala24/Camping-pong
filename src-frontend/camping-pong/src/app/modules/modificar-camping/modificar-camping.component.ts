@@ -107,7 +107,7 @@ export class ModificarCampingComponent {
   map: L.Map;
   marker: L.Marker;
   rows: FormArray;
- 
+
 
   ngOnInit() {
     this.route.params
@@ -117,7 +117,7 @@ export class ModificarCampingComponent {
       );
     console.log(this.idCamping);
     this.campingService.getCamping(this.idCamping).subscribe(data => {
-      this.camping = data.consulta; 
+      this.camping = data.consulta;
       console.log(this.camping);
 
       let auxCoords = this.camping.ubicacion.split(",");
@@ -127,24 +127,24 @@ export class ModificarCampingComponent {
         lat: Number(x[1]),
         lng: Number(y[2])
       }
-      
 
-    this.map = L.map('map').setView([marcador.lat, marcador.lng], 13);
-    this.marker = L.marker(marcador).addTo(this.map);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(this.map);
-    this.map.on('click', (e) => {
-      if (!this.marker) {
+      this.campingForm.controls['ubicacion'].setValue(`Lat: ${marcador.lat}, Lng: ${marcador.lng}`);
+      this.map = L.map('map').setView([marcador.lat, marcador.lng], 13);
+      this.marker = L.marker(marcador).addTo(this.map);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(this.map);
+      this.map.on('click', (e) => {
+        if (!this.marker) {
 
-        this.marker = L.marker(e.latlng).addTo(this.map);
-      } else {
-        this.marker.setLatLng(e.latlng);
-      }
-      this.campingForm.controls['ubicacion'].setValue(`Lat: ${e.latlng.lat}, Lng: ${e.latlng.lng}`);
-    
-    });
+          this.marker = L.marker(e.latlng).addTo(this.map);
+        } else {
+          this.marker.setLatLng(e.latlng);
+        }
+        this.campingForm.controls['ubicacion'].setValue(`Lat: ${e.latlng.lat}, Lng: ${e.latlng.lng}`);
+
+      });
 
 
 
@@ -155,27 +155,21 @@ export class ModificarCampingComponent {
       this.preciosService.getPrecios(this.idCamping).subscribe(precios => {
         this.precios = precios.consulta
         for (let index = 0; index < this.precios.length; index++) {
-          if(index == 0){
-            for (let j = 0; j < this.precios[index].detalle_precio.length; j++) {
-              this.onAddRow();
-              
-              
-            }
-          }
-          if (this.precios[index].temporada == "Baja"){
+
+          if (this.precios[index].temporada == "Baja") {
             this.campingForm.get('fechaTBajaInicio').setValue(this.precios[index].fecha_inicio);
             this.campingForm.get('fechaTBajaFin').setValue(this.precios[index].fecha_fin);
-          }else if (this.precios[index].temporada == "Media"){
+          } else if (this.precios[index].temporada == "Media") {
             this.campingForm.get('fechaTMediaInicio').setValue(this.precios[index].fecha_inicio);
-            this.campingForm.get('fechaTMediaFin').setValue(this.precios[index].fecha_fin);            
-          }else{
+            this.campingForm.get('fechaTMediaFin').setValue(this.precios[index].fecha_fin);
+          } else {
             this.campingForm.get('fechaTAltaInicio').setValue(this.precios[index].fecha_inicio);
             this.campingForm.get('fechaTAltaFin').setValue(this.precios[index].fecha_fin);
 
           }
-          
+
         }
-        
+
         console.log(this.precios);
       })
     });
@@ -191,7 +185,6 @@ export class ModificarCampingComponent {
       region: new FormControl('', [Validators.required]),
       ciudad: new FormControl('', [Validators.required]),
       ubicacion: new FormControl('', [Validators.required]),
-      imagenes: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       telefono: new FormControl('', [Validators.pattern("^[0-9]{9}$"), Validators.required]),
       fechaTBajaInicio: ['', Validators.required],
@@ -200,19 +193,10 @@ export class ModificarCampingComponent {
       fechaTMediaInicio: ['', Validators.required],
       fechaTAltaInicio: ['', Validators.required],
       fechaTAltaFin: ['', Validators.required],
-      // arrayService: this.fb.array([{ nombre: 'Piscina', disponible: false },
-      // { nombre: 'Barbacoa', disponible: false  },
-      // { nombre: 'Supermercado', disponible: false},
-      // { nombre: 'Bar', disponible: false },
-      // { nombre: 'Wifi', disponible: false },
-      // { nombre: 'Gimnasio', disponible: false },
-      // { nombre: 'Se admiten mascotas', disponible: false },
-      // { nombre: 'Medico', disponible: false}]),
 
-      //   });
 
     })
-    this.rows = this.fb.array([]);
+
 
 
   }
@@ -220,25 +204,32 @@ export class ModificarCampingComponent {
 
 
   modificarCamping() {
+    let contenidoAux = {
+      'nombre': this.campingForm.get('nombre').value,
+      'region': this.campingForm.get('region').value,
+      'descripcion': this.campingForm.get('descripcion').value,
+      'ciudad': this.campingForm.get('ciudad').value,
+      'ubicacion': this.campingForm.get('ubicacion').value,
+      'email': this.campingForm.get('email').value,
+      'telefono': this.campingForm.get('telefono').value,
+      'fechaTBajaInicio': this.campingForm.get('fechaTBajaInicio').value,
+      'fechaTBajaFin': this.campingForm.get('fechaTBajaFin').value,
+      'fechaTMediaInicio': this.campingForm.get('fechaTMediaInicio').value,
+      'fechaTMediaFin': this.campingForm.get('fechaTMediaFin').value,
+      'fechaTAltaInicio': this.campingForm.get('fechaTAltaInicio').value,
+      'fechaTAltaFin': this.campingForm.get('fechaTAltaFin').value
+    }
 
-  }
+    this.campingService.modificarCamping(contenidoAux, this.idCamping).subscribe(
+      res => {
+        this.toastr.success("Has modificado el camping con éxito")
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+          this.router.navigate(["/admin/lista-camping"]));
+      },
+      err => {
+        this.toastr.warning(err)
 
-
-  onAddRow() {
-    this.rows.push(this.createItemFormGroup());
-  
-  }
-  
-  onRemoveRow(rowIndex:number){
-    this.rows.removeAt(rowIndex);
-  }
-  
-  createItemFormGroup(): FormGroup {
-    return this.fb.group({
-      nombre: null,
-      preciobaja: null,
-      preciomedia: null,
-      precioalta: null,
-    });
+      },
+    )
   }
 }

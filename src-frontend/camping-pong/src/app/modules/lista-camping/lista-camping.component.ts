@@ -13,6 +13,7 @@ export class ListaCampingComponent implements OnInit{
   constructor(private route: ActivatedRoute, private campingService : CampingService,private toastr: ToastrService){}
   p:Number = 1;
   ciudadActual:string = "";
+  ciudadAux:string = "";
   query:any = {};
   campings: any[] = [];
   campingsFiltrados: any[] = [];
@@ -31,14 +32,16 @@ export class ListaCampingComponent implements OnInit{
     this.route.queryParams
       .subscribe(params => {
         this.ciudadActual = params['ciudad'];
+        this.ciudadAux = params['ciudad'];
+        this.ciudadActual = this.ciudadActual.toUpperCase()
         this.query = {
-      ciudad : this.ciudadActual
+      ciudad : this.ciudadAux
       
     }
     this.campingService.getListaCamping(this.query).subscribe((data) =>{
       this.campings = data.filteredCamping;
       this.campingsFiltrados = this.campings
-      console.log(this.campings);
+      
     })
       }
     );
