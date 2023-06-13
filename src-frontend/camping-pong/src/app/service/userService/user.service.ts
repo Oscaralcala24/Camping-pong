@@ -41,7 +41,7 @@ export class UserService implements OnInit {
     return this.http.get<any>(this.URL+ "listaUsuarios")
   }
 
-  deleteUser(id:string) : Observable<User>{
+  deleteUser(id:string) : Observable<any>{
     return this.http.delete<any>(this.URL + 'borrar/'+id);
   }
 

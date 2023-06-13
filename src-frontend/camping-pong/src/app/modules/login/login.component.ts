@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/userService/user.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   }
   error: string;
 requestFailed: boolean;
-    constructor( private authService: AuthService, private router : Router ,private userService: UserService){}
+    constructor( private authService: AuthService, private router : Router ,private userService: UserService,private toastr: ToastrService){}
   ngOnInit() {
     
   }
@@ -33,6 +34,7 @@ requestFailed: boolean;
         if(getID){
         
         this.userService.setUser(res.data) 
+        this.toastr.success("Sesión iniciada con exito")   
         this.router.navigate(['/'])
         }
       },

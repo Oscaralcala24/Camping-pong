@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { Router } from '@angular/router';
 import { FormControl,FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-crear-usuario-admin',
   templateUrl: './crear-usuario-admin.component.html',
   styleUrls: ['./crear-usuario-admin.component.scss']
 })
 export class CrearUsuarioAdminComponent implements OnInit{
-  constructor( private authService: AuthService, private router : Router, private fb: FormBuilder){
+  constructor( private authService: AuthService, private router : Router, private fb: FormBuilder,private toastr: ToastrService){
     this.reactiveForm() 
   }
 
@@ -51,11 +52,22 @@ export class CrearUsuarioAdminComponent implements OnInit{
     }
     console.log(user)
 
-    this.authService.signUp(user).subscribe(
+    this.authService.signUpAdminUser(user).subscribe(
       res => {
-        console.log(res);
+        if(res.status == "Usuario registrado correctamente"){
+          this.toastr.success(res.status)
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/admin/lista-usuarios']);
+        });
+          
+        }else{
+          this.toastr.warning("Usuario ya existe")
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/admin/crear-usuario']);
+        });
+        }
       },
-      err => console.log(err),
+      err => this.toastr.warning(err.status),
     )
   }
 

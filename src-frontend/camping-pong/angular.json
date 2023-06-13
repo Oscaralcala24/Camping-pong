@@ -34,7 +34,8 @@
               "node_modules/bootstrap/scss/bootstrap.scss",
               "src/styles.scss",
               "src/assets/scss/tema.scss",
-              "node_modules/font-awesome/css/font-awesome.css"
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
@@ -103,7 +104,8 @@
               "node_modules/bootstrap/scss/bootstrap.scss",
               "src/styles.scss",
               "src/assets/scss/tema.scss",
-              "node_modules/font-awesome/css/font-awesome.css"
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js"

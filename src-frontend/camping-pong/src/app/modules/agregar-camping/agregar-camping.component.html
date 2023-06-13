@@ -12,7 +12,7 @@
             <form [formGroup]="campingForm" class="mx-auto my-4 row" (ngSubmit)="agregarCamping()" novalidate>
                 <mat-form-field appearance="fill" class="col-md-4 me-auto">
                     <mat-label>Introduzca el nombre</mat-label>
-                    <input matInput placeholder="Antonio" formControlName="nombre" required name="nombre">
+                    <input matInput placeholder="Camping Giralda" formControlName="nombre" required name="nombre">
                     <mat-error *ngIf="errorHandling('nombre', 'required')">
                         El campo nombre es requerido
                     </mat-error>
@@ -181,30 +181,33 @@
                     <button type='button' mat-raised-button color="accent" (click)="onAddRow()"><mat-icon>add</mat-icon>Añadir precio</button>
                 </div>
                 <div class="col-12 mt-5 row mx-auto ">
-                    <div class="col-12 row mx-auto justify-content-between mt-5" *ngFor="let row of campingForm.get('rows')?.controls;let index = index;">
+                    <div class="col-12 row mx-auto justify-content-between align-items-center mt-5" *ngFor="let row of campingForm.get('rows')?.controls;let index = index;">
                         
                             <mat-form-field class="col-12 col-md-3">
                                 <mat-label>Introduzca nombre</mat-label>
                                 <input  type="text" matInput placeholder="Adulto" [formControl]="row.get('nombre')" >
                             </mat-form-field>
-                            <mat-form-field class="col-12 col-md-3" appearance="outline" floatLabel="always">
+                            <mat-form-field class="col-12 col-md-2" appearance="outline" floatLabel="always">
                                 <mat-label>Precio T.Baja</mat-label>
                                 <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="row.get('preciobaja')">
                                 <span matTextPrefix>€&nbsp;</span>
-                                <span matTextSuffix>.00</span>
+                                
                             </mat-form-field>
-                            <mat-form-field class="col-12 col-md-3" appearance="outline" floatLabel="always">
+                            <mat-form-field class="col-12 col-md-2" appearance="outline" floatLabel="always">
                                 <mat-label>Precio T.Media</mat-label>
                                 <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="row.get('preciomedia')">
                                 <span matTextPrefix>€&nbsp;</span>
-                                <span matTextSuffix>.00</span>
+                                
                             </mat-form-field>
-                            <mat-form-field class="col-12 col-md-3" appearance="outline" floatLabel="always">
+                            <mat-form-field class="col-12 col-md-2" appearance="outline" floatLabel="always">
                                 <mat-label>Precio T.Alta</mat-label>
                                 <input matInput type="number" class="example-right-align" placeholder="0" [formControl]="row.get('precioalta')">
                                 <span matTextPrefix>€&nbsp;</span>
-                                <span matTextSuffix>.00</span>
+                                
                             </mat-form-field>
+                            <div class="col-12 col-md-3" (click)="onRemoveRow(index)">
+                                <mat-icon>delete</mat-icon>
+                            </div>
                             <mat-divider></mat-divider>
                     </div>
                 </div>

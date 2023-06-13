@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { UserService } from 'src/app/service/userService/user.service';
 
@@ -16,7 +17,7 @@ export class LoginAdminComponent {
   }
   error: string;
   requestFailed: boolean;
-    constructor( private authService: AuthService, private router : Router ,private userService: UserService){}
+    constructor( private authService: AuthService, private router : Router ,private userService: UserService,private toastr: ToastrService){}
 
   signIn(){
     this.authService.signInAdmin(this.user).subscribe(
@@ -28,6 +29,7 @@ export class LoginAdminComponent {
         if(getID){
         
         this.userService.setUser(res.data) 
+        this.toastr.success("Sesión iniciada con exito")   
         this.router.navigate(['/admin/dashboard']);
         }
       },

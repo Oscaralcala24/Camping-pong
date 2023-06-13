@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import 'fabric';
+import { ToastrService } from 'ngx-toastr';
 declare const fabric: any;
 
 @Component({
@@ -35,7 +36,7 @@ export class ModalParcelasComponent {
    points = [];
    newPt: any;
  
-   constructor(private dialogRef: MatDialogRef<ModalParcelasComponent>) {}
+   constructor(private dialogRef: MatDialogRef<ModalParcelasComponent>,private toastr: ToastrService) {}
 
    getParcelas(): any[] {
     return this.parcelas;
@@ -69,6 +70,7 @@ export class ModalParcelasComponent {
    guardarParcela(){
     this.parcelas.push({coordenadas: JSON.stringify(this.points), tamano: this.selectedValue})
     this.canvas.add(this.polygon)
+    this.toastr.success("Parcela introducida con exito")
     this.crearParcela();
    }
    crearParcela(){

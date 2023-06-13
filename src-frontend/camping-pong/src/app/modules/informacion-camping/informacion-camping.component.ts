@@ -11,6 +11,7 @@ import { UserService } from 'src/app/service/userService/user.service';
 import { ReservaService } from 'src/app/service/reservaService/reserva.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/service/auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-informacion-camping',
@@ -20,7 +21,7 @@ import { AuthService } from 'src/app/service/auth/auth.service';
 export class InformacionCampingComponent {
   constructor(private _snackBar: MatSnackBar,private reservaService: ReservaService, private userService: UserService, private router: Router, private route: ActivatedRoute,
     private campingService: CampingService, private serviciosService: ServiciosServiceService,
-    private preciosService: PreciosService, private fb: FormBuilder, private parcelaService: ParcelaService,private gallery: Gallery,private authService:AuthService) { }
+    private preciosService: PreciosService, private fb: FormBuilder, private parcelaService: ParcelaService,private gallery: Gallery,private authService:AuthService,private toastr: ToastrService) { }
   reservaForm: FormGroup;
   idCamping: string;
   camping: any;
@@ -212,7 +213,7 @@ export class InformacionCampingComponent {
 
   detalleReserva() {
     if (!this.authService.loggedIn()){
-      this._snackBar.open("Debes iniciar sesión", "Aceptar");
+      this.toastr.warning("Debes iniciar sesión")
       this.router.navigateByUrl('/login')
       // this.router.navigate(['/login']);
     }
@@ -249,16 +250,18 @@ export class InformacionCampingComponent {
       
       this.reservaService.checkReserva(reserva).subscribe(data=>{
         
-        this._snackBar.open(data, "Aceptar");
+        
         if(data == "Parcela seleccionada correctamente"){
+          this.toastr.success(data)
           this.parcelaElegida = buttonId
+        }else{
+          this.toastr.warning(data)
         }
 
       })
 
     }else{
-      this._snackBar.open("Debes seleccionar una fecha de entrada y salida", "Aceptar");
-
+      this.toastr.warning("Debes seleccionar una fecha de entrada y salida")
     }
   }
 

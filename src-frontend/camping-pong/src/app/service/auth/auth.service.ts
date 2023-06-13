@@ -44,6 +44,10 @@ private URL = "http://localhost:3000";
                                 .set('Access-Control-Allow-Headers', 'Content-Type')
     });
   }
+  signUpAdminUser(user:any){
+    
+    return this.http.post<any>(this.URL + '/usuarios/registroAdmin', user);
+  }
 
   loggedIn() : boolean{
     if(localStorage.getItem('token')){

@@ -9,6 +9,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { Router } from '@angular/router';
 import { ModalParcelasComponent } from '../modal-parcelas/modal-parcelas.component';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -155,7 +156,7 @@ ciudades = {
  
   
  
-  constructor(private fb: FormBuilder, private campingService: CampingService,private dialog: MatDialog, private router: Router) {
+  constructor(private fb: FormBuilder, private campingService: CampingService,private dialog: MatDialog, private router: Router,private toastr: ToastrService) {
     this.reactiveForm()
   }
 
@@ -278,11 +279,13 @@ agregarCamping(){
 
   this.campingService.addCamping(formData).subscribe(
     res => {
+      this.toastr.success(res)
       this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-      this.router.navigate(["admin/lista-camping"]));
+      this.router.navigate(["/admin/lista-camping"]));
     },
     err => {
-      alert(err)
+      this.toastr.warning(err)
+      
     },
   )
 

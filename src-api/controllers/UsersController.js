@@ -41,16 +41,14 @@ const registrarUsuarioAdmin = async function (req, res) {
     const consultaAux = await Usuario.findOne({ "dni": data.dni }, { contrasena: 0 }).exec();
     if (consultaAux == null) {
       await Usuario.create(data)
-      
-      res.status(201).json({ status: "Usuario ya resgistrado correctamente" });
+
+      res.status(200).json({ status: "Usuario registrado correctamente" });
     } else {
-      res.json({ status: "Usuario ya esta registrado" })
+      res.status(200).json({ status: "Usuario ya esta registrado" })
     }
 
   } catch (err) {
-    console.log(err)
-    console.log()
-    res.json({ status: "No se ha ingresado correctamente" })
+    res.status(404).json({ status: "No se ha ingresado correctamente" })
   }
 };
 
@@ -208,42 +206,42 @@ const generateRandomPassword = async function (req, res) {
   const nuevaContrasena = password()
   const transporter = nodemailer.createTransport({
     service: 'hotmail',
-    tls: {rejectUnauthorized: false},
+    tls: { rejectUnauthorized: false },
     auth: {
       user: 'camping-pong@hotmail.com',
       pass: process.env.EMAIL_PASSWORD
     }
   });
   console.log(email);
-    const mailOptions = {
-      from: 'camping-pong@hotmail.com',
-      to: email,
-      subject: 'Contraseña nueva',
-      text: 'Su nueva contraseña es: ' + nuevaContrasena
-    };
+  const mailOptions = {
+    from: 'camping-pong@hotmail.com',
+    to: email,
+    subject: 'Contraseña nueva',
+    text: 'Su nueva contraseña es: ' + nuevaContrasena
+  };
 
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        try {     
-          bcrypt.hash(nuevaContrasena, SALT_WORK_FACTOR, async function (err, hash) {
-            consulta = await Usuario.findByIdAndUpdate(idUser, { contrasena: hash }).exec()
-            res.status(200);
-            res.json(
-              'Cambios confirmados'
-            );
-          });
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      try {
+        bcrypt.hash(nuevaContrasena, SALT_WORK_FACTOR, async function (err, hash) {
+          consulta = await Usuario.findByIdAndUpdate(idUser, { contrasena: hash }).exec()
+          res.status(200);
+          res.json(
+            'Cambios confirmados'
+          );
+        });
 
 
-        } catch (err) {
-          console.log(err)
-          res.json({ status: "error", error: "Error" })
-        }
-
-        console.log('Correo electrónico enviado: ' + info.response);
+      } catch (err) {
+        console.log(err)
+        res.json({ status: "error", error: "Error" })
       }
-    });
+
+      console.log('Correo electrónico enviado: ' + info.response);
+    }
+  });
 
 
 }
@@ -253,18 +251,12 @@ const generateRandomPassword = async function (req, res) {
 const deleteUser = async function (req, res) {
   try {
     consulta = await Usuario.findByIdAndDelete({ "_id": req.params.id }).exec()
-    if (consulta.deletedCount === 1) {
-      res.status(200).json(
-        "Usuario borrado con exito"
-      );
-    } else {
-      res.json(
-        "El usuario no se ha podido eliminar"
-      );
-    }
+
+    res.status(200).json({status: "Usuario borrado con exito"});
+
   } catch (err) {
     console.log(err)
-    res.json({ status: "error", error: "Error" })
+    res.status(404).json({ status: "error", error: "Error" })
   }
 
 }

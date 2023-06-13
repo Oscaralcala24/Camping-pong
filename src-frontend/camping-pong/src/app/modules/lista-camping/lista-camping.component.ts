@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CampingService } from 'src/app/service/campingService/camping.service';
 import { FilterPipe } from 'src/app/pipe/filter.pipe';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-lista-camping',
   templateUrl: './lista-camping.component.html',
   styleUrls: ['./lista-camping.component.scss']
 })
 export class ListaCampingComponent implements OnInit{
-  constructor(private route: ActivatedRoute, private campingService : CampingService){}
+  constructor(private route: ActivatedRoute, private campingService : CampingService,private toastr: ToastrService){}
   p:Number = 1;
   ciudadActual:string = "";
   query:any = {};

@@ -14,13 +14,6 @@
 # FROM nginx:latest
 
 
-# # Copiar los archivos compilados al directorio de contenido estático de Nginx
-# COPY --from=builder /app/dist/* /usr/share/nginx/html/
-# ADD nginx.conf .
-# # Expone el puerto en el que se ejecutará el frontend
-# EXPOSE 80
-# # Define el comando de inicio del contenedor
-# CMD ["nginx", "-g", "daemon off;"]
 
 # Imagen de node que se va a usar (establecer vuestra versión, en el ejemplo es la 14)
 FROM node:14 as builder
@@ -30,8 +23,8 @@ WORKDIR /app
 COPY package*.json ./ 
 # Instalar las dependencias
 RUN npm install 
+# Copiar el código fuente al contenedor
 COPY . /app
-
 # Construir la aplicación Angular
 RUN npm run build
 # Establecer una imagen más liviana arrancar la aplicación Angular

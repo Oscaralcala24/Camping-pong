@@ -10,7 +10,8 @@ COPY package*.json ./
 # Instalar las dependencias 
 RUN npm install 
 
-# Copiar el código fuente al contenedor ( el primer punto es el directorio local donde está el dockerfile y el segundo punto es el directorio WORKDIR definido más arriba)
+# Copiar el código fuente al contenedor ( el primer punto es el directorio local donde está el dockerfile
+# y el segundo punto es el directorio WORKDIR definido más arriba)
 COPY . . 
 
 # Exponer el puerto en el que se ejecutará la API 

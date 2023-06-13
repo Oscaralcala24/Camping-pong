@@ -12,6 +12,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModalCancelarReservaComponent } from '../modal-cancelar-reserva/modal-cancelar-reserva.component';
 import { ModalValorarCampingComponent } from '../modal-valorar-camping/modal-valorar-camping.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-reservas-usuario',
@@ -30,7 +31,7 @@ export class ReservasUsuarioComponent {
   reservasPasadas = [];
   dialogRef: MatDialogRef<ModalCancelarReservaComponent>;
   dialogReValorar: MatDialogRef<ModalValorarCampingComponent>;
-  constructor(private router:Router,private _snackBar: MatSnackBar,private dialog: MatDialog, private authService: AuthService, private fb: FormBuilder, private userService: UserService, private route: ActivatedRoute, private reservaService: ReservaService, private campingService: CampingService, private preciosService: PreciosService) {
+  constructor(private router:Router,private toastr: ToastrService,private dialog: MatDialog, private authService: AuthService, private fb: FormBuilder, private userService: UserService, private route: ActivatedRoute, private reservaService: ReservaService, private campingService: CampingService, private preciosService: PreciosService) {
 
   }
 
@@ -204,8 +205,11 @@ export class ReservasUsuarioComponent {
 
   cancelarReserva(id: string) {
     this.reservaService.cancelarReserva(id).subscribe(data => {
-      console.log(data);
-
+     
+      this.toastr.success(data)   
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+        this.router.navigate(['/reservas']);
+    });
     })
   }
 
@@ -246,8 +250,10 @@ export class ReservasUsuarioComponent {
     this.dialogReValorar.afterClosed().subscribe((body) => {
       if (body.resultado == true) {
         this.reservaService.valorarReserva(buttonId, body.puntuacion).subscribe(data => {
-          this._snackBar.open(data, "Aceptar");    
-          location.reload();
+          this.toastr.success(data)   
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate(['/reservas']);
+        });
         })
       }
     });

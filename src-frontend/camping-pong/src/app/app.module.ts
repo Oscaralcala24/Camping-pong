@@ -21,7 +21,7 @@ import { FooterAdminComponent } from './layout/footer-admin/footer-admin.compone
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GalleryModule } from  'ng-gallery';
 import { PathLocationStrategy } from '@angular/common';
-
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +43,7 @@ import { PathLocationStrategy } from '@angular/common';
     HttpClientModule,
     NgxPaginationModule,
     GalleryModule,
+    ToastrModule.forRoot(),
     StarRatingModule.forRoot(),
   ],
   providers: [UserService,AuthGuard,{

@@ -27,9 +27,11 @@ export class IngresosCampingComponent implements OnInit {
       this.reservas.forEach(element => {
 
         let fecha = new Date(element.id_reserva.fecha_pago)
-        this.anos.push(fecha.getFullYear());
-        this.updateChart()
+        if (!this.anos.includes(fecha.getFullYear())) {
+          this.anos.push(fecha.getFullYear());
+        }
         
+        this.updateChart()
       });
     })
     setTimeout(() => {

@@ -4,6 +4,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from 'src/app/service/userService/user.service';
 import { User } from 'src/app/models/user';
 import { ModalGenerarPasswordComponent } from '../modal-generar-password/modal-generar-password.component';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-usuarios-admin',
@@ -18,7 +20,7 @@ export class ListaUsuariosAdminComponent {
   usuario :any;
   dialogRef: MatDialogRef<ModalBorrarusuarioComponent>;
   modalPassword: MatDialogRef<ModalGenerarPasswordComponent>;
-  constructor(private userService: UserService, private dialog: MatDialog) {
+  constructor(private userService: UserService, private dialog: MatDialog,private toastr: ToastrService,private router:Router) {
 
   }
 
@@ -55,8 +57,10 @@ export class ListaUsuariosAdminComponent {
       if (confirmed) {
         this.userService.deleteUser(buttonId).subscribe(
           res => {
-            alert(res)
-            window.location.reload();
+            this.toastr.success(res.status)
+            this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+              this.router.navigate(['/admin/lista-usuarios']);
+          });
           },
           err => console.log(err),
         )
@@ -83,10 +87,13 @@ export class ListaUsuariosAdminComponent {
         this.userService.getUsuario(buttonId).subscribe((data) =>{
           console.log(data)
           this.usuario = data.consulta;
-          console.log(this.usuario._id)
-          console.log(this.usuario.email)
           this.userService.generatePassword(this.usuario._id,this.usuario.email).subscribe((data) =>{
-            alert(data)
+            if ( data == "Cambios confirmados" ) {
+              this.toastr.success("Contraseña cambiada correctamente", "Correo enviado a usuario")
+            }else{
+              this.toastr.error("Error al generar nueva contraseña")
+
+            }
           })
         })
       }

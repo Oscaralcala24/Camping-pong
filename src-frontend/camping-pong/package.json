@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^15.2.0",
+    "@angular/animations": "^15.2.9",
     "@angular/cdk": "^15.2.9",
     "@angular/common": "^15.2.0",
     "@angular/compiler": "^15.2.0",
@@ -33,6 +33,7 @@
     "moment": "^2.29.4",
     "ng-gallery": "^8.0.4",
     "ngx-pagination": "^6.0.3",
+    "ngx-toastr": "^17.0.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
   },

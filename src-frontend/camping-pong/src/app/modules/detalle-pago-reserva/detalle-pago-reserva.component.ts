@@ -10,6 +10,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { UserService } from 'src/app/service/userService/user.service';
 import { User } from 'src/app/models/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-detalle-pago-reserva',
   templateUrl: './detalle-pago-reserva.component.html',
@@ -36,7 +37,7 @@ export class DetallePagoReservaComponent implements OnInit {
    reservaForm: FormGroup;
    user:User;
    
-   constructor(private _snackBar: MatSnackBar,private campingService:CampingService,private preciosService:PreciosService,private reservaService: ReservaService, private route:ActivatedRoute, private router:Router, private fb:FormBuilder, private userService:UserService){
+   constructor(private toastr: ToastrService,private campingService:CampingService,private preciosService:PreciosService,private reservaService: ReservaService, private route:ActivatedRoute, private router:Router, private fb:FormBuilder, private userService:UserService){
      
      this.reservaForm = this.fb.group({
       ntarjeta: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{15,16}$")]),
@@ -188,8 +189,13 @@ export class DetallePagoReservaComponent implements OnInit {
     }
     console.log(reserva);
     this.reservaService.addReserva(reserva).subscribe((data)=>{
-      this._snackBar.open(data, "Aceptar");    
-      this.router.navigate(["/"])
+      console.log(data.status);
+      if (data == "Reserva realizada con exito"){
+        this.toastr.success(data)  
+        this.router.navigate(["/"])
+      }else{
+        this.toastr.error(data)  
+      }
     })
 
   }

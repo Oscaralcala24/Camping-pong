@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/service/userService/user.service';
 import { Validate } from '../registro/validation';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -13,7 +15,7 @@ export class PerfilComponent implements OnInit{
   disabled=true;
   updateDataForm: FormGroup;   
   updatePasswordForm: FormGroup;
-  constructor(private fb: FormBuilder, private userService: UserService){
+  constructor(private fb: FormBuilder, private userService: UserService,private toastr: ToastrService,private router:Router){
     this.passwordForm()
     this.reactiveForm()
   }
@@ -65,9 +67,13 @@ export class PerfilComponent implements OnInit{
 
     this.userService.updateUser(userAux, this.user._id).subscribe(
       res => {
-        console.log(res)
+        this.toastr.success(res) 
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          this.router.navigate(['/perfil']);
+      });
+        
       },
-      err => console.log(err),
+      err => this.toastr.error(err) ,
     )
   }
 
@@ -80,10 +86,13 @@ export class PerfilComponent implements OnInit{
     }
     this.userService.updatePassword(passwordAux,this.user._id).subscribe(
       res => {
-        console.log(res)
+        this.toastr.success(res)
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          this.router.navigate(['/perfil']);
+      });
         
       },
-      err => console.log(err),
+      err => this.toastr.error(err),
     )
   }
 }

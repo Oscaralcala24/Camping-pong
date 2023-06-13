@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/service/userService/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReservaService } from 'src/app/service/reservaService/reserva.service';
 import * as moment from 'moment';
 import { CampingService } from 'src/app/service/campingService/camping.service';
 import { PreciosService } from 'src/app/service/preciosService/precios.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-modificar-usuario-admin',
@@ -21,7 +22,8 @@ export class ModificarUsuarioAdminComponent {
   reservas: any = [];
   reservasAux: any=[];
   precios: any;
-  constructor(private fb: FormBuilder, private userService: UserService, private route: ActivatedRoute, private reservaService: ReservaService, private campingService: CampingService, private preciosService: PreciosService) {
+  constructor(private fb: FormBuilder, private userService: UserService, private route: ActivatedRoute, private reservaService: ReservaService, private campingService: CampingService, private preciosService: PreciosService
+    , private router: Router,private toastr: ToastrService) {
 
     this.reactiveForm()
   }
@@ -144,9 +146,15 @@ export class ModificarUsuarioAdminComponent {
 
     this.userService.updateUser(userAux, this.user._id).subscribe(
       res => {
-        console.log(res)
+        this.toastr.success(res)
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+        this.router.navigate(["/admin/lista-usuarios/modificar/"+this.idUsuario]));
       },
-      err => console.log(err),
+      err => {
+        this.toastr.success(err)
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+        this.router.navigate(["/admin/lista-usuarios/modificar/"+this.idUsuario]));
+      },
     )
   }
 
