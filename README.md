@@ -12,7 +12,7 @@ El desarrollo de toda Aplicación Web requiere seguir un [proceso estructurado](
 
 ---
 
-# Título del Proyecto
+# CAMPING-PONG
 
 #### Curso Escolar 2022-2023
 #### Autor: Óscar Alcalá Espigares - https://github.com/Oscaralcala24
@@ -22,12 +22,28 @@ El desarrollo de toda Aplicación Web requiere seguir un [proceso estructurado](
 
 ## Breve descripción del proyecto
 
-Si ya tienes una idea para tu aplicación, explícala brevemente. Si no es así, lo que realmente necesitas es **buscar un problema o necesidad a la que darle solución**, y estos **están por todas partes**. Así que trata de buscar problemas o necesidades en tu vida diaria y realiza una lista. Una vez que tengas una lista exhaustiva, ya puedes empezar a pensar en **cómo puedes resolverlos**.
-
-En este apartado el alumno debe hacer una breve descripción del proyecto que vaya a realizar. Esta descripción no será ua descripción detallada, será una presentación general con no más de 10 líneas.
+Nuestra aplicación surge para solucionar el problema que existe actualmente en el proceso de reserva de parcelas en campings. Actualmente, no hay ninguna aplicación especializada que permita a los usuarios buscar y reservar parcelas en diferentes campings desde un solo lugar. Para lograr esto, nuestra empresa establecerá acuerdos con campings para ofrecer sus parcelas a través de nuestra aplicación. Además de facilitar el proceso de reserva para nuestros clientes, nuestra empresa tiene como objetivo promover el uso de los campings y fomentar el uso responsable del medio ambiente.
 
 ## Definir el objetivo de la aplicación
-Nuestra aplicación llega para resolver el problema que existe con las reservas de los camping, ya que no existe ninguna aplicación que los unifique a todos, permita reservar parcelas y cancelarlas cuando sea necesario. Nuestra empresa más allá de facilitar a nuestro clientes la reserva de camping, tiene como objetivo fomentar el uso de estos tanto como fomentar el uso responsable del medio ambiente.
+El usuario puede:
+Registrarse, hacer login y logout 
+Visualizar una lista de campings disponibles
+Ver información referente al camping
+Tramitar una reserva
+Cancelar una reserva
+Ver datos de su perfil y modificarlos
+Ver historial de reservas y su información
+Valorar el camping en el que se ha alojado
+
+El administrador puede:
+Añadir nuevo camping
+Añadir nuevo usuario
+Ver listado de campings
+Ver y modificar la información del camping
+Ver listado de usuarios
+Ver y modificar la información del usuario
+Visualizar las reservas de un usuario
+Visualizar gráfico ingresos mensuales
 
 - **¿Qué va a hacer la aplicación?**
 - **¿Cuál es su atractivo principal?** 
@@ -35,10 +51,6 @@ Nuestra aplicación llega para resolver el problema que existe con las reservas 
 - **¿Qué necesidad va a cubrir?**
 
 ## Estructura del Proyecto
-
-En este apartado el alumno explicará el contenido del repositorio y de todas las carpetas relevantes del mismo. Para facilitar la gestión de la entrega, todo el código y documentación debe estar en este repositorio.
-
-Por lo anterior, un proyecto que contenga un Frontend en una tecnología o framework (por ejemplo Angular) y una API REST en otra tecnología o framework (Springboot, Express) deberá tener la siguiente estructura de directorios en el repositorio de entrega:
 
 - src-api
 - src-frontend

@@ -15,16 +15,10 @@ const registrarUsuario = async function (req, res) {
     console.log(consultaAux);
     if (consultaAux == null) {
       await Usuario.create(data)
-      const token = jwt.sign({ id: data._id, role: data.role }, process.env.JWT_SECRET, {
-        expiresIn: '1d'
-      });
-      res.status(201).json({
-        status: 'success',
-        token,
-        data: {
-          data,
-        },
-      });
+     
+      res.status(200).json(
+        "Usuario creado con éxito"
+      );
     } else {
       res.json({ status: "Usuario ya esta registrado" })
     }
