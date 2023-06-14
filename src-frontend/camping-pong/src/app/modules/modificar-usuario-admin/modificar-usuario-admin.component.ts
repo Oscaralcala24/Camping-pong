@@ -70,7 +70,9 @@ export class ModificarUsuarioAdminComponent {
             let fechaSalida = new Date(element.id_reserva.fecha_salida);
             let fechaEntrada2 = moment(fechaEntrada.getFullYear() + "-" + (fechaEntrada.getMonth() + 1) + "-" + fechaEntrada.getDate(), 'YYYY-MM-DD');
             let fechaSalida2 = moment(fechaSalida.getFullYear() + "-" + (fechaSalida.getMonth() + 1) + "-" + fechaSalida.getDate(), 'YYYY-MM-DD');
+  
             const noches = this.calcularNochesPorTemporada(fechaEntrada2, fechaSalida2);
+            console.log(noches);
             let datosAux= [];
     
             if(noches.Baja > 0){
@@ -94,9 +96,9 @@ export class ModificarUsuarioAdminComponent {
                     
                     this.reservas[l].detalle.forEach(precios =>{
                       element.detalle_precio.forEach(k=>{
-
+                        console.log(datosAux[j].cantidadNoches);
                       if(k.nombre == precios.nombre && precios.cantidad>0){
-                        sumatotal += precios.cantidad*k.precio;
+                        sumatotal += precios.cantidad*k.precio*datosAux[j].cantidadNoches;
                         datosAux[j].precios.push({nombre: precios.nombre, cantidad: precios.cantidad, precio:k.precio})
                       }
                     })
@@ -191,27 +193,32 @@ export class ModificarUsuarioAdminComponent {
     let tempMediaFin
     let tempAltaInicio
     var tempAltaFin
+
     for (let index = 0; index < this.precios.length; index++) {
       let arrayini;
       let arrayfin;
       arrayini = this.precios[index].fecha_inicio.split("/")
       arrayfin = this.precios[index].fecha_fin.split("/")
+      let fechaAuxIn = new Date(arrayini[0])
+      let fechaAuxOut = new Date(arrayfin[0])
+
+
       if (this.precios[index].temporada == "Baja") {
 
-        tempBajaInicio = moment({ month: arrayini[1], day: arrayini[0] });
-        tempBajaFin = moment({ month: arrayfin[1], day: arrayfin[0] });
+        tempBajaInicio = moment({ month: fechaAuxIn.getMonth()+1, day: fechaAuxIn.getDate() });
+        tempBajaFin = moment({ month: fechaAuxOut.getMonth()+1, day: fechaAuxOut.getDate() });
         if (!tempBajaInicio.isBefore(tempBajaFin)) {
           let fechaActual = new Date()
-          tempBajaInicio = moment({ year: fechaActual.getFullYear(), month: arrayini[1], day: arrayini[0] });
-          tempBajaFin = moment({ year: fechaActual.getFullYear() + 1, month: arrayfin[1], day: arrayfin[0] });
+          tempBajaInicio = moment({ year: fechaActual.getFullYear(), month: fechaAuxIn.getMonth()+1, day: fechaAuxIn.getDate() });
+          tempBajaFin = moment({ year: fechaActual.getFullYear() + 1, month: fechaAuxOut.getMonth()+1, day: fechaAuxOut.getDate() });
         }
       } else if (this.precios[index].temporada == "Media") {
-        tempMediaInicio = moment({ month: arrayini[1], day: arrayini[0] });
-        tempMediaFin = moment({ month: arrayfin[1], day: arrayfin[0] });
+        tempMediaInicio = moment({ month: fechaAuxIn.getMonth()+1, day: fechaAuxIn.getDate() });
+        tempMediaFin = moment({ month: fechaAuxOut.getMonth()+1, day: fechaAuxOut.getDate() });
       } else {
 
-        tempAltaInicio = moment({ month: arrayini[1], day: arrayini[0] });
-        tempAltaFin = moment({ month: arrayfin[1], day: arrayfin[0] });
+        tempAltaInicio = moment({ month: fechaAuxIn.getMonth()+1, day: fechaAuxIn.getDate() });
+        tempAltaFin = moment({ month: fechaAuxOut.getMonth()+1, day: fechaAuxOut.getDate() });
       }
     }
 
